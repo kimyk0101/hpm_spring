@@ -5,13 +5,12 @@
 	
 <configuration>
 	<typeAliases>
-		<typeAlias alias="PhoneAppVo" type="himedia.phoneappspring.repository.vo.PhoneAppVo" />
-		<typeAlias alias="PhotoVo" type="himedia.phoneappspring.repository.vo.PhotoVo" />
-			
+		<typeAlias alias="UserVo"
+			type="himedia.hpm_spring.repository.vo.UserVo" />
 	</typeAliases>
+	
 	<mappers>
-		<mapper resource="mybatis/mappers/phoneApp.xml" />
- 		<mapper resource="mybatis/mappers/photo.xml" />
+		<mapper resource="mybatis/mappers/user.xml" />
 	</mappers>
 </configuration>
  
