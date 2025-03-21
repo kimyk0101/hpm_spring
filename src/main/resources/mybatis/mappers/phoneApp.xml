@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="himedia.phoneappspring.mappers.PhoneAppMapper">
+	<!-- 전체 연락처 조회 -->
+	<select id="selectAllNumbers" resultType="PhoneAppVo"> 
+	SELECT * FROM userinfo ORDER BY name
+	</select>
+	
+	<!-- 특정 연락처 조회 -->
+	<select id="selectNumberById" parameterType="Integer" resultType="PhoneAppVo"> 
+		SELECT * FROM userinfo WHERE id=#{id} 
+	</select>
+		
+	<!-- 연락처 추가 -->
+	<insert id="insertNumber" parameterType="PhoneAppVo"> 
+	INSERT INTO userinfo (name, phone_number, email, nickname, memo) 
+	VALUES (#{name}, #{phone_number}, #{email}, #{nickname}, #{memo}) 
+	</insert>
+	
+	<!-- 기존 연락처 수정 -->
+	<update id="updateNumberPartially" parameterType="PhoneAppVo">
+    UPDATE userinfo
+    <set>
+        <if test="name != null"> name = #{name}, </if>
+        <if test="phone_number != null"> phone_number = #{phone_number}, </if>
+        <if test="email != null"> email = #{email}, </if>
+        <if test="nickname != null"> nickname = #{nickname}, </if>
+        <if test="memo != null"> memo = #{memo} </if>
+    </set>
+    WHERE id = #{id}
+	</update>
+	
+	<!-- 연락처 수정 -->
+	<update id="updateNumber" parameterType="PhoneAppVo"> 
+	UPDATE userinfo SET name=#{name}, phone_number=#{phone_number}, email=#{email}, nickname=#{nickname}, memo=#{memo} 
+	WHERE id=#{id} 
+	</update>
+	
+	<!-- 연락처 삭제 -->
+	<delete id="deleteNumber" parameterType="Integer"> 
+	DELETE FROM userinfo WHERE id=#{id} 
+	</delete>
+	
+	<!-- 연락처 이름 검색 -->
+	<select id="selectByName" parameterType="PhoneAppVo" resultType="PhoneAppVo"> 
+	SELECT * 
+	FROM userinfo
+	WHERE name LIKE CONCAT('%', #{name}, '%');
+	</select>
+	
+	<!-- 연락처 전화번호 검색 -->
+	<select id="selectByPhonenumber" parameterType="PhoneAppVo" resultType="PhoneAppVo"> 
+	SELECT * 
+	FROM userinfo
+	WHERE phone_number LIKE CONCAT('%', #{phone_number}, '%');
+	</select>
+</mapper>
