@@ -22,8 +22,7 @@
 	</insert>
 
 	<!-- 로그인 -->
-	<select id="loginUser" parameterType="String"
-		resultType="UserVo">
+	<select id="loginUser" parameterType="String" resultType="UserVo">
 		SELECT * FROM user 
 		WHERE user_id=#{user_id} AND password=#{password}
 	</select>
