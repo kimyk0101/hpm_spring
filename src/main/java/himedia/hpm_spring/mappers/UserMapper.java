@@ -7,16 +7,16 @@ import himedia.hpm_spring.repository.vo.UserVo;
 
 public interface UserMapper {
 
-//	<select id="selectAllUsers" resultType="UserVo">	// 전체 유저 조회
+//	<select id="selectAllUsers" resultType="hpmUser">	// 전체 유저 조회
 	List<UserVo> selectAllUsers();
 	
-//	<select id="selectById" parameterType="Long" resultType="UserVo">	// 특정 유저 조회
+//	<select id="selectById" parameterType="Long" resultType="hpmUser">	// 특정 유저 조회
 	UserVo selectById(Long id);
 	
-//	<insert id="registerUser" parameterType="UserVo">	// 회원가입
+//	<insert id="registerUser" parameterType="hpmUser">	// 회원가입
 	int registerUser(UserVo user);
 	
-//	<select id="loginUser" resultType="UserVo">			// 로그인 
+//	<select id="loginUser" resultType="hpmUser">			// 로그인 
 	UserVo loginUser(String user_id, String password);
 	
 //	<update id="updateUser" parameterType="UserVo">		//	유저 정보 수정
