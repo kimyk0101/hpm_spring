@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+ <mapper namespace="himedia.hpm_spring.mappers.UserMapper">
+ 
+ 	<!-- 전체 유저 조회 -->
+ 	<select id="retrieveAllUsers" resultType="UserVo">
+ 		SELECT * FROM users ORDER BY id DESC
+ 	</select>
+ 
+ 	<!-- 특정 유저 조회 -->
+ 	<select id="retrieveUserById" parameterType="Long" resultType="UserVo">
+ 		SELECT * FROM users WHERE id=#{id}
+ 	</select>
+ 	
+ 	<!-- 회원가입 -->
+ 	<insert id="registerUser" parameterType="UserVo">
+ 		INSERT INTO users
+ 		(name, nickname, user_id, password, birth, phone_number, email, address)
+ 		VALUES (#{name}, #{nickname}, #{user_id}, #{password}, #{birth}, #{phone_number}, #{email}, #{address})
+ 	</insert>
+ 
+ 	<!-- 로그인 -->
+ 	<select id="authenticateUser" parameterType="String"
+ 		resultType="UserVo">
+ 		SELECT * FROM users 
+ 		WHERE user_id=#{user_id} AND password=#{password}
+ 	</select>
+ 
+ 	<!-- 유저 정보 수정 -->
+ 	<update id="updateUserFields" parameterType="UserVo">
+ 		UPDATE users 
+ 		SET name=#{name}, nickname=#{nickname}, user_id=#{user_id}, password=#{password}, 
+ 		birth=#{birth}, phone_number=#{phone_number}, email=#{email}, address=#{address}
+ 		WHERE id=#{id}
+ 	</update>
+ 
+ 	<!-- 유저 삭제 -->
+ 	<delete id="deleteUser" parameterType="Long">
+ 		DELETE FROM users WHERE id=#{id}
+ 	</delete>
+ 
+ </mapper>

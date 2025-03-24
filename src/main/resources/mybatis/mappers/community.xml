@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="himedia.hpm_spring.mappers.CommunityMapper">
+
+	<!-- 전체 게시글 조회 -->
+	<select id="retrieveAllCommunities" resultType="CommunityVo">
+	SELECT communities.*, users.nickname FROM communities JOIN users 
+	WHERE communities.users_id = users.id 
+	ORDER BY communities.id DESC
+	</select>
+	
+	<!-- 특정 게시글 조회 -->
+	<select id="retrieveCommunityById" parameterType="Long" resultType="CommunityVo">
+	SELECT communities.*, users.nickname FROM communities JOIN users 
+	WHERE communities.id=#{id} AND communities.users_id = users.id
+	</select>
+	
+	<!-- 사용자의 게시글 조회 -->
+	<select id="retrieveMyCommunities" parameterType="Long" resultType="CommunityVo">
+	SELECT id, title, upload_date FROM communities WHERE users_id=#{users_id}
+	</select>
+	
+	<!-- 게시글 작성 -->
+	<insert id="createCommunity" parameterType="CommunityVo">
+	INSERT INTO communities (category_code, title, content, upload_date, users_id)
+	VALUES (#{category_code}, #{title}, #{content}, #{upload_date}, (SELECT id FROM users WHERE users_id = #{users_id}))
+	</insert>
+	
+	<!-- 게시글 일부 수정 -->
+	<update id="updateCommunity" parameterType="CommunityVo">
+	UPDATE communities SET
+	category_code=#{category_code}, title=#{title}, content=#{content}
+	WHERE id=#{id}
+	</update>
+	
+	<!-- 기존 게시글 전체 수정 -->
+	<!-- 
+	<update id="replaceCommunity" parameterType="CommunityVo">
+	UPDATE communities SET
+	category_code=#{category_code}, title=#{title}, content=#{content}
+	WHERE id=#{id}
+	</update>
+	 -->
+
+	<!-- 게시글 삭제 -->
+	<delete id="deleteCommunity" parameterType="Long">
+	DELETE FROM communities WHERE id=#{id}
+	</delete>
+</mapper>
