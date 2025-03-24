@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import himedia.hpm_spring.repository.vo.UserLoginData;
@@ -97,4 +99,19 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
         }
     }
+    
+    // GET : /api/users/check-userId?userId=입력값 -> 아이디 중복 체크
+    @GetMapping("/check-userId")
+    @CrossOrigin(origins = "http://localhost:5173")  // 프론트엔드 주소
+    public ResponseEntity<Boolean> checkUserId(@RequestParam String userId) {
+        try {
+            boolean isAvailable = userService.isUserIdAvailable(userId);
+            return ResponseEntity.ok(isAvailable);
+        } catch (Exception e) {
+            e.printStackTrace();  // 예외를 로그에 출력 (서버 로그에서 확인 가능)
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(false);
+        }
+    }
+
+
 }

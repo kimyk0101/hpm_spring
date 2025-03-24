@@ -68,7 +68,7 @@ public class UserService {
 				user.setNickname((String) value);
 				break;
 			case "user_id":
-				user.setUser_id((String) value);
+				user.setUserId((String) value);
 				break;
 			case "password":
 				user.setPassword((String) value);
@@ -101,4 +101,9 @@ public class UserService {
 	public int deleteUser(Long id) {
 		return userMapper.deleteUser(id);
 	}
+	
+	//	아이디 중복 체크
+	public boolean isUserIdAvailable(String userId) {
+        return userMapper.countByUserId(userId) == 0;
+    }
 }

@@ -40,5 +40,11 @@
  	<delete id="deleteUser" parameterType="Long">
  		DELETE FROM users WHERE id=#{id}
  	</delete>
+ 	
+ 	<!-- 아이디 중복 체크 -->
+ 	<select id="countByUserId" parameterType="String" resultType="int">
+        SELECT COUNT(*) FROM users WHERE user_id = #{userId}
+    </select>
+ 	
  
  </mapper>

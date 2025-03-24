@@ -16,7 +16,7 @@ public class UserVo {
 	private Long id;				// 	유저 고유번호
 	private String name;			// 	이름
 	private String nickname;		// 	닉네임
-	private String user_id;			//	아이디
+	private String userId;			//	아이디
 	private String password;		//	비밀번호
 	private String birth;			//	생년월일
 	private String phone_number;	// 	전화번호

@@ -23,4 +23,7 @@ public interface UserMapper {
 	
 //	<delete id="deleteUser" parameterType="Long">		//	유저 삭제
 	int deleteUser(Long id);
+	
+//	<select id="countByUserId" parameterType="String" resultType="int">
+	int countByUserId(String userId);
 }
