@@ -19,5 +19,5 @@ public class CommentVo {
 	private String review_id;		//	산후기 게시글 작성자 아이디
 	private String retaurant_id;	// 	맛집후기 게시글 작성자 아이디
 	private String community_id;	// 	자유게시판 게시글 작성자 아이디
-	private String user_id;			//	댓글 작성자 아이디
+	private String users_id;			//	댓글 작성자 아이디
 }

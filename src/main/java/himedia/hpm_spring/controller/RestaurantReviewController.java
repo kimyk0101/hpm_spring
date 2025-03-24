@@ -1,0 +1,77 @@
+package himedia.hpm_spring.controller;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import himedia.hpm_spring.repository.vo.RestaurantReviewVo;
+import himedia.hpm_spring.repository.vo.ReviewVo;
+import himedia.hpm_spring.service.RestaurantReviewService;
+
+@RestController
+@RequestMapping("/api/restaurant-reviews")
+public class RestaurantReviewController {
+
+	@Autowired
+    private RestaurantReviewService restaurantReviewService;
+    
+    // GET : /api/restaurant-reviews -> 모든 맛집 리뷰 게시글 조회
+    @GetMapping
+    public ResponseEntity<List<RestaurantReviewVo>> retrieveAllReviews() {
+        List<RestaurantReviewVo> reviews = restaurantReviewService.retrieveAllReviews();
+        return ResponseEntity.ok(reviews);
+    }
+    
+    // GET : /api/restaurant-reviews/{id} -> 특정 맛집 리뷰 게시글 조회
+    @GetMapping("/{id}")
+    public ResponseEntity<RestaurantReviewVo> retrieveReviewById(@PathVariable Long id) {
+    	RestaurantReviewVo review = restaurantReviewService.retrieveReviewById(id);
+        return ResponseEntity.ok(review);
+    }
+    
+    // GET : /api/restaurant-reviews/my/{id} -> 사용자의 맛집 리뷰 게시글 조회
+    @GetMapping("/my/{id}")
+    public ResponseEntity<List<RestaurantReviewVo>> retrieveMyReviews(@PathVariable Long id) {
+        List<RestaurantReviewVo> reviews = restaurantReviewService.retrieveMyReviews(id);
+        return ResponseEntity.ok(reviews);
+    }
+        
+    // POST : /api/restaurant-reviews -> 맛집 리뷰 게시글 생성
+    @PostMapping
+    public ResponseEntity<RestaurantReviewVo> createReview(@RequestBody RestaurantReviewVo review) {
+    	RestaurantReviewVo savedReview = restaurantReviewService.createReview(review);
+        return ResponseEntity.ok(savedReview);
+    }
+
+    // PATCH : /api/reviews/{id} -> 맛집 리뷰 게시글 일부 수정
+    @PatchMapping("/{id}")
+    public ResponseEntity<RestaurantReviewVo> updateReview(@RequestBody RestaurantReviewVo review, @PathVariable Long id) {
+        review.setId(id);
+        RestaurantReviewVo updatedReview = restaurantReviewService.updateReview(review);
+        return ResponseEntity.ok(updatedReview);
+    }
+    
+    // PUT : /api/restaurant-reviews/{id} -> 기존 맛집 리뷰 게시글 전체 수정
+//    @PutMapping("/{id}")
+//    public ResponseEntity<RestaurantReviewVo> replaceReview(@RequestBody RestaurantReviewVo review, @PathVariable Long id) {
+//        review.setId(id);
+//        RestaurantReviewVo updatedReview = restaurantReviewService.replaceCommunity(review);
+//        return ResponseEntity.ok(updatedReview);
+//    }
+    
+    // DELETE : /api/restaurant-reviews/{id} -> 맛집 리뷰 게시글 삭제
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteReview(@PathVariable Long id) {
+    	restaurantReviewService.deleteReview(id);
+        return ResponseEntity.ok().<Void>build();
+    }
+}
