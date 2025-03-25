@@ -1,5 +1,7 @@
 package himedia.hpm_spring.repository.vo;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,6 +15,7 @@ import lombok.ToString;
 @ToString
 public class UserLoginData {
 
-	private String user_id;			//	아이디
+	@JsonProperty("user_id")
+	private String userId;			//	아이디
 	private String password;		//	비밀번호
 }

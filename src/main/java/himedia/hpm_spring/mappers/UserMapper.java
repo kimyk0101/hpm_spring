@@ -16,7 +16,7 @@ public interface UserMapper {
 	int registerUser(UserVo user);
 	
 //	<select id="authenticateUser" resultType="UserVo">			// 로그인 
-	UserVo authenticateUser(String user_id, String password);
+	UserVo authenticateUser(String userId, String password);
 	
 //	<update id="updateUserFields" parameterType="UserVo">		//	유저 정보 수정
 	int updateUserFields(UserVo user);
@@ -24,6 +24,6 @@ public interface UserMapper {
 //	<delete id="deleteUser" parameterType="Long">		//	유저 삭제
 	int deleteUser(Long id);
 	
-//	<select id="countByUserId" parameterType="String" resultType="int">
+//	<select id="countByUserId" parameterType="String" resultType="int">	//	아이디 중복체크
 	int countByUserId(String userId);
 }

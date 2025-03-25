@@ -4,9 +4,12 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import himedia.hpm_spring.controller.UserController;
 import himedia.hpm_spring.exception.UserNotFoundException;
 import himedia.hpm_spring.mappers.UserMapper;
 import himedia.hpm_spring.repository.vo.UserLoginData;
@@ -25,7 +28,7 @@ public class UserService {
 
 	// 로그인
 	public UserVo authenticateUser(UserLoginData loginData) {
-		UserVo user = userMapper.authenticateUser(loginData.getUser_id(), loginData.getPassword());
+		UserVo user = userMapper.authenticateUser(loginData.getUserId(), loginData.getPassword());
 
 		return user;
 	}
@@ -53,7 +56,7 @@ public class UserService {
 		updates.forEach((key, value) -> {
 			if (value == null) {
 				// null 값이 들어올 경우, 필수 필드는 예외 처리
-				if ("name".equals(key) || "nickname".equals(key) || "user_id".equals(key) || "password".equals(key)) {
+				if ("name".equals(key) || "nickname".equals(key) || "userId".equals(key) || "password".equals(key)) {
 					throw new IllegalArgumentException(key + " cannot be null");
 				}
 				// 선택적 필드들에 대해서는 null 값이 들어오면 빈 문자열("")로 처리
@@ -78,13 +81,16 @@ public class UserService {
 				user.setBirth((Date) value);
 				break;
 			case "phone_number":
-				user.setPhone_number((String) value);
+				user.setPhoneNumber((String) value);
 				break;
 			case "email":
 				user.setEmail((String) value);
 				break;
 			case "address":
 				user.setAddress((String) value);
+				break;
+			case "update_date":
+				user.setUpdateDate((Date) value);
 				break;
 			 default:
 	                throw new IllegalArgumentException("Invalid field name: " + key);
@@ -103,8 +109,9 @@ public class UserService {
 		return userMapper.deleteUser(id);
 	}
 	
-	//	아이디 중복 체크
-	public boolean isUserIdAvailable(String userId) {
-        return userMapper.countByUserId(userId) == 0;
+    // 아이디 중복 체크 메서드
+    public boolean checkUserIdInDatabase(String userId) {
+        // MyBatis에서 countByUserId를 호출하여 아이디 존재 여부를 확인
+        return userMapper.countByUserId(userId) == 0; // 0이면 사용 가능, 아니면 중복
     }
 }

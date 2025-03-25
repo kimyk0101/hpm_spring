@@ -14,6 +14,8 @@
 	<mappers>
 		<mapper resource="mybatis/mappers/user.xml" />
 		<mapper resource="mybatis/mappers/community.xml" />
+		<mapper resource="mybatis/mappers/review.xml" />
 		<mapper resource="mybatis/mappers/restaurantReview.xml" />
 	</mappers>
+	
 </configuration>

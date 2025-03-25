@@ -3,10 +3,11 @@ package himedia.hpm_spring.controller;
 import java.util.List;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -44,7 +45,7 @@ public class UserController {
             return ResponseEntity.ok(loginUser);
         }
 
-        if (loginData.getUser_id().isEmpty() || loginData.getPassword().isEmpty()) {
+        if (loginData.getUserId().isEmpty() || loginData.getPassword().isEmpty()) {
             System.err.println("no user_id or password");
             return ResponseEntity.ofNullable(null);
         }
@@ -67,13 +68,15 @@ public class UserController {
         session.invalidate();
     }
 
+    private static final Logger logger = LoggerFactory.getLogger(UserController.class);
+    
     // POST : /api/users -> 새로운 유저 생성
     @PostMapping
     public ResponseEntity<UserVo> registerUser(@RequestBody UserVo user) {
         UserVo savedUser = userService.registerUser(user);
         return ResponseEntity.ok(savedUser);
     }
-
+    	
     // PATCH : /api/users/{id} -> 기존 유저 정보 수정
     @PatchMapping("/{id}")
     public ResponseEntity<UserVo> updateUserFields(@RequestBody Map<String, Object> updates, @PathVariable Long id) {
@@ -100,17 +103,12 @@ public class UserController {
         }
     }
     
-    // GET : /api/users/check-userId?userId=입력값 -> 아이디 중복 체크
-    @GetMapping("/check-userId")
-//    @CrossOrigin(origins = "http://localhost:5173")  // 프론트엔드 주소
-    public ResponseEntity<Boolean> checkUserId(@RequestParam String userId) {
-        try {
-            boolean isAvailable = userService.isUserIdAvailable(userId);
-            return ResponseEntity.ok(isAvailable);
-        } catch (Exception e) {
-            e.printStackTrace();  // 예외를 로그에 출력 (서버 로그에서 확인 가능)
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(false);
-        }
+    // GET : /api/users/check-user-id/?userId=입력된 값 -> 아이디 중복 체크
+    @GetMapping("/check-user-id")
+    public ResponseEntity<Boolean> checkUserId(@RequestParam("userId") String userId) {
+        // 클라이언트에서 보낸 userId를 처리
+        boolean isTaken = userService.checkUserIdInDatabase(userId);
+        return ResponseEntity.ok(isTaken);
     }
 
 
