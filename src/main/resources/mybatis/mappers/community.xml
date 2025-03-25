@@ -19,13 +19,13 @@
 	
 	<!-- 사용자의 게시글 조회 -->
 	<select id="retrieveMyCommunities" parameterType="Long" resultType="CommunityVo">
-	SELECT id, title, upload_date FROM communities WHERE users_id=#{users_id}
+	SELECT id, title, update_date FROM communities WHERE users_id=#{users_id}
 	</select>
 	
 	<!-- 게시글 작성 -->
 	<insert id="createCommunity" parameterType="CommunityVo">
-	INSERT INTO communities (category_code, title, content, upload_date, users_id)
-	VALUES (#{category_code}, #{title}, #{content}, #{upload_date}, (SELECT id FROM users WHERE users_id = #{users_id}))
+	INSERT INTO communities (category_code, title, content, update_date, users_id)
+	VALUES (#{category_code}, #{title}, #{content}, #{update_date}, (SELECT id FROM users WHERE users_id = #{users_id}))
 	</insert>
 	
 	<!-- 게시글 일부 수정 -->

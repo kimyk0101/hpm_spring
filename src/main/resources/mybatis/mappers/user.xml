@@ -17,8 +17,8 @@
  	<!-- 회원가입 -->
  	<insert id="registerUser" parameterType="UserVo">
  		INSERT INTO users
- 		(name, nickname, user_id, password, birth, phone_number, email, address)
- 		VALUES (#{name}, #{nickname}, #{user_id}, #{password}, #{birth}, #{phone_number}, #{email}, #{address})
+ 		(name, nickname, user_id, password, birth, phone_number, email, address, update_date)
+ 		VALUES (#{name}, #{nickname}, #{user_id}, #{password}, #{birth}, #{phone_number}, #{email}, #{address}, #{update_date})
  	</insert>
  
  	<!-- 로그인 -->
@@ -32,7 +32,7 @@
  	<update id="updateUserFields" parameterType="UserVo">
  		UPDATE users 
  		SET name=#{name}, nickname=#{nickname}, user_id=#{user_id}, password=#{password}, 
- 		birth=#{birth}, phone_number=#{phone_number}, email=#{email}, address=#{address}
+ 		birth=#{birth}, phone_number=#{phone_number}, email=#{email}, address=#{address}, update_date=#{update_date}
  		WHERE id=#{id}
  	</update>
  

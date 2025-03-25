@@ -1,5 +1,6 @@
 package himedia.hpm_spring.service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -74,7 +75,7 @@ public class UserService {
 				user.setPassword((String) value);
 				break;
 			case "birth":
-				user.setBirth((String) value);
+				user.setBirth((Date) value);
 				break;
 			case "phone_number":
 				user.setPhone_number((String) value);

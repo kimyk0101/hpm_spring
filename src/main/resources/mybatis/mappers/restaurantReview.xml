@@ -19,18 +19,18 @@
 	
 	<!-- 사용자의 맛집 리뷰 게시글 조회 -->
 	<select id="retrieveMyReviews" parameterType="Long" resultType="RestaurantReviewVo">
-	SELECT id, title, upload_date FROM restaurants WHERE users_id=#{users_id}
+	SELECT id, title, update_date FROM restaurants WHERE users_id=#{users_id}
 	</select>
 	
 	<!-- 맛집 리뷰 게시글 작성 -->
 	<insert id="createReview" parameterType="RestaurantReviewVo">
     INSERT INTO restaurants (
         name, location, course, level, category_code, 
-        title, content, upload_date, users_id, mountains_id
+        title, content, update_date, users_id, mountains_id
     )
     VALUES (
         #{name}, #{location}, #{course}, #{level}, #{category_code}, 
-        #{title}, #{content}, #{upload_date}, 
+        #{title}, #{content}, #{update_date}, 
         (SELECT id FROM users WHERE users_id = #{users_id}), 
         (SELECT id FROM mountains WHERE mountains_id = #{mountains_id})
     )

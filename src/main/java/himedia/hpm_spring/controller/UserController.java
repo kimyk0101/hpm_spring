@@ -102,7 +102,7 @@ public class UserController {
     
     // GET : /api/users/check-userId?userId=입력값 -> 아이디 중복 체크
     @GetMapping("/check-userId")
-    @CrossOrigin(origins = "http://localhost:5173")  // 프론트엔드 주소
+//    @CrossOrigin(origins = "http://localhost:5173")  // 프론트엔드 주소
     public ResponseEntity<Boolean> checkUserId(@RequestParam String userId) {
         try {
             boolean isAvailable = userService.isUserIdAvailable(userId);
