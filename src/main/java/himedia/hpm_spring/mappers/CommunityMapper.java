@@ -24,6 +24,6 @@ public interface CommunityMapper {
 //	<update id="replaceCommunity" parameterType="CommunityVo">	//	기존 게시글 전체 수정
 //	int replaceCommunity(CommunityVo community);
 	
-//	<delete id="deleteCommunity" parameterType="Long">	//	게시글 삭제
-	int deleteCommunity(Long id);
+//	<delete id="deleteCommunity" parameterType="Map">	//	게시글 삭제
+	int deleteCommunity(Long id, Long usersId);
 }

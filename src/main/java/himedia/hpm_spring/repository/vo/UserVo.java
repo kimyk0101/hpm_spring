@@ -25,6 +25,7 @@ public class UserVo {
 	@JsonProperty("user_id")
 	private String userId;			//	아이디
 	private String password;		//	비밀번호
+	
 	// 날짜 선택 시 시간대 오차 발생 떄문에 타임존 명시 
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
 	private Date birth;				//	생년월일
@@ -36,4 +37,5 @@ public class UserVo {
 	
 	@JsonProperty("update_date")
 	private Date updateDate;		//	갱신 시간
+	//	TODO: Date -> LocalDateTime 변경
 }
