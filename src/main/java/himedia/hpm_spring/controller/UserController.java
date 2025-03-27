@@ -1,5 +1,6 @@
 package himedia.hpm_spring.controller;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
@@ -80,14 +81,16 @@ public class UserController {
     // PATCH : /api/users/{id} -> 기존 유저 정보 수정
     @PatchMapping("/{id}")
     public ResponseEntity<UserVo> updateUserFields(@RequestBody Map<String, Object> updates, @PathVariable Long id) {
-        UserVo updatedUser = userService.updateUserFields(id, updates);
+    	// 업데이트 날짜를 DB에 저장하기 위해 백엔드에서 직접 추가 
+    	updates.put("update_date", java.sql.Date.valueOf(LocalDate.now()));
+    	UserVo updatedUser = userService.updateUserFields(id, updates);
         return ResponseEntity.ok(updatedUser);
     }
 
     // DELETE : /api/users/{id} -> 기존 유저 삭제
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
-        userService.deleteUser(id);
+    	userService.deleteUser(id);
         return ResponseEntity.ok().<Void>build();
     }
 

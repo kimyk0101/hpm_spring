@@ -2,6 +2,7 @@ package himedia.hpm_spring.repository.vo;
 
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import lombok.AllArgsConstructor;
@@ -24,6 +25,8 @@ public class UserVo {
 	@JsonProperty("user_id")
 	private String userId;			//	아이디
 	private String password;		//	비밀번호
+	// 날짜 선택 시 시간대 오차 발생 떄문에 타임존 명시 
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
 	private Date birth;				//	생년월일
 	
 	@JsonProperty("phone_number")

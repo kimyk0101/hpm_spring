@@ -1,5 +1,7 @@
 package himedia.hpm_spring.service;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -78,7 +80,18 @@ public class UserService {
 				user.setPassword((String) value);
 				break;
 			case "birth":
-				user.setBirth((Date) value);
+				 try {
+					 	// 리액트에서 생년월일 문자열 받아오기 
+				        String birthStr = (String) value;
+				        // 날짜 형식 지정자 생성
+				        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+				        // 문자열을 Date 객체로 변환
+				        Date birthDate = sdf.parse(birthStr); 
+				        user.setBirth(birthDate);
+				    } catch (ParseException e) {
+				    	// 날짜 포맷이 잘못된 경우 예외 처리 
+				        throw new IllegalArgumentException("Invalid date format for birth", e);
+				    }
 				break;
 			case "phone_number":
 				user.setPhoneNumber((String) value);
