@@ -31,9 +31,6 @@ public class CommunityService {
 
 	// 게시글 생성
 	public CommunityVo createCommunity(CommunityVo community) {
-		// userId를 커뮤니티 객체에 설정
-//		community.setUsersId(usersId);
-
 		// 게시글 생성
 		communityMapper.createCommunity(community);
 

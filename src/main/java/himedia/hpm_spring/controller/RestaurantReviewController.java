@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import himedia.hpm_spring.repository.vo.RestaurantReviewVo;
-import himedia.hpm_spring.repository.vo.ReviewVo;
+import himedia.hpm_spring.repository.vo.MountainReviewVo;
 import himedia.hpm_spring.service.RestaurantReviewService;
 
 @RestController
@@ -22,33 +22,33 @@ import himedia.hpm_spring.service.RestaurantReviewService;
 public class RestaurantReviewController {
 
 	@Autowired
-    private RestaurantReviewService restaurantReviewService;
+    private RestaurantReviewService rReviewService;
     
     // GET : /api/restaurant-reviews -> 모든 맛집 리뷰 게시글 조회
     @GetMapping
     public ResponseEntity<List<RestaurantReviewVo>> retrieveAllReviews() {
-        List<RestaurantReviewVo> reviews = restaurantReviewService.retrieveAllReviews();
+        List<RestaurantReviewVo> reviews = rReviewService.retrieveAllReviews();
         return ResponseEntity.ok(reviews);
     }
     
     // GET : /api/restaurant-reviews/{id} -> 특정 맛집 리뷰 게시글 조회
     @GetMapping("/{id}")
     public ResponseEntity<RestaurantReviewVo> retrieveReviewById(@PathVariable Long id) {
-    	RestaurantReviewVo review = restaurantReviewService.retrieveReviewById(id);
+    	RestaurantReviewVo review = rReviewService.retrieveReviewById(id);
         return ResponseEntity.ok(review);
     }
     
     // GET : /api/restaurant-reviews/my/{id} -> 사용자의 맛집 리뷰 게시글 조회
     @GetMapping("/my/{id}")
     public ResponseEntity<List<RestaurantReviewVo>> retrieveMyReviews(@PathVariable Long id) {
-        List<RestaurantReviewVo> reviews = restaurantReviewService.retrieveMyReviews(id);
+        List<RestaurantReviewVo> reviews = rReviewService.retrieveMyReviews(id);
         return ResponseEntity.ok(reviews);
     }
         
     // POST : /api/restaurant-reviews -> 맛집 리뷰 게시글 생성
     @PostMapping
     public ResponseEntity<RestaurantReviewVo> createReview(@RequestBody RestaurantReviewVo review) {
-    	RestaurantReviewVo savedReview = restaurantReviewService.createReview(review);
+    	RestaurantReviewVo savedReview = rReviewService.createReview(review);
         return ResponseEntity.ok(savedReview);
     }
 
@@ -56,7 +56,7 @@ public class RestaurantReviewController {
     @PatchMapping("/{id}")
     public ResponseEntity<RestaurantReviewVo> updateReview(@RequestBody RestaurantReviewVo review, @PathVariable Long id) {
         review.setId(id);
-        RestaurantReviewVo updatedReview = restaurantReviewService.updateReview(review);
+        RestaurantReviewVo updatedReview = rReviewService.updateReview(review);
         return ResponseEntity.ok(updatedReview);
     }
     
@@ -64,14 +64,14 @@ public class RestaurantReviewController {
 //    @PutMapping("/{id}")
 //    public ResponseEntity<RestaurantReviewVo> replaceReview(@RequestBody RestaurantReviewVo review, @PathVariable Long id) {
 //        review.setId(id);
-//        RestaurantReviewVo updatedReview = restaurantReviewService.replaceCommunity(review);
+//        RestaurantReviewVo updatedReview = rReviewService.replaceCommunity(review);
 //        return ResponseEntity.ok(updatedReview);
 //    }
     
     // DELETE : /api/restaurant-reviews/{id} -> 맛집 리뷰 게시글 삭제
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteReview(@PathVariable Long id) {
-    	restaurantReviewService.deleteReview(id);
+    	rReviewService.deleteReview(id);
         return ResponseEntity.ok().<Void>build();
     }
 }

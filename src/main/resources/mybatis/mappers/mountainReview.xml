@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="himedia.hpm_spring.mappers.MountainReviewMapper">
+	<resultMap id="mReviewResultMap" type="himedia.hpm_spring.repository.vo.MountainReviewVo">
+    	<result property="id" column="id"/>
+    	<result property="name" column="name"/>
+    	<result property="nickname" column="nickname"/>
+    	<result property="location" column="location"/>
+    	<result property="course" column="course"/>
+    	<result property="level" column="level"/>
+   	 	<result property="title" column="title"/>
+    	<result property="content" column="content"/>
+    	<result property="updateDate" column="update_date"/>
+    	<result property="usersId" column="users_id"/>
+    	<result property="mountainsId" column="mountains_id"/>
+	</resultMap>
+
+	<!-- 전체 리뷰 게시글 조회 -->
+	<select id="retrieveAllReviews" resultMap="mReviewResultMap">
+	SELECT reviews.*, users.nickname FROM reviews JOIN users 
+	WHERE reviews.users_id = users.id 
+	ORDER BY reviews.id DESC
+	</select>
+	
+	<!-- 특정 리뷰 게시글 조회 -->
+	<select id="retrieveReviewById" parameterType="Long" resultMap="mReviewResultMap">
+	SELECT reviews.*, users.nickname FROM reviews JOIN users 
+	WHERE reviews.id=#{id} AND reviews.users_id = users.id
+	</select>
+	
+	<!-- 사용자의 리뷰 게시글 조회 -->
+	<select id="retrieveMyReviews" parameterType="Long" resultMap="mReviewResultMap">
+	SELECT id, title, update_date FROM reviews WHERE users_id=#{usersId}
+	</select>
+	
+	<!-- 리뷰 게시글 작성 -->
+	<insert id="createReview" parameterType="mReviewVo">
+    INSERT INTO reviews (name, location, course, level, title, content, update_date, users_id, mountains_id)
+    VALUES (#{name}, #{location}, #{course}, #{level}, #{title}, #{content}, #{updateDate}, #{usersId}, #{mountainsId})
+	</insert>
+	
+	<!-- 리뷰 게시글 일부 수정 -->
+	<update id="updateReview" parameterType="mReviewVo">
+	UPDATE reviews SET
+	name=#{name}, location=#{location}, course=#{course}, level=#{level}, title=#{title}, content=#{content}
+	WHERE id=#{id}
+	</update>
+	
+	<!-- 기존 리뷰 게시글 전체 수정 -->
+	<!-- 
+	<update id="replaceReview" parameterType="mReviewVo">
+	UPDATE reviews SET
+	name=#{name}, location=#{location}, course=#{course}, level=#{level}, title=#{title}, content=#{content}
+	WHERE id=#{id}
+	</update>
+	 -->
+
+	<!-- 리뷰 게시글 삭제 -->
+	<delete id="deleteReview" parameterType="Map">
+	DELETE FROM reviews 
+	WHERE id=#{id} AND users_id = #{usersId}
+	</delete>
+</mapper>

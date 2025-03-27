@@ -12,40 +12,40 @@ import himedia.hpm_spring.repository.vo.RestaurantReviewVo;
 public class RestaurantReviewService {
 
     @Autowired
-    private RestaurantReviewMapper restaurantReviewMapper;
+    private RestaurantReviewMapper rReviewMapper;
 
     // 모든 맛집 리뷰 게시글 조회
     public List<RestaurantReviewVo> retrieveAllReviews() {
-        return restaurantReviewMapper.retrieveAllReviews();
+        return rReviewMapper.retrieveAllReviews();
     }
 
     // 특정 맛집 리뷰 게시글 조회
     public RestaurantReviewVo retrieveReviewById(Long id) {
-        return restaurantReviewMapper.retrieveReviewById(id);
+        return rReviewMapper.retrieveReviewById(id);
     }
 
     // 사용자의 맛집 리뷰 게시글 조회
     public List<RestaurantReviewVo> retrieveMyReviews(Long id) {
-        return restaurantReviewMapper.retrieveMyReviews(id);
+        return rReviewMapper.retrieveMyReviews(id);
     }
 
     // 맛집 리뷰 게시글 생성
     public RestaurantReviewVo createReview(RestaurantReviewVo review) {
         // 맛집 리뷰 게시글 생성
-    	restaurantReviewMapper.createReview(review);
+    	rReviewMapper.createReview(review);
 
         // 생성된 맛집 리뷰 게시글의 ID를 이용해 리뷰 게시글을 다시 조회하여 반환
         Long id = review.getId();
-        return restaurantReviewMapper.retrieveReviewById(id);
+        return rReviewMapper.retrieveReviewById(id);
     }
 
     // 맛집 리뷰 게시글 일부 수정 (PATCH)
     public RestaurantReviewVo updateReview(RestaurantReviewVo review) {
         // 맛집 리뷰 업데이트 (일부 필드 수정)
-        int updatedRows = restaurantReviewMapper.updateReview(review);
+        int updatedRows = rReviewMapper.updateReview(review);
         
         if (updatedRows > 0) {
-            return restaurantReviewMapper.retrieveReviewById(review.getId());
+            return rReviewMapper.retrieveReviewById(review.getId());
         } else {
             throw new RuntimeException("Failed to update restaurantReview");
         }
@@ -54,10 +54,10 @@ public class RestaurantReviewService {
     // 맛집 리뷰 게시글 전체 수정 (PUT)
 //    public RestaurantReviewVo replaceReview(RestaurantReviewVo review) {
 //        // 리뷰 게시글 전체 수정
-//        int updatedRows = restaurantReviewMapper.replaceReview(review);
+//        int updatedRows = rReviewMapper.replaceReview(review);
 //        
 //        if (updatedRows > 0) {
-//            return restaurantReviewMapper.retrieveReviewById(review.getId());
+//            return rReviewMapper.retrieveReviewById(review.getId());
 //        } else {
 //            throw new RuntimeException("Failed to replace restaurantReview");
 //        }
@@ -65,7 +65,7 @@ public class RestaurantReviewService {
 
     // 맛집 리뷰 게시글 삭제
     public void deleteReview(Long id) {
-        int deletedRows = restaurantReviewMapper.deleteReview(id);
+        int deletedRows = rReviewMapper.deleteReview(id);
         if (deletedRows == 0) {
             throw new RuntimeException("Failed to delete restaurantReview with ID: " + id);
         }

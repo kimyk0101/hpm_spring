@@ -7,14 +7,14 @@
 	<typeAliases>
 		<typeAlias alias="UserVo" type="himedia.hpm_spring.repository.vo.UserVo" />
 		<typeAlias alias="CommunityVo" type="himedia.hpm_spring.repository.vo.CommunityVo" />
-		<typeAlias alias="ReviewVo" type="himedia.hpm_spring.repository.vo.ReviewVo"/>
-		<typeAlias alias="RestaurantReviewVo" type="himedia.hpm_spring.repository.vo.RestaurantReviewVo"/>
+		<typeAlias alias="mReviewVo" type="himedia.hpm_spring.repository.vo.MountainReviewVo"/>
+		<typeAlias alias="rReviewVo" type="himedia.hpm_spring.repository.vo.RestaurantReviewVo"/>
 	</typeAliases>
 	
 	<mappers>
 		<mapper resource="mybatis/mappers/user.xml" />
 		<mapper resource="mybatis/mappers/community.xml" />
-		<mapper resource="mybatis/mappers/review.xml" />
+		<mapper resource="mybatis/mappers/mountainReview.xml" />
 		<mapper resource="mybatis/mappers/restaurantReview.xml" />
 	</mappers>
 	
