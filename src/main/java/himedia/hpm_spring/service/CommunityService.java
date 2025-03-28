@@ -28,6 +28,11 @@ public class CommunityService {
 	public List<CommunityVo> retrieveMyCommunities(Long id) {
 		return communityMapper.retrieveMyCommunities(id);
 	}
+	
+	// [경민] 키워드 기반 게시글 조회 
+	public List<CommunityVo> retrieveCommunitiesByKeyword(String keyword) {
+		return communityMapper.retrieveCommunitiesByKeyword(keyword);
+	}
 
 	// 게시글 생성
 	public CommunityVo createCommunity(CommunityVo community) {

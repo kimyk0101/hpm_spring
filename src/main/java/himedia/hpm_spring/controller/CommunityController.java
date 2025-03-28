@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import himedia.hpm_spring.repository.vo.CommunityVo;
@@ -32,7 +33,7 @@ public class CommunityController {
 		List<CommunityVo> communities = communityService.retrieveAllCommunities();
 		return ResponseEntity.ok(communities);
 	}
-
+	
 	// GET : /api/communities/{id} -> 특정 게시글 조회
 	@GetMapping("/{id}")
 	public ResponseEntity<CommunityVo> retrieveCommunityById(@PathVariable Long id) {
@@ -46,7 +47,14 @@ public class CommunityController {
 		List<CommunityVo> communities = communityService.retrieveMyCommunities(id);
 		return ResponseEntity.ok(communities);
 	}
-
+	
+	// [경민] GET : /api/communities/search?q=#{keyword} -> 키워드 기반 게시글 조회
+		@GetMapping("/search")
+		public ResponseEntity<List<CommunityVo>> retrieveCommunitiesByKeyword(@RequestParam("q") String keyword) {
+			List<CommunityVo> results = communityService.retrieveCommunitiesByKeyword(keyword);
+			return ResponseEntity.ok(results);
+		}
+	
 	// POST : /api/communities/ -> 게시글 생성
 	@PostMapping
 	public ResponseEntity<CommunityVo> createCommunity(@RequestBody CommunityVo community) {
