@@ -3,44 +3,47 @@
 	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 	
 <mapper namespace="himedia.hpm_spring.mappers.RestaurantReviewMapper">
+	<resultMap id="rReviewResultMap" type="himedia.hpm_spring.repository.vo.RestaurantReviewVo">
+    	<result property="id" column="id"/>
+    	<result property="name" column="name"/>
+    	<result property="nickname" column="nickname"/>
+    	<result property="location" column="location"/>
+    	<result property="rate" column="rate"/>
+   	 	<result property="title" column="title"/>
+    	<result property="content" column="content"/>
+    	<result property="updateDate" column="update_date"/>
+    	<result property="usersId" column="users_id"/>
+    	<!-- result property="mountainsId" column="mountains_id"/ -->
+	</resultMap>
 
 	<!-- 전체 맛집 리뷰 게시글 조회 -->
-	<select id="retrieveAllReviews" resultType="rReviewVo">
+	<select id="retrieveAllReviews" resultMap="rReviewResultMap">
 	SELECT restaurants.*, users.nickname FROM restaurants JOIN users 
 	WHERE restaurants.users_id = users.id 
 	ORDER BY restaurants.id DESC
 	</select>
 	
 	<!-- 특정 맛집 리뷰 게시글 조회 -->
-	<select id="retrieveReviewById" parameterType="Long" resultType="rReviewVo">
+	<select id="retrieveReviewById" parameterType="Long" resultMap="rReviewResultMap">
 	SELECT restaurants.*, users.nickname FROM restaurants JOIN users 
 	WHERE restaurants.id=#{id} AND restaurants.users_id = users.id
 	</select>
 	
 	<!-- 사용자의 맛집 리뷰 게시글 조회 -->
-	<select id="retrieveMyReviews" parameterType="Long" resultType="rReviewVo">
-	SELECT id, title, update_date FROM restaurants WHERE users_id=#{users_id}
+	<select id="retrieveMyReviews" parameterType="Long" resultMap="rReviewResultMap">
+	SELECT id, title, update_date FROM restaurants WHERE users_id=#{usersId}
 	</select>
 	
 	<!-- 맛집 리뷰 게시글 작성 -->
 	<insert id="createReview" parameterType="rReviewVo">
-    INSERT INTO restaurants (
-        name, location, course, level,
-        title, content, update_date, users_id, mountains_id
-    )
-    VALUES (
-        #{name}, #{location}, #{course}, #{level}, 
-        #{title}, #{content}, #{update_date}, 
-        (SELECT id FROM users WHERE users_id = #{users_id}), 
-        (SELECT id FROM mountains WHERE mountains_id = #{mountains_id})
-    )
-</insert>
+    INSERT INTO restaurants (name, location, rate, title, content, update_date, users_id)
+    VALUES (#{name}, #{location}, #{rate}, #{title}, #{content}, #{updateDate}, #{usersId})
+	</insert>
 	
 	<!-- 맛집 리뷰 게시글 일부 수정 -->
 	<update id="updateReview" parameterType="rReviewVo">
 	UPDATE restaurants SET
-	name=#{name}, location=#{location}, course=#{course}, level=#{level}, 
-	 title=#{title}, content=#{content}
+	name=#{name}, location=#{location}, rate=#{rate}, title=#{title}, content=#{content}
 	WHERE id=#{id}
 	</update>
 	
@@ -56,6 +59,7 @@
 
 	<!-- 맛집 리뷰 게시글 삭제 -->
 	<delete id="deleteReview" parameterType="Long">
-	DELETE FROM restaurants WHERE id=#{id}
+	DELETE FROM restaurants 
+	WHERE id=#{id} AND users_id = #{usersId}
 	</delete>
 </mapper>

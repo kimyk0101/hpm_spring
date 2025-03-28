@@ -1,6 +1,7 @@
 package himedia.hpm_spring.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -70,8 +71,10 @@ public class RestaurantReviewController {
     
     // DELETE : /api/restaurant-reviews/{id} -> 맛집 리뷰 게시글 삭제
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteReview(@PathVariable Long id) {
-    	rReviewService.deleteReview(id);
+    public ResponseEntity<Void> deleteReview(@PathVariable Long id, @RequestBody Map<String, Long> requestBody) {
+    	Long usersId = requestBody.get("usersId"); // 클라이언트에서 전달받은 usersId
+    	
+    	rReviewService.deleteReview(id, usersId);
         return ResponseEntity.ok().<Void>build();
     }
 }

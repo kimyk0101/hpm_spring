@@ -64,10 +64,10 @@ public class RestaurantReviewService {
 //    }
 
     // 맛집 리뷰 게시글 삭제
-    public void deleteReview(Long id) {
-        int deletedRows = rReviewMapper.deleteReview(id);
+    public void deleteReview(Long id, Long usersId) {
+        int deletedRows = rReviewMapper.deleteReview(id, usersId);
         if (deletedRows == 0) {
-            throw new RuntimeException("Failed to delete restaurantReview with ID: " + id);
+            throw new RuntimeException("Failed to delete restaurantReview with ID: " + id + " for user ID: " + usersId);
         }
     }
 }
