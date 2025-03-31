@@ -1,6 +1,7 @@
 package himedia.hpm_spring.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,8 +29,8 @@ public class CommunityService {
 	public List<CommunityVo> retrieveMyCommunities(Long id) {
 		return communityMapper.retrieveMyCommunities(id);
 	}
-	
-	// [경민] 키워드 기반 게시글 조회 
+
+	// [경민] 키워드 기반 게시글 조회
 	public List<CommunityVo> retrieveCommunitiesByKeyword(String keyword) {
 		return communityMapper.retrieveCommunitiesByKeyword(keyword);
 	}
@@ -56,25 +57,19 @@ public class CommunityService {
 		}
 	}
 
-	// 게시글 전체 수정 (PUT)
-//    public CommunityVo replaceCommunity(CommunityVo community) {
-//        // 게시글 전체 수정
-//        int updatedRows = communityMapper.replaceCommunity(community);
-//        
-//        if (updatedRows > 0) {
-//            return communityMapper.retrieveCommunityById(community.getId());
-//        } else {
-//            throw new RuntimeException("Failed to replace community");
-//        }
-//    }
-
 	// 게시글 삭제
 	public void deleteCommunity(Long id, Long usersId) {
 		// 삭제 쿼리 실행 (usersId와 id 함께 비교)
-	    int deletedRows = communityMapper.deleteCommunity(id, usersId);
+		int deletedRows = communityMapper.deleteCommunity(id, usersId);
 
-	    if (deletedRows == 0) {
-	        throw new RuntimeException("Failed to delete community with ID: " + id + " for user ID: " + usersId);
-	    }
+		if (deletedRows == 0) {
+			throw new RuntimeException("Failed to delete community with ID: " + id + " for user ID: " + usersId);
+		}
 	}
+
+	// 조회수 증가 메서드
+	public void incrementViews(Long id) {
+		communityMapper.incrementViews(id); // Mapper 메서드 호출
+	}
+
 }

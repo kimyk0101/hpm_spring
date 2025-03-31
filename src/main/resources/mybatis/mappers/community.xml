@@ -10,6 +10,7 @@
     	<result property="content" column="content"/>
     	<result property="updateDate" column="update_date"/>
     	<result property="usersId" column="users_id"/>
+    	<result property="views" column="views"/>
 	</resultMap>
 
 	<!-- 전체 게시글 조회 -->
@@ -52,20 +53,18 @@
  	title=#{title}, content=#{content}
 	WHERE id=#{id}
 	</update>
-	
-	<!-- 기존 게시글 전체 수정 -->
-	<!-- 
-	<update id="replaceCommunity" parameterType="CommunityVo">
-	UPDATE communities SET
-	title=#{title}, content=#{content}
-	WHERE id=#{id}
-	</update>
-	 -->
 
 	<!-- 게시글 삭제 -->
 	<delete id="deleteCommunity" parameterType="Map">
   	DELETE FROM communities
   	WHERE id = #{id} AND users_id = #{usersId}
 	</delete>
+	
+	 <!-- 조회수 증가 -->
+    <update id="incrementViews" parameterType="Long">
+    UPDATE communities
+    SET views = views + 1
+    WHERE id = #{id}
+    </update>
 
 </mapper>

@@ -25,10 +25,10 @@ public interface CommunityMapper {
 		
 //	<update id="updateCommunity" parameterType="CommunityVo">	//	게시글 일부 수정
 	int updateCommunity(CommunityVo community);
-	
-//	<update id="replaceCommunity" parameterType="CommunityVo">	//	기존 게시글 전체 수정
-//	int replaceCommunity(CommunityVo community);
-	
+		
 //	<delete id="deleteCommunity" parameterType="Map">	//	게시글 삭제
 	int deleteCommunity(Long id, Long usersId);
+	
+//	<update id="incrementViews" parameterType="Long">	 //	조회수 증가 메서드
+    void incrementViews(Long id);	
 }
