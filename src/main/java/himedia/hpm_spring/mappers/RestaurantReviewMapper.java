@@ -21,9 +21,9 @@ public interface RestaurantReviewMapper {
 //	<update id="updateReview" parameterType="rReviewVo">	//	맛집 리뷰 게시글 일부 수정
 	int updateReview(RestaurantReviewVo review);
 	
-//	<update id="replaceReview" parameterType="rReviewVo">	//	기존 맛집 리뷰 게시글 전체 수정
-//	int replaceReview(rReviewVo review);
-	
 //	<delete id="deleteReview" parameterType="Map">	//	맛집 리뷰 게시글 삭제
 	int deleteReview(Long id, Long usersId);
+	
+//	<update id="incrementViews" parameterType="Long">	 //	조회수 증가 메서드
+    void incrementViews(Long id);
 }

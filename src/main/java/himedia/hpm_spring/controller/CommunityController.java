@@ -31,19 +31,11 @@ public class CommunityController {
 	private CommunityService communityService;
 
 	// GET : /api/communities -> 모든 커뮤니티 게시글 조회
-//	@GetMapping
-//	public ResponseEntity<List<CommunityVo>> retrieveAllCommunities() {
-//		List<CommunityVo> communities = communityService.retrieveAllCommunities();
-//		return ResponseEntity.ok(communities);
-//	}
-	private static final Logger logger = LoggerFactory.getLogger(CommunityController.class);
-
-    @GetMapping
-    public List<CommunityVo> getCommunities() {
-        List<CommunityVo> communities = communityService.retrieveAllCommunities();
-        communities.forEach(community -> logger.info("Update Date: {}", community.getUpdateDate()));
-        return communities;
-    }
+	@GetMapping
+	public ResponseEntity<List<CommunityVo>> retrieveAllCommunities() {
+		List<CommunityVo> communities = communityService.retrieveAllCommunities();
+		return ResponseEntity.ok(communities);
+	}
 	
 	// GET : /api/communities/{id} -> 특정 게시글 조회
 	@GetMapping("/{id}")

@@ -51,18 +51,6 @@ public class RestaurantReviewService {
         }
     }
 
-    // 맛집 리뷰 게시글 전체 수정 (PUT)
-//    public RestaurantReviewVo replaceReview(RestaurantReviewVo review) {
-//        // 리뷰 게시글 전체 수정
-//        int updatedRows = rReviewMapper.replaceReview(review);
-//        
-//        if (updatedRows > 0) {
-//            return rReviewMapper.retrieveReviewById(review.getId());
-//        } else {
-//            throw new RuntimeException("Failed to replace restaurantReview");
-//        }
-//    }
-
     // 맛집 리뷰 게시글 삭제
     public void deleteReview(Long id, Long usersId) {
         int deletedRows = rReviewMapper.deleteReview(id, usersId);
@@ -70,4 +58,9 @@ public class RestaurantReviewService {
             throw new RuntimeException("Failed to delete restaurantReview with ID: " + id + " for user ID: " + usersId);
         }
     }
+    
+	// 조회수 증가 메서드
+	public void incrementViews(Long id) {
+		rReviewMapper.incrementViews(id); 
+	}
 }

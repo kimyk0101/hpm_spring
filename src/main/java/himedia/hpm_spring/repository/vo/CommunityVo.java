@@ -30,5 +30,5 @@ public class CommunityVo {
 	@JsonProperty("users_id")
 	private Long usersId;			//	게시글 작성자 아이디
 	
-	private Long views;				//	조회수
+	private Long views;				//	게시글 조회수
 }

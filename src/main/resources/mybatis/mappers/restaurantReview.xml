@@ -13,6 +13,7 @@
     	<result property="content" column="content"/>
     	<result property="updateDate" column="update_date"/>
     	<result property="usersId" column="users_id"/>
+    	<result property="views" column="views"/>
     	<!-- result property="mountainsId" column="mountains_id"/ -->
 	</resultMap>
 
@@ -46,20 +47,17 @@
 	name=#{name}, location=#{location}, rate=#{rate}, title=#{title}, content=#{content}
 	WHERE id=#{id}
 	</update>
-	
-	<!-- 기존 맛집 리뷰 게시글 전체 수정 -->
-	<!-- 
-	<update id="replaceReview" parameterType="rReviewVo">
-	UPDATE restaurants SET
-	name=#{name}, location=#{location}, course=#{course}, level=#{level}, 
-	 title=#{title}, content=#{content}
-	WHERE id=#{id}
-	</update>
-	 -->
 
 	<!-- 맛집 리뷰 게시글 삭제 -->
 	<delete id="deleteReview" parameterType="Long">
 	DELETE FROM restaurants 
 	WHERE id=#{id} AND users_id = #{usersId}
 	</delete>
+	
+	<!-- 조회수 증가 -->
+    <update id="incrementViews" parameterType="Long">
+    UPDATE communities
+    SET views = views + 1
+    WHERE id = #{id}
+    </update>
 </mapper>

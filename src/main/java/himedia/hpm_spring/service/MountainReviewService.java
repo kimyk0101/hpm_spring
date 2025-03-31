@@ -51,18 +51,6 @@ public class MountainReviewService {
         }
     }
 
-    // 리뷰 게시글 전체 수정 (PUT)
-//    public ReviewVo replaceReview(ReviewVo review) {
-//        // 리뷰 게시글 전체 수정
-//        int updatedRows = mReviewMapper.replaceReview(review);
-//        
-//        if (updatedRows > 0) {
-//            return mReviewMapper.retrieveReviewById(review.getId());
-//        } else {
-//            throw new RuntimeException("Failed to replace review");
-//        }
-//    }
-
     // 리뷰 게시글 삭제
     public void deleteReview(Long id, Long usersId) {
         int deletedRows = mReviewMapper.deleteReview(id, usersId);
@@ -71,4 +59,9 @@ public class MountainReviewService {
             throw new RuntimeException("Failed to delete review with ID: " + id + " for user ID: " + usersId);
         }
     }
+    
+	// 조회수 증가 메서드
+	public void incrementViews(Long id) {
+		mReviewMapper.incrementViews(id); 
+	}
 }

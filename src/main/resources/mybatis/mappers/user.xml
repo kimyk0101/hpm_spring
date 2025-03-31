@@ -13,7 +13,7 @@
         <result property="phoneNumber" column="phone_number"/>
         <result property="email" column="email"/>
         <result property="address" column="address"/>
-        <result property="updateDate" column="update_date"/>
+        <result property="registerDate" column="register_date"/>
     </resultMap>
     
  	<!-- 전체 유저 조회 -->
@@ -29,8 +29,8 @@
  	<!-- 회원가입 -->
  	<insert id="registerUser" parameterType="UserVo">
  		INSERT INTO users
- 		(name, nickname, user_id, password, birth, phone_number, email, address, update_date)
- 		VALUES (#{name}, #{nickname}, #{userId}, #{password}, #{birth}, #{phoneNumber}, #{email}, #{address}, #{updateDate})
+ 		(name, nickname, user_id, password, birth, phone_number, email, address, register_date)
+ 		VALUES (#{name}, #{nickname}, #{userId}, #{password}, #{birth}, #{phoneNumber}, #{email}, #{address}, #{registerDate})
  	</insert>
  
  	<!-- 로그인 -->
@@ -43,7 +43,7 @@
  	<update id="updateUserFields" parameterType="UserVo">
  		UPDATE users 
  		SET name=#{name}, nickname=#{nickname}, user_id=#{userId}, password=#{password}, 
- 		birth=#{birth}, phone_number=#{phoneNumber}, email=#{email}, address=#{address}, update_date=#{updateDate}
+ 		birth=#{birth}, phone_number=#{phoneNumber}, email=#{email}, address=#{address}
  		WHERE id=#{id}
  	</update>
  

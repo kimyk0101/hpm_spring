@@ -2,6 +2,7 @@ package himedia.hpm_spring.service;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -99,8 +100,8 @@ public class UserService {
 			case "address":
 				user.setAddress((String) value);
 				break;
-			case "update_date":
-				user.setUpdateDate((Date) value);
+			case "register_date":
+				user.setRegisterDate((LocalDateTime) value);
 				break;
 			 default:
 	                throw new IllegalArgumentException("Invalid field name: " + key);

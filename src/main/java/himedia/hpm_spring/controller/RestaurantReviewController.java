@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -61,14 +62,6 @@ public class RestaurantReviewController {
         return ResponseEntity.ok(updatedReview);
     }
     
-    // PUT : /api/restaurant-reviews/{id} -> 기존 맛집 리뷰 게시글 전체 수정
-//    @PutMapping("/{id}")
-//    public ResponseEntity<RestaurantReviewVo> replaceReview(@RequestBody RestaurantReviewVo review, @PathVariable Long id) {
-//        review.setId(id);
-//        RestaurantReviewVo updatedReview = rReviewService.replaceCommunity(review);
-//        return ResponseEntity.ok(updatedReview);
-//    }
-    
     // DELETE : /api/restaurant-reviews/{id} -> 맛집 리뷰 게시글 삭제
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteReview(@PathVariable Long id, @RequestBody Map<String, Long> requestBody) {
@@ -76,5 +69,12 @@ public class RestaurantReviewController {
     	
     	rReviewService.deleteReview(id, usersId);
         return ResponseEntity.ok().<Void>build();
+    }
+    
+	//	PUT : /api/restaurant-reviews/{id}/increment-views -> 조회수
+    @PutMapping("/{id}/increment-views")
+    public ResponseEntity<Void> incrementViews(@PathVariable("id") Long id) {
+    	rReviewService.incrementViews(id);
+        return ResponseEntity.ok().build();
     }
 }

@@ -1,5 +1,6 @@
 package himedia.hpm_spring.repository.vo;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -35,7 +36,7 @@ public class UserVo {
 	private String email;			// 	이메일
 	private String address;			// 	주소
 	
-	@JsonProperty("update_date")
-	private Date updateDate;		//	갱신 시간
-	//	TODO: Date -> LocalDateTime 변경
+	@JsonProperty("register_date")
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	private LocalDateTime registerDate;		//	갱신 시간
 }

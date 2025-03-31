@@ -28,12 +28,14 @@ public class MountainReviewVo {
 	private String content;			// 	게시글 내용
 	
 	@JsonProperty("update_date")
-	@JsonFormat(pattern = "yyyy-MM-dd HH:mm")
-	private LocalDateTime updateDate;		//	게시글 게시시간
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	private LocalDateTime updateDate;	//	게시글 게시시간
 	
 	@JsonProperty("users_id")
-	private Long usersId;		//	게시글 작성자 아이디
+	private Long usersId;			//	게시글 작성자 아이디
 	
 	@JsonProperty("mountains_id")
-	private Long mountainsId;	//	산 고유번호
+	private Long mountainsId;		//	산 고유번호
+	
+	private Long views;				//	게시글 조회수
 }

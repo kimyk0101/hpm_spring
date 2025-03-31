@@ -21,9 +21,9 @@ public interface MountainReviewMapper {
 //	<update id="updateReview" parameterType="mReviewVo">	//	리뷰 게시글 일부 수정
 	int updateReview(MountainReviewVo review);
 	
-//	<update id="replaceReview" parameterType="mReviewVo">	//	기존 리뷰 게시글 전체 수정
-//	int replaceReview(mReviewVo review);
-	
 //	<delete id="deleteReview" parameterType="Map">	//	리뷰 게시글 삭제
 	int deleteReview(Long id, Long usersId);
+	
+//	<update id="incrementViews" parameterType="Long">	 //	조회수 증가 메서드
+    void incrementViews(Long id);
 }
