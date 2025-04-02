@@ -27,13 +27,17 @@ public class UserPhotoController {
 
     //	프로필 사진 업로드
     @PostMapping("/upload")
-    public ResponseEntity<String> uploadPhoto(@RequestParam("usersId") Integer userId, 
-                                              @RequestParam("photo") MultipartFile photo) throws IOException {
-    	
-		String filePath = userPhotoService.insertPhoto(userId, photo);
-		return ResponseEntity.ok("프로필 사진이 성공적으로 업로드되었습니다. 파일 경로: " + filePath);
+    public ResponseEntity<UserPhotoVo> uploadPhoto(@RequestParam("usersId") Integer userId, 
+                                                   @RequestParam("photo") MultipartFile photo) throws IOException {
+        
+        String filePath = userPhotoService.insertPhoto(userId, photo);
+
+        // 파일 저장 후 DB에서 다시 조회
+        UserPhotoVo photoVo = userPhotoService.selectPhotoByUserId(userId);
+
+        return ResponseEntity.ok(photoVo); // ✅ JSON 객체로 반환
     }
-    
+
     //	프로필 사진 조회
     @GetMapping("/view/{usersId}")
     public ResponseEntity<UserPhotoVo> viewPhoto(@PathVariable("usersId") int usersId) {
