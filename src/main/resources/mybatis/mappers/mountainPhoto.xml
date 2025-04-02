@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="himedia.hpm_spring.mappers.MountainPhotoMapper">
+
+	<!-- 등산후기 사진 업로드 -->
+    <insert id="insertPhoto" parameterType="MountainPhotoVo">
+        INSERT INTO mountain_photos (
+            file_name, file_path, update_date, mountains_id
+        )
+        VALUES (
+            #{fileName}, #{filePath}, #{updateDate}, #{mountainsId}
+        )
+    </insert>
+    
+
+	<!-- 해당 ID 등산후기 사진 조회 -->
+     <select id="selectAllPhotoByMountainId" parameterType="int" resultType="MountainPhotoVo">
+        SELECT 
+            id,
+            file_name as fileName,
+            file_path as filePath,
+            update_date as updateDate,
+            mountains_id as mountainsId
+        FROM 
+            mountain_photos
+        WHERE 
+            mountains_id = #{mountainsId}
+    </select> 
+
+	<!-- 해당 ID 등산후기 사진 삭제 -->
+    <delete id="deletePhotoByMountainId" parameterType="int">
+        DELETE FROM
+        	mountain_photos 
+        WHERE
+        	mountains_id = #{mountainsId}
+    </delete>
+
+</mapper>
