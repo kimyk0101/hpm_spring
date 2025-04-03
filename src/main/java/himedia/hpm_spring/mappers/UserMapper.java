@@ -26,4 +26,7 @@ public interface UserMapper {
 	
 //	<select id="countByUserId" parameterType="String" resultType="int">	//	아이디 중복체크
 	int countByUserId(String userId);
+	
+//	<select id="countByNickname" parameterType="String" resultType="int">	//	닉네임 중복체크
+	int countByNickname(String nickname);
 }

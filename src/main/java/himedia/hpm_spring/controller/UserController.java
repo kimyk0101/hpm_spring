@@ -113,6 +113,14 @@ public class UserController {
         boolean isTaken = userService.checkUserIdInDatabase(userId);
         return ResponseEntity.ok(isTaken);
     }
+    
+    // GET : /api/users/check-nickname/?nickname=입력된 값 -> 닉네임 중복 체크
+    @GetMapping("/check-nickname")
+    public ResponseEntity<Boolean> checkNickname(@RequestParam("nickname") String nickname) {
+        // 클라이언트에서 보낸 userId를 처리
+        boolean isTaken = userService.checkUserIdInDatabase(nickname);
+        return ResponseEntity.ok(isTaken);
+    }
 
 
 }

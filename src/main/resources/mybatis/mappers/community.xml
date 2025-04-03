@@ -11,13 +11,16 @@
     	<result property="updateDate" column="update_date"/>
     	<result property="usersId" column="users_id"/>
     	<result property="views" column="views"/>
+    	<result property="commentCount" column="comment_count"/>
 	</resultMap>
 
-	<!-- 전체 게시글 조회 -->
+	<!-- 전체 게시글 조회 + 댓글 수 -->
 	<select id="retrieveAllCommunities" resultMap="communityResultMap">
-	SELECT communities.*, users.nickname FROM communities JOIN users 
-	ON communities.users_id = users.id 
-	ORDER BY communities.id DESC
+    SELECT c.*, u.nickname, 
+           (SELECT COUNT(*) FROM community_comments cc WHERE cc.communities_id = c.id) AS comment_count
+    FROM communities c
+    JOIN users u ON c.users_id = u.id
+    ORDER BY c.id DESC
 	</select>
 	
 	<!-- 특정 게시글 조회 -->
@@ -66,5 +69,7 @@
     SET views = views + 1
     WHERE id = #{id}
     </update>
+    
+
 
 </mapper>

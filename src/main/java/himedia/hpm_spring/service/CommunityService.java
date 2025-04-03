@@ -71,5 +71,4 @@ public class CommunityService {
 	public void incrementViews(Long id) {
 		communityMapper.incrementViews(id); // Mapper 메서드 호출
 	}
-
 }

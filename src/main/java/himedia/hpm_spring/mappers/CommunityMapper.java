@@ -2,8 +2,6 @@ package himedia.hpm_spring.mappers;
 
 import java.util.List;
 
-import org.apache.ibatis.annotations.Param;
-
 import himedia.hpm_spring.repository.vo.CommunityVo;
 
 public interface CommunityMapper {

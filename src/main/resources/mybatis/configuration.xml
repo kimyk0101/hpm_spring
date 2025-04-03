@@ -14,6 +14,7 @@
 		<typeAlias alias="RestaurantPhotoVo" type="himedia.hpm_spring.repository.vo.RestaurantPhotoVo" />
 		<typeAlias alias="MountainPhotoVo" type="himedia.hpm_spring.repository.vo.MountainPhotoVo" />
 		<typeAlias alias="ReviewPhotoVo" type="himedia.hpm_spring.repository.vo.ReviewPhotoVo" />
+		<typeAlias alias="cCommentVo" type="himedia.hpm_spring.repository.vo.CommunityCommentVo"/>
 	</typeAliases>
 	
 	<mappers>
@@ -26,6 +27,7 @@
 		<mapper resource="mybatis/mappers/restaurantPhoto.xml" />
 		<mapper resource="mybatis/mappers/mountainPhoto.xml" />
 		<mapper resource="mybatis/mappers/reviewPhoto.xml" />
+		<mapper resource="mybatis/mappers/communityComment.xml" />
 	</mappers>
 	
 </configuration>

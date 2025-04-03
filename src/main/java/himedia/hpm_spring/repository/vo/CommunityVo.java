@@ -1,6 +1,7 @@
 package himedia.hpm_spring.repository.vo;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -31,4 +32,7 @@ public class CommunityVo {
 	private Long usersId;			//	게시글 작성자 아이디
 	
 	private Long views;				//	게시글 조회수
+	
+	@JsonProperty("comment_count")
+	private Long commentCount;		//	댓글 개수
 }

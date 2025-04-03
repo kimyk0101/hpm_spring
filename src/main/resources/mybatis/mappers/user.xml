@@ -56,6 +56,11 @@
  	<select id="countByUserId" parameterType="String" resultType="int">
         SELECT COUNT(*) FROM users WHERE user_id = #{userId}
     </select>
+    
+    <!-- 닉네임 중복 체크 -->
+ 	<select id="countByNickname" parameterType="String" resultType="int">
+        SELECT COUNT(*) FROM users WHERE nickname = #{nickname}
+    </select>
  	
  
  </mapper>

@@ -36,7 +36,7 @@ public class CommunityController {
 		List<CommunityVo> communities = communityService.retrieveAllCommunities();
 		return ResponseEntity.ok(communities);
 	}
-	
+
 	// GET : /api/communities/{id} -> 특정 게시글 조회
 	@GetMapping("/{id}")
 	public ResponseEntity<CommunityVo> retrieveCommunityById(@PathVariable Long id) {
@@ -58,7 +58,7 @@ public class CommunityController {
 			return ResponseEntity.ok(results);
 		}
 	
-	// POST : /api/communities/ -> 게시글 생성
+	// POST : /api/communities -> 게시글 생성
 	@PostMapping
 	public ResponseEntity<CommunityVo> createCommunity(@RequestBody CommunityVo community) {
 		 System.out.println("받은 데이터: " + community);
