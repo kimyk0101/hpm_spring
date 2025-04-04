@@ -44,7 +44,7 @@ public class UserPhotoService {
 	        Path newFilePath = uploadPath.resolve(fileName);
 	        Files.copy(photo.getInputStream(), newFilePath, StandardCopyOption.REPLACE_EXISTING);
 
-	        // 3. DB 업데이트
+	        // 3. PhotoVo 객체 생성 및 파일 정보 설정
 	        UserPhotoVo userPhotoVo = new UserPhotoVo();
 	        userPhotoVo.setUsersId(usersId);
 	        userPhotoVo.setFileName(fileName);

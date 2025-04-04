@@ -15,4 +15,10 @@ public interface CommunityPhotoMapper {
 //  <delete id="deletePhotoByCommunityId" parameterType="int">
     int deletePhotoByCommunityId(int communitiesId);
 
+//	<select id="findPhotoById" parameterType="int" resultType="com.example.model.CommunityPhoto">
+    CommunityPhotoVo findPhotoById(int photoId);
+
+//	<delete id="deletePhotoById" parameterType="int">
+    int deletePhotoById(int photoId);    
+    
 }

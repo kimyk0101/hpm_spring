@@ -18,6 +18,9 @@ public interface CommunityCommentMapper {
 //	<select id="findReplyById" parameterType="Long" resultMap="cCommentResultMap">	// 특정 대댓글 조회
     CommunityCommentVo findReplyById(Long id);
 
+//	<select id="retriveMyComments" parameterType="Long" resultType="cCommentResultMap">	// 사용자 댓글 + 대댓글 조회  
+    List<CommunityCommentVo> retrieveMyComments(Long id); 
+    
 //	<insert id="createComment" parameterType="cCommentVo">	// 댓글 생성
 	int createComment(CommunityCommentVo comment);
 

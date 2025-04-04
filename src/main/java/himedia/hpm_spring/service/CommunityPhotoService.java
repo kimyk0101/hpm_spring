@@ -73,5 +73,15 @@ public class CommunityPhotoService {
     public int deletePhotoByCommunityId(int communitiesId) {
         return communityPhotoMapper.deletePhotoByCommunityId(communitiesId);
     }
+    
+    //	특정 사진 조회
+    public CommunityPhotoVo findPhotoById(int photoId) {
+        return communityPhotoMapper.findPhotoById(photoId);
+    }
+    
+    //	특정 사진 삭제 
+    public int deletePhotoById(int photoId) {
+        return communityPhotoMapper.deletePhotoById(photoId);
+    }
 
 }

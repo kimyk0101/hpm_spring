@@ -35,6 +35,11 @@ public class CommunityCommentService {
         return cCommentMapper.findReplyById(id);
     }
     
+    // 사용자 댓글 + 대댓글 조회 
+    public List<CommunityCommentVo> retrieveMyComments(Long id) {
+    	return cCommentMapper.retrieveMyComments(id);
+    }
+    
 	// 댓글 추가
 	public CommunityCommentVo createComment(CommunityCommentVo comment) {
 		cCommentMapper.createComment(comment);

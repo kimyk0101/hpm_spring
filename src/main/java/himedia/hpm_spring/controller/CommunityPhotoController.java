@@ -1,5 +1,6 @@
 package himedia.hpm_spring.controller;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
@@ -44,7 +45,9 @@ public class CommunityPhotoController {
 
         // 파일 저장 후 DB에서 다시 조회
         List<CommunityPhotoVo> photoVo = communityPhotoService.selectAllPhotoByCommunityId(communitiesId);
-
+        System.out.println("✔️ 업로드된 커뮤니티 ID: " + communitiesId);
+        System.out.println("✔️ 파일 수: " + photos.length);
+        System.out.println("✔️ 저장된 경로 리스트: " + filePaths);
         return ResponseEntity.ok(photoVo); // JSON 객체로 반환
     }
     
@@ -67,7 +70,7 @@ public class CommunityPhotoController {
     }
 
     
-    //	communitysId로 사진 삭제
+    //	communitysId로 사진 삭제(모든 사진 삭제)  
     @DeleteMapping("/delete/{communitysId}")
     public ResponseEntity<?> deletePhoto(@PathVariable("communitysId") int communitysId) {
         try {
@@ -78,6 +81,52 @@ public class CommunityPhotoController {
             return ResponseEntity.ok("사진이 삭제되었습니다.");
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("사진 삭제 중 오류가 발생했습니다: " + e.getMessage());
+        }
+    }
+    
+    //	photoId로 사진 삭제(사진 개별 삭제)
+    @DeleteMapping("/delete/photo/{photoId}")
+    public ResponseEntity<?> deletePhotoById(@PathVariable("photoId") int photoId) {
+    	System.out.println("✅ [삭제 요청 들어옴] photoId = " + photoId);
+    	try {
+            CommunityPhotoVo photo = communityPhotoService.findPhotoById(photoId);
+            System.out.println("📸 photo 객체: " + photo); 
+            if (photo == null) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("해당 사진이 존재하지 않습니다.");
+            }
+
+            // 1️⃣ 서버에 저장된 실제 파일 삭제
+            String filePath = photo.getFilePath(); // 예: "/uploads/xxx.jpg"
+            if (filePath == null || filePath.isBlank()) {
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("파일 경로가 유효하지 않습니다.");
+            }
+
+            String absolutePath = "C:/home/user" + filePath;
+            File file = new File(absolutePath);
+
+            System.out.println("📂 삭제하려는 실제 경로: " + absolutePath);
+
+            if (file.exists()) {
+                if (file.delete()) {
+                    System.out.println("✅ 파일 삭제 성공!");
+                } else {
+                    System.out.println("⚠ 파일 삭제 실패!");
+                }
+            } else {
+                System.out.println("❌ 파일이 존재하지 않음: " + absolutePath);
+            }
+            // 2️⃣ DB에서 삭제
+            int result = communityPhotoService.deletePhotoById(photoId);
+            if (result == 0) {
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("DB 삭제 실패");
+            }
+
+            return ResponseEntity.ok("사진이 성공적으로 삭제되었습니다.");
+        } catch (Exception e) {
+        	e.printStackTrace(); // ✅ 콘솔에 에러 출력
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("삭제 중 오류 발생: " + e.getMessage());
         }
     }
     

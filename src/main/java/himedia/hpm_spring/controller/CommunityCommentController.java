@@ -52,6 +52,13 @@ public class CommunityCommentController {
         return ResponseEntity.ok(reply);
     }
     
+ // GET: /api/communities/comments/my/{id} -> 사용자가 작성한 댓글 + 대댓글 조회 
+    @GetMapping("/comments/my/{id}")
+    public ResponseEntity<List<CommunityCommentVo>> retrieveCommentsByUser(@PathVariable Long id) {
+        List<CommunityCommentVo> comments = cCommentService.retrieveMyComments(id);
+        return ResponseEntity.ok(comments);
+    }
+    
 	// POST : /api/communities/{communityId}/comments -> 댓글 생성
 	@PostMapping("/{communityId}/comments")
 	public ResponseEntity<CommunityCommentVo> createComment(@PathVariable Long communityId, @RequestBody CommunityCommentVo comment) {

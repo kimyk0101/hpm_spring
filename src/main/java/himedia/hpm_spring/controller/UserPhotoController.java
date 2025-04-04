@@ -25,7 +25,7 @@ public class UserPhotoController {
     @Autowired
     private UserPhotoService userPhotoService;
 
-    //	프로필 사진 업로드
+    //	프로필 사진 업로드(수정) 
     @PostMapping("/upload")
     public ResponseEntity<UserPhotoVo> uploadPhoto(@RequestParam("usersId") Integer userId, 
                                                    @RequestParam("photo") MultipartFile photo) throws IOException {
