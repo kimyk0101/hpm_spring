@@ -78,18 +78,18 @@ public class UserService {
 				user.setPassword((String) value);
 				break;
 			case "birth":
-				 try {
-					 	// 리액트에서 생년월일 문자열 받아오기 
-				        String birthStr = (String) value;
-				        // 날짜 형식 지정자 생성
-				        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-				        // 문자열을 Date 객체로 변환
-				        Date birthDate = sdf.parse(birthStr); 
-				        user.setBirth(birthDate);
-				    } catch (ParseException e) {
-				    	// 날짜 포맷이 잘못된 경우 예외 처리 
-				        throw new IllegalArgumentException("Invalid date format for birth", e);
-				    }
+				try {
+					// 리액트에서 생년월일 문자열 받아오기
+					String birthStr = (String) value;
+					// 날짜 형식 지정자 생성
+					SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+					// 문자열을 Date 객체로 변환
+					Date birthDate = sdf.parse(birthStr);
+					user.setBirth(birthDate);
+				} catch (ParseException e) {
+					// 날짜 포맷이 잘못된 경우 예외 처리
+					throw new IllegalArgumentException("Invalid date format for birth", e);
+				}
 				break;
 			case "phone_number":
 				user.setPhoneNumber((String) value);
@@ -103,15 +103,15 @@ public class UserService {
 			case "register_date":
 				user.setRegisterDate((LocalDateTime) value);
 				break;
-			 default:
-	                throw new IllegalArgumentException("Invalid field name: " + key);
+			default:
+				throw new IllegalArgumentException("Invalid field name: " + key);
 			}
-			
+
 		});
 		// 3️. 수정된 데이터를 저장
 		userMapper.updateUserFields(user);
 
-		// 4️. 업데이트된 유저 정보 반환 
+		// 4️. 업데이트된 유저 정보 반환
 		return user;
 	}
 
@@ -119,15 +119,15 @@ public class UserService {
 	public int deleteUser(Long id) {
 		return userMapper.deleteUser(id);
 	}
-	
-    // 아이디 중복 체크 메서드
-    public boolean checkUserIdInDatabase(String userId) {
-        // MyBatis에서 countByUserId를 호출하여 아이디 존재 여부를 확인
-        return userMapper.countByUserId(userId) == 0; // 0이면 사용 가능, 아니면 중복
-    }
-    
-    // 닉네임 중복 체크 메서드
-    public boolean checkNicknameInDatabase(String nickname) {
-        return userMapper.countByNickname(nickname) == 0; // 0이면 사용 가능, 아니면 중복
-    }
+
+	// 아이디 중복 체크 메서드
+	public boolean checkUserIdInDatabase(String userId) {
+		// MyBatis에서 countByUserId를 호출하여 아이디 존재 여부를 확인
+		return userMapper.countByUserId(userId) == 0; // 0이면 사용 가능, 아니면 중복
+	}
+
+	// 닉네임 중복 체크 메서드
+	public boolean checkNicknameInDatabase(String nickname) {
+		return userMapper.countByNickname(nickname) == 0; // 0이면 사용 가능, 아니면 중복
+	}
 }
