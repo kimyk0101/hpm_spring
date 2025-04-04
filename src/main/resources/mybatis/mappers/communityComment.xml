@@ -19,7 +19,7 @@
     FROM community_comments 
     JOIN users ON community_comments.users_id = users.id
     WHERE community_comments.communities_id = #{communityId}
-    ORDER BY COALESCE(community_comments.parent_id, community_comments.id) DESC, community_comments.update_date ASC;
+    ORDER BY community_comments.update_date ASC;
 	</select>
 
 	<!-- 특정 댓글 조회 -->

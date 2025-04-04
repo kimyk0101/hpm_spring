@@ -128,6 +128,6 @@ public class UserService {
     
     // 닉네임 중복 체크 메서드
     public boolean checkNicknameInDatabase(String nickname) {
-        return userMapper.countByUserId(nickname) == 0; // 0이면 사용 가능, 아니면 중복
+        return userMapper.countByNickname(nickname) == 0; // 0이면 사용 가능, 아니면 중복
     }
 }
