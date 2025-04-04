@@ -7,14 +7,15 @@
     	<result property="id" column="id"/>
     	<result property="name" column="name"/>
     	<result property="nickname" column="nickname"/>
+    	<result property="mountainName" column="mountain_name"/>
     	<result property="location" column="location"/>
     	<result property="rate" column="rate"/>
    	 	<result property="title" column="title"/>
     	<result property="content" column="content"/>
     	<result property="updateDate" column="update_date"/>
     	<result property="usersId" column="users_id"/>
+    	<result property="mountainsId" column="mountains_id"/>
     	<result property="views" column="views"/>
-    	<!-- result property="mountainsId" column="mountains_id"/ -->
 	</resultMap>
 
 	<!-- 전체 맛집 리뷰 게시글 조회 -->
@@ -37,14 +38,14 @@
 	
 	<!-- 맛집 리뷰 게시글 작성 -->
 	<insert id="createReview" parameterType="rReviewVo">
-    INSERT INTO restaurants (name, location, rate, title, content, update_date, users_id)
-    VALUES (#{name}, #{location}, #{rate}, #{title}, #{content}, #{updateDate}, #{usersId})
+    INSERT INTO restaurants (name, mountain_name, location, rate, title, content, update_date, users_id, mountains_id)
+    VALUES (#{name}, #{mountainName}, #{location}, #{rate}, #{title}, #{content}, #{updateDate}, #{usersId}, #{mountainsId})
 	</insert>
 	
 	<!-- 맛집 리뷰 게시글 일부 수정 -->
 	<update id="updateReview" parameterType="rReviewVo">
 	UPDATE restaurants SET
-	name=#{name}, location=#{location}, rate=#{rate}, title=#{title}, content=#{content}
+	name=#{name}, mountain_name=#{mountainName}, location=#{location}, rate=#{rate}, title=#{title}, content=#{content}
 	WHERE id=#{id}
 	</update>
 

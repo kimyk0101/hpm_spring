@@ -54,7 +54,7 @@ public class RestaurantReviewController {
         return ResponseEntity.ok(savedReview);
     }
 
-    // PATCH : /api/reviews/{id} -> 맛집 리뷰 게시글 일부 수정
+    // PATCH : /api/restaurant-reviews/{id} -> 맛집 리뷰 게시글 일부 수정
     @PatchMapping("/{id}")
     public ResponseEntity<RestaurantReviewVo> updateReview(@RequestBody RestaurantReviewVo review, @PathVariable Long id) {
         review.setId(id);

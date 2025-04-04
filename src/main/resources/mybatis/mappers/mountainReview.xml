@@ -8,13 +8,14 @@
     	<result property="name" column="name"/>
     	<result property="nickname" column="nickname"/>
     	<result property="location" column="location"/>
-    	<result property="course" column="course"/>
-    	<result property="level" column="level"/>
+    	<result property="courseName" column="course_name"/>
+    	<result property="difficultyLevel" column="difficulty_level"/>
    	 	<result property="title" column="title"/>
     	<result property="content" column="content"/>
     	<result property="updateDate" column="update_date"/>
     	<result property="usersId" column="users_id"/>
     	<result property="mountainsId" column="mountains_id"/>
+    	<result property="mountainCoursesId" column="mountain_courses_id"/>
     	<result property="views" column="views"/>
 	</resultMap>
 
@@ -38,14 +39,14 @@
 	
 	<!-- 리뷰 게시글 작성 -->
 	<insert id="createReview" parameterType="mReviewVo">
-    INSERT INTO reviews (name, location, course, level, title, content, update_date, users_id, mountains_id)
-    VALUES (#{name}, #{location}, #{course}, #{level}, #{title}, #{content}, #{updateDate}, #{usersId}, #{mountainsId})
+    INSERT INTO reviews (name, nickname, location, course_name, difficulty_level, title, content, update_date, users_id, mountains_id, mountain_courses_id)
+    VALUES (#{name}, #{nickname}, #{location}, #{courseName}, #{difficultyLevel}, #{title}, #{content}, #{updateDate}, #{usersId}, #{mountainsId}, #{mountainCoursesId})
 	</insert>
 	
 	<!-- 리뷰 게시글 일부 수정 -->
 	<update id="updateReview" parameterType="mReviewVo">
 	UPDATE reviews SET
-	name=#{name}, location=#{location}, course=#{course}, level=#{level}, title=#{title}, content=#{content}
+	name=#{name}, location=#{location}, course_name=#{courseName}, difficulty_level=#{difficultyLevel}, title=#{title}, content=#{content}
 	WHERE id=#{id}
 	</update>
 

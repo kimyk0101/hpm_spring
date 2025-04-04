@@ -126,6 +126,4 @@ public class CommunityCommentController {
 	    cCommentService.deleteReply(replyId, usersId);
 	    return ResponseEntity.ok().<Void>build();
 	}
-	
-	
 }
