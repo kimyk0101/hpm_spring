@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="himedia.hpm_spring.mappers.MountainsMapper">
+
+    <select id="selectAllMountains" resultType="MountainsVo">
+        SELECT 
+            id, 
+            name, 
+            location, 
+            longitude, 
+            latitude, 
+            height, 
+            selection_reason, 
+            transportation_info 
+        FROM 
+            mountains;
+    </select>
+
+    <select id="selectMountainById" resultType="MountainsVo">
+        SELECT 
+            id, 
+            name, 
+            location, 
+            longitude, 
+            latitude, 
+            height, 
+            selection_reason, 
+            transportation_info 
+        FROM 
+            mountains
+        WHERE 
+            id = #{id};
+    </select>
+
+    <select id="selectMountainsByLocation" resultType="MountainsVo">
+        SELECT 
+            id, 
+            name, 
+            location, 
+            longitude, 
+            latitude, 
+            height, 
+            selection_reason, 
+            transportation_info 
+        FROM 
+            mountains
+        WHERE 
+            location LIKE #{location};
+    </select>
+
+    <select id="selectMountainsByHeight" resultType="MountainsVo">
+        SELECT 
+            id, 
+            name, 
+            location, 
+            longitude, 
+            latitude, 
+            height, 
+            selection_reason, 
+            transportation_info 
+        FROM 
+            mountains
+        WHERE 
+            height > #{height};
+    </select>
+
+</mapper>
