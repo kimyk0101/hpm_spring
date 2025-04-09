@@ -15,4 +15,4 @@ ENV SPRING_DATASOURCE_URL=jdbc:mysql://localhost:3306/hpmdb
 EXPOSE 8088
 
 # 6. 컨테이너 실행될 때 JAR 실행
-ENTRYPOINT ["java", "-jar", "/app/hpm_srping.jar"]
+ENTRYPOINT ["java", "-jar", "/app/hpm_spring.jar"]
