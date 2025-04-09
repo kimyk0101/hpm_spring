@@ -32,8 +32,8 @@
         WHERE 
             id = #{id};
     </select>
-
-    <select id="selectMountainsByLocation" resultType="MountainsVo">
+    
+    <select id="selectMountainByName" resultType="MountainsVo">
         SELECT 
             id, 
             name, 
@@ -46,23 +46,25 @@
         FROM 
             mountains
         WHERE 
-            location LIKE #{location};
+            name = #{name};
     </select>
+        
 
-    <select id="selectMountainsByHeight" resultType="MountainsVo">
-        SELECT 
-            id, 
-            name, 
-            location, 
-            longitude, 
-            latitude, 
-            height, 
-            selection_reason, 
-            transportation_info 
-        FROM 
-            mountains
-        WHERE 
-            height > #{height};
-    </select>
+	<select id="searchMountains" resultType="MountainsVo">
+    SELECT 
+        id, 
+        name, 
+        location, 
+        longitude, 
+        latitude, 
+        height, 
+        selection_reason, 
+        transportation_info 
+    FROM 
+        mountains
+    WHERE 
+        name LIKE CONCAT('%', #{keyword}, '%') 
+        OR location LIKE CONCAT('%', #{keyword}, '%');
+</select>
 
 </mapper>

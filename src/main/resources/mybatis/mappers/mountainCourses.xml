@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+	namespace="himedia.hpm_spring.mappers.MountainCoursesMapper">
+
+	<select id="findByMountainId" resultType="MountainCoursesVo">
+		SELECT
+		id,
+		course_name,
+		difficulty_level,
+		course_time,
+		course_length,
+		mountains_id
+		FROM mountain_courses
+		WHERE mountains_id = #{mountainId}
+	</select>
+</mapper>

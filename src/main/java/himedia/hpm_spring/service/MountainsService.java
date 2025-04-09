@@ -19,18 +19,24 @@ public class MountainsService {
         return mountainsMapper.selectAllMountains();
     }
 
-    // 특정 산 정보 조회
+    // 특정 산 정보 조회 (id)
     public MountainsVo retrieveMountainById(Long id) {
         return mountainsMapper.selectMountainById(id);
     }
-
-    // 특정 지역의 산 정보 조회
-    public List<MountainsVo> retrieveMountainsByLocation(String location) {
-        return mountainsMapper.selectMountainsByLocation(location);
+    
+    // 특정 산 정보 조회 (name)
+    public String retrieveMountainByName(String name) {
+    	MountainsVo mountain = mountainsMapper.selectMountainByName(name);
+        if (mountain != null) {
+            return mountain.getId().toString(); // 산 ID를 문자열로 반환
+        } else {
+            return null; // 산 코드가 없을 경우 null 반환
+        }
+    }
+    
+    // 검색 기능
+    public List<MountainsVo> searchMountains(String keyword) {
+        return mountainsMapper.searchMountains(keyword);
     }
 
-    // 특정 고도 이상의 산 정보 조회
-    public List<MountainsVo> retrieveMountainsByHeight(String height) {
-        return mountainsMapper.selectMountainsByHeight(height);
-    }
 }

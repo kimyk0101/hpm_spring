@@ -11,8 +11,9 @@ public interface MountainsMapper {
     List<MountainsVo> selectAllMountains();
 
     MountainsVo selectMountainById(Long id);
-
-    List<MountainsVo> selectMountainsByLocation(String location);
-
-    List<MountainsVo> selectMountainsByHeight(String height);
+        
+    MountainsVo selectMountainByName(String name);
+    
+    List<MountainsVo> searchMountains(String keyword);
+    
 }
