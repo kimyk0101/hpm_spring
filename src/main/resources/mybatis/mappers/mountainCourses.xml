@@ -7,11 +7,11 @@
 	<select id="findByMountainId" resultType="MountainCoursesVo">
 		SELECT
 		id,
-		course_name,
-		difficulty_level,
-		course_time,
-		course_length,
-		mountains_id
+		course_name as courseName,
+		difficulty_level as difficultyLevel,
+		course_time as courseTime,
+		course_length as courseLength,
+		mountains_id as mountainsId 
 		FROM mountain_courses
 		WHERE mountains_id = #{mountainId}
 	</select>
