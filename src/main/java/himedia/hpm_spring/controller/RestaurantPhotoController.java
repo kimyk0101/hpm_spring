@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import ch.qos.logback.core.model.Model;
+import himedia.hpm_spring.repository.vo.CommunityPhotoVo;
 import himedia.hpm_spring.repository.vo.RestaurantPhotoVo;
 import himedia.hpm_spring.service.RestaurantPhotoService;
 
@@ -79,4 +80,28 @@ public class RestaurantPhotoController {
         }
     }
     
+    // 사진 개별 삭제 
+    @DeleteMapping("/delete/photo/{photoId}")
+    public ResponseEntity<?> deletePhotoById(@PathVariable("photoId") int photoId) {
+    	System.out.println("✅ [삭제 요청 들어옴] photoId = " + photoId);
+    	try {
+            RestaurantPhotoVo photo = restaurantPhotoService.findPhotoById(photoId);
+            System.out.println("📸 photo 객체: " + photo); 
+            if (photo == null) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("해당 사진이 존재하지 않습니다.");
+            }
+            
+            // 2️. DB에서 삭제   
+            int result = restaurantPhotoService.deletePhotoById(photoId);
+            if (result == 0) {
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("DB 삭제 실패");
+            }
+
+            return ResponseEntity.ok("사진이 성공적으로 삭제되었습니다.");
+        } catch (Exception e) {
+        	e.printStackTrace(); // ✅ 콘솔에 에러 출력
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("삭제 중 오류 발생: " + e.getMessage());
+        }
+    }
 }

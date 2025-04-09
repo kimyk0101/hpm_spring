@@ -55,8 +55,8 @@ public class CommunityPhotoController {
     
     
     //	커뮤니티 사진 조회
-    @GetMapping("/list/{communitysId}")
-    public ResponseEntity<?> viewPhoto(@PathVariable("communitysId") int communitysId, Model model) {
+    @GetMapping("/list/{communitiesId}")
+    public ResponseEntity<?> viewPhoto(@PathVariable("communitiesId") int communitysId, Model model) {
         try {
             List<CommunityPhotoVo> photos = communityPhotoService.selectAllPhotoByCommunityId(communitysId);
             if (photos == null || photos.isEmpty()) {
@@ -71,8 +71,8 @@ public class CommunityPhotoController {
 
     
     //	communitysId로 사진 삭제(모든 사진 삭제)  
-    @DeleteMapping("/delete/{communitysId}")
-    public ResponseEntity<?> deletePhoto(@PathVariable("communitysId") int communitysId) {
+    @DeleteMapping("/delete/{communitiesId}")
+    public ResponseEntity<?> deletePhoto(@PathVariable("communitiesId") int communitysId) {
         try {
             int result = communityPhotoService.deletePhotoByCommunityId(communitysId);
             if (result == 0) {
@@ -94,29 +94,8 @@ public class CommunityPhotoController {
             if (photo == null) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body("해당 사진이 존재하지 않습니다.");
             }
-
-            // 1️⃣ 서버에 저장된 실제 파일 삭제
-            String filePath = photo.getFilePath(); // 예: "/uploads/xxx.jpg"
-            if (filePath == null || filePath.isBlank()) {
-                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("파일 경로가 유효하지 않습니다.");
-            }
-
-            String absolutePath = "C:/home/user" + filePath;
-            File file = new File(absolutePath);
-
-            System.out.println("📂 삭제하려는 실제 경로: " + absolutePath);
-
-            if (file.exists()) {
-                if (file.delete()) {
-                    System.out.println("✅ 파일 삭제 성공!");
-                } else {
-                    System.out.println("⚠ 파일 삭제 실패!");
-                }
-            } else {
-                System.out.println("❌ 파일이 존재하지 않음: " + absolutePath);
-            }
-            // 2️⃣ DB에서 삭제
+            
+            // 2️. DB에서 삭제   
             int result = communityPhotoService.deletePhotoById(photoId);
             if (result == 0) {
                 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("DB 삭제 실패");

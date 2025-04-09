@@ -15,6 +15,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 import himedia.hpm_spring.mappers.UserPhotoMapper;
 import himedia.hpm_spring.repository.vo.UserPhotoVo;
+import himedia.hpm_spring.util.S3PathUtil;
+import software.amazon.awssdk.core.sync.RequestBody;
+import software.amazon.awssdk.services.s3.S3Client;
+import software.amazon.awssdk.services.s3.model.PutObjectRequest;
 
 @Service
 public class UserPhotoService {
@@ -22,44 +26,53 @@ public class UserPhotoService {
     @Autowired
     private UserPhotoMapper userPhotoMapper;
     
-	@Value("${file.upload-dir}")
-	private String uploadDir;
+    @Autowired
+    private S3Client s3Client;
+    
+	@Value("${cloud.aws.s3.bucket}")
+	private String bucket;
 
 	@Transactional
 	public String insertPhoto(Integer usersId, MultipartFile photo) {
 	    try {
-	        // 0. 업로드 디렉토리 보장
-	        Path uploadPath = Paths.get(uploadDir);
-	        Files.createDirectories(uploadPath);
 
-	        // 1. 기존 사진 삭제 (있을 경우)
+	        // 1. S3에서 기존 사진 삭제 (있을 경우)
 	        UserPhotoVo existing = userPhotoMapper.selectPhotoByUserId(usersId);
 	        if (existing != null) {
-	            Path oldFilePath = uploadPath.resolve(existing.getFileName());
-	            Files.deleteIfExists(oldFilePath);
+	        	 s3Client.deleteObject(builder ->
+	                builder.bucket(bucket).key(existing.getFilePath())
+	            );
 	        }
 
-	        // 2. 새 파일 이름 및 경로 설정
-	        String fileName = UUID.randomUUID() + "_" + photo.getOriginalFilename();
-	        Path newFilePath = uploadPath.resolve(fileName);
-	        Files.copy(photo.getInputStream(), newFilePath, StandardCopyOption.REPLACE_EXISTING);
-
-	        // 3. PhotoVo 객체 생성 및 파일 정보 설정
+	        // 2. 새 경로 생성
+	        String key = S3PathUtil.getUserProfilePath(usersId, photo.getOriginalFilename());
+	        
+	        // 3. S3 업로드
+	        s3Client.putObject(
+	        		PutObjectRequest.builder()
+	                	.bucket(bucket)
+	                    .key(key)
+	                    .contentType(photo.getContentType())
+	                    .build(),
+	                RequestBody.fromInputStream(photo.getInputStream(), photo.getSize())
+	        );
+	        
+	        // 4. PhotoVo 객체 생성 및 DB 저장
 	        UserPhotoVo userPhotoVo = new UserPhotoVo();
 	        userPhotoVo.setUsersId(usersId);
-	        userPhotoVo.setFileName(fileName);
-	        userPhotoVo.setFilePath("/uploads/" + fileName); // 프론트에서 접근할 URL 기준 경로
+	        userPhotoVo.setFilePath(key); // ✅ key만 저장
+	        userPhotoVo.setFileName(photo.getOriginalFilename());
 	        userPhotoVo.setUpdateDate(new Date());
 
 	        userPhotoMapper.insertOrUpdatePhoto(userPhotoVo);
 
-	        return newFilePath.toString();
+	        return key;
 
 	    } catch (Exception e) {
 	        // 에러 로그 좀 더 구체적으로
-	        System.err.println("프로필 사진 업로드 실패: " + e.getMessage());
-	        e.printStackTrace();
-	        return null;
+	    	  System.err.println("S3 프로필 사진 업로드 실패: " + e.getMessage());
+	          e.printStackTrace();
+	          return null;
 	    }
 	}
 

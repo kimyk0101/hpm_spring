@@ -2,6 +2,9 @@ package himedia.hpm_spring.mappers;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
+import himedia.hpm_spring.repository.vo.CommunityVo;
 import himedia.hpm_spring.repository.vo.MountainReviewVo;
 
 public interface MountainReviewMapper {
@@ -14,6 +17,9 @@ public interface MountainReviewMapper {
 	
 //	<select id="retrieveMyReviews" parameterType="Long" resultType="mReviewVo">	// 	사용자의 리뷰 게시글 조회
 	List<MountainReviewVo> retrieveMyReviews(Long id);
+
+//  <select id="retriveReviewsByKeyword" resultType="mReviewVo" // 키워드 기반 리뷰 검색
+	List<MountainReviewVo> retrieveReviewsByKeyword(@Param("pattern") String pattern);
 	
 //	<insert id="createReview" parameterType="mReviewVo">	//	리뷰 게시글 작성
 	int createReview(MountainReviewVo review);

@@ -48,6 +48,15 @@
     LIMIT 1;
 	</select>
 	
+	<!-- 사용자의 댓글 + 대댓글 조회 -->
+	<select id="retrieveMyComments" parameterType="Long" resultMap="rCommentResultMap">
+	SELECT c.*, co.title AS title
+  	FROM restaurant_comments c
+  	JOIN restaurants co ON c.restaurants_id = co.id
+  	WHERE c.users_id = #{userId}
+  	ORDER BY c.update_date DESC
+	</select>
+	
 
     <!-- 댓글 생성 -->
     <insert id="createComment" parameterType="rCommentVo" useGeneratedKeys="true" keyProperty="id">

@@ -35,4 +35,6 @@ public class CommunityVo {
 	
 	@JsonProperty("comment_count")
 	private Long commentCount;		//	댓글 개수
+	
+	private String imageUrl;		//	대표 이미지
 }

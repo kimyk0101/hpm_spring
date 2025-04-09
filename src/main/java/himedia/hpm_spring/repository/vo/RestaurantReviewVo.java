@@ -42,4 +42,9 @@ public class RestaurantReviewVo {
 	
 	private Long views;				//	게시글 조회수
 	
+	@JsonProperty("comment_count")
+	private Long commentCount;		//	댓글 개수
+	
+	private String imageUrl;		//	대표 이미지
+	
 }

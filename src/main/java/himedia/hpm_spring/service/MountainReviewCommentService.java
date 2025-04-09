@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import himedia.hpm_spring.mappers.MountainReviewCommentMapper;
+import himedia.hpm_spring.repository.vo.CommunityCommentVo;
 import himedia.hpm_spring.repository.vo.MountainReviewCommentVo;
 
 @Service
@@ -33,6 +34,11 @@ public class MountainReviewCommentService {
     // 특정 대댓글 조회
     public MountainReviewCommentVo retrieveReplyById(Long id) {
         return mCommentMapper.findReplyById(id);
+    }
+    
+ // 사용자 댓글 + 대댓글 조회 
+    public List<MountainReviewCommentVo> retrieveMyComments(Long id) {
+    	return mCommentMapper.retrieveMyComments(id);
     }
     
 	// 댓글 추가

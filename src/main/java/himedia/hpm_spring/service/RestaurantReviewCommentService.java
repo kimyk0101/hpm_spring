@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import himedia.hpm_spring.mappers.RestaurantReviewCommentMapper;
+import himedia.hpm_spring.repository.vo.CommunityCommentVo;
 import himedia.hpm_spring.repository.vo.RestaurantReviewCommentVo;
 
 @Service
@@ -33,6 +34,11 @@ public class RestaurantReviewCommentService {
     // 특정 대댓글 조회
     public RestaurantReviewCommentVo retrieveReplyById(Long id) {
         return rCommentMapper.findReplyById(id);
+    }
+    
+    // 사용자 댓글 + 대댓글 조회 
+    public List<RestaurantReviewCommentVo> retrieveMyComments(Long id) {
+    	return rCommentMapper.retrieveMyComments(id);
     }
     
 	// 댓글 추가

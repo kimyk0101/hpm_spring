@@ -2,6 +2,8 @@ package himedia.hpm_spring.mappers;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import himedia.hpm_spring.repository.vo.CommunityVo;
 
 public interface CommunityMapper {
@@ -15,8 +17,8 @@ public interface CommunityMapper {
 //	<select id="retrieveMyCommunities" parameterType="Long" resultType="CommunityVo">	// 	사용자의 게시글 조회
 	List<CommunityVo> retrieveMyCommunities(Long id);
 
-//  [경민] <select id="retriveCommunitiesByKeyword(String keyword) {
-	List<CommunityVo> retrieveCommunitiesByKeyword(String keyword);
+//  <select id="retriveCommunitiesByKeyword" resultType="CommunityVo"	//	 키워드 기반 게시글 검색
+	List<CommunityVo> retrieveCommunitiesByKeyword(@Param("pattern") String pattern);
 
 //	<insert id="createCommunity" parameterType="CommunityVo">	//	게시글 작성
 	int createCommunity(CommunityVo community);

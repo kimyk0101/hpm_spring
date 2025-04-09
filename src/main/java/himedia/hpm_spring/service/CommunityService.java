@@ -14,7 +14,10 @@ public class CommunityService {
 
 	@Autowired
 	private CommunityMapper communityMapper;
-
+	
+	@Autowired
+	private CommunityPhotoService communityPhotoService;
+	
 	// 모든 커뮤니티 게시글 조회
 	public List<CommunityVo> retrieveAllCommunities() {
 		return communityMapper.retrieveAllCommunities();
@@ -32,7 +35,8 @@ public class CommunityService {
 
 	// [경민] 키워드 기반 게시글 조회
 	public List<CommunityVo> retrieveCommunitiesByKeyword(String keyword) {
-		return communityMapper.retrieveCommunitiesByKeyword(keyword);
+		String pattern = "(^|[^가-힣a-zA-Z0-9])" + keyword + "([^가-힣a-zA-Z0-9]|$)";
+	    return communityMapper.retrieveCommunitiesByKeyword(pattern);
 	}
 
 	// 게시글 생성
@@ -59,7 +63,10 @@ public class CommunityService {
 
 	// 게시글 삭제
 	public void deleteCommunity(Long id, Long usersId) {
-		// 삭제 쿼리 실행 (usersId와 id 함께 비교)
+		
+		// 게시글 이미지 먼저 삭제
+		communityPhotoService.deletePhotoByCommunityId(id.intValue());
+		// 게시글 삭제 쿼리 실행 (usersId와 id 함께 비교)
 		int deletedRows = communityMapper.deleteCommunity(id, usersId);
 
 		if (deletedRows == 0) {

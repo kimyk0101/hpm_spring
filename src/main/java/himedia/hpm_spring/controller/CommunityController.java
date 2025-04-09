@@ -54,7 +54,9 @@ public class CommunityController {
 	// [경민] GET : /api/communities/search?q=#{keyword} -> 키워드 기반 게시글 조회
 		@GetMapping("/search")
 		public ResponseEntity<List<CommunityVo>> retrieveCommunitiesByKeyword(@RequestParam("q") String keyword) {
-			List<CommunityVo> results = communityService.retrieveCommunitiesByKeyword(keyword);
+			// 정확한 단어 검색을 위한 커스텀 정규식 패턴 생성
+		    String pattern = "(^|[^가-힣a-zA-Z0-9])" + keyword + "([^가-힣a-zA-Z0-9]|$)";
+			List<CommunityVo> results = communityService.retrieveCommunitiesByKeyword(pattern);
 			return ResponseEntity.ok(results);
 		}
 	

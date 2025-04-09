@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import ch.qos.logback.core.model.Model;
+import himedia.hpm_spring.repository.vo.CommunityPhotoVo;
 import himedia.hpm_spring.repository.vo.MountainPhotoVo;
 import himedia.hpm_spring.service.MountainPhotoService;
 
@@ -36,15 +37,14 @@ public class MountainPhotoController {
             return ResponseEntity.badRequest().body(null); // 오류 발생시 null
         }
 
-        List<String> filePaths = mountainPhotoService.insertPhoto(mountainsId, photos);
+        List<String> s3Urls = mountainPhotoService.insertPhoto(mountainsId, photos);
 
-        if (filePaths == null) {
+        if (s3Urls == null) {
             return ResponseEntity.internalServerError().body(null); // 서비스에서 null 반환시 서버 오류 처리
         }
 
         // 파일 저장 후 DB에서 다시 조회
         List<MountainPhotoVo> photoVo = mountainPhotoService.selectAllPhotoByMountainId(mountainsId);
-
         return ResponseEntity.ok(photoVo); // JSON 객체로 반환
     }
     
@@ -77,6 +77,31 @@ public class MountainPhotoController {
             return ResponseEntity.ok("사진이 삭제되었습니다.");
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("사진 삭제 중 오류가 발생했습니다: " + e.getMessage());
+        }
+    }
+    
+    //	photoId로 사진 삭제(사진 개별 삭제)
+    @DeleteMapping("/delete/photo/{photoId}")
+    public ResponseEntity<?> deletePhotoById(@PathVariable("photoId") int photoId) {
+    	System.out.println("✅ [삭제 요청 들어옴] photoId = " + photoId);
+    	try {
+            MountainPhotoVo photo = mountainPhotoService.findPhotoById(photoId);
+            System.out.println("📸 photo 객체: " + photo); 
+            if (photo == null) {
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("해당 사진이 존재하지 않습니다.");
+            }
+            
+            // DB에서 삭제   
+            int result = mountainPhotoService.deletePhotoById(photoId);
+            if (result == 0) {
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("DB 삭제 실패");
+            }
+
+            return ResponseEntity.ok("사진이 성공적으로 삭제되었습니다.");
+        } catch (Exception e) {
+        	e.printStackTrace(); // ✅ 콘솔에 에러 출력
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("삭제 중 오류 발생: " + e.getMessage());
         }
     }
     

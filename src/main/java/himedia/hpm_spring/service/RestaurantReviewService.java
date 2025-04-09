@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import himedia.hpm_spring.mappers.RestaurantReviewMapper;
+import himedia.hpm_spring.repository.vo.CommunityVo;
 import himedia.hpm_spring.repository.vo.RestaurantReviewVo;
 
 @Service
@@ -13,7 +14,10 @@ public class RestaurantReviewService {
 
     @Autowired
     private RestaurantReviewMapper rReviewMapper;
-
+    
+    @Autowired
+	private RestaurantPhotoService restaurantPhotoService;
+    
     // 모든 맛집 리뷰 게시글 조회
     public List<RestaurantReviewVo> retrieveAllReviews() {
         return rReviewMapper.retrieveAllReviews();
@@ -28,6 +32,12 @@ public class RestaurantReviewService {
     public List<RestaurantReviewVo> retrieveMyReviews(Long id) {
         return rReviewMapper.retrieveMyReviews(id);
     }
+    
+    // 키워드 기반 게시글 조회
+ 	public List<RestaurantReviewVo> retrieveReviewsByKeyword(String keyword) {
+ 		String pattern = "(^|[^가-힣a-zA-Z0-9])" + keyword + "([^가-힣a-zA-Z0-9]|$)";
+ 		return rReviewMapper.retrieveReviewsByKeyword(pattern);
+ 	}
 
     // 맛집 리뷰 게시글 생성
     public RestaurantReviewVo createReview(RestaurantReviewVo review) {
@@ -53,7 +63,11 @@ public class RestaurantReviewService {
 
     // 맛집 리뷰 게시글 삭제
     public void deleteReview(Long id, Long usersId) {
-        int deletedRows = rReviewMapper.deleteReview(id, usersId);
+    	
+    	// 게시글 이미지 먼저 삭제
+    	restaurantPhotoService.deletePhotoByRestaurantId(id.intValue());
+        
+    	int deletedRows = rReviewMapper.deleteReview(id, usersId);
         if (deletedRows == 0) {
             throw new RuntimeException("Failed to delete restaurantReview with ID: " + id + " for user ID: " + usersId);
         }

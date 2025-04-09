@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import himedia.hpm_spring.mappers.MountainReviewMapper;
+import himedia.hpm_spring.repository.vo.CommunityVo;
 import himedia.hpm_spring.repository.vo.MountainReviewVo;
 
 @Service
@@ -13,6 +14,9 @@ public class MountainReviewService {
 
     @Autowired
     private MountainReviewMapper mReviewMapper;
+    
+    @Autowired
+	private MountainPhotoService mountainPhotoService;
 
     // 모든 리뷰 게시글 조회
     public List<MountainReviewVo> retrieveAllReviews() {
@@ -28,6 +32,13 @@ public class MountainReviewService {
     public List<MountainReviewVo> retrieveMyReviews(Long id) {
         return mReviewMapper.retrieveMyReviews(id);
     }
+    
+    // 키워드 기반 게시글 조회
+ 	public List<MountainReviewVo> retrieveReviewsByKeyword(String keyword) {
+ 		String pattern = "(^|[^가-힣a-zA-Z0-9])" + keyword + "([^가-힣a-zA-Z0-9]|$)";
+ 		return mReviewMapper.retrieveReviewsByKeyword(pattern);
+ 	}
+
 
     // 리뷰 게시글 생성
     public MountainReviewVo createReview(MountainReviewVo review) {
@@ -53,6 +64,10 @@ public class MountainReviewService {
 
     // 리뷰 게시글 삭제
     public void deleteReview(Long id, Long usersId) {
+    	
+    	// 게시글 이미지 먼저 삭제
+    	mountainPhotoService.deletePhotoByMountainId(id.intValue());
+    	
         int deletedRows = mReviewMapper.deleteReview(id, usersId);
         
         if (deletedRows == 0) {

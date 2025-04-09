@@ -46,5 +46,9 @@ public class MountainReviewVo {
 	@JsonProperty("mountain_courses_id")
 	private Long mountainCoursesId;		//	산 코스 고유번호
 	
+	@JsonProperty("comment_count")
+	private Long commentCount;		//	댓글 개수
 	
+	private String imageUrl;		//	대표 이미지
+
 }

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import himedia.hpm_spring.repository.vo.CommunityCommentVo;
 import himedia.hpm_spring.repository.vo.RestaurantReviewCommentVo;
 import himedia.hpm_spring.service.RestaurantReviewCommentService;
 
@@ -50,6 +51,13 @@ public class RestaurantReviewCommentController {
     public ResponseEntity<RestaurantReviewCommentVo> retrieveReplyById(@PathVariable Long id) {
     	RestaurantReviewCommentVo reply = rCommentService.retrieveReplyById(id);
         return ResponseEntity.ok(reply);
+    }
+    
+    // GET: /api/communities/comments/my/{id} -> 사용자가 작성한 댓글 + 대댓글 조회 
+    @GetMapping("/comments/my/{id}")
+    public ResponseEntity<List<RestaurantReviewCommentVo>> retrieveCommentsByUser(@PathVariable Long id) {
+        List<RestaurantReviewCommentVo> comments = rCommentService.retrieveMyComments(id);
+        return ResponseEntity.ok(comments);
     }
     
 	// POST : /api/restaurant-reviews/{rReviewId}/comments -> 댓글 생성

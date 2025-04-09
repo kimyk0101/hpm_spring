@@ -2,6 +2,7 @@ package himedia.hpm_spring.mappers;
 
 import java.util.List;
 
+import himedia.hpm_spring.repository.vo.CommunityCommentVo;
 import himedia.hpm_spring.repository.vo.MountainReviewCommentVo;
 
 public interface MountainReviewCommentMapper {
@@ -18,6 +19,9 @@ public interface MountainReviewCommentMapper {
 //	<select id="findReplyById" parameterType="Long" resultMap="mCommentResultMap">	// 특정 대댓글 조회
     MountainReviewCommentVo findReplyById(Long id);
 
+//	<select id="retriveMyComments" parameterType="Long" resultType="mCommentResultMap">	// 사용자 댓글 + 대댓글 조회  
+    List<MountainReviewCommentVo> retrieveMyComments(Long id); 
+    
 //	<insert id="createComment" parameterType="mCommentVo" useGeneratedKeys="true" keyProperty="id">	// 댓글 생성
 	int createComment(MountainReviewCommentVo comment);
 

@@ -13,9 +13,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import himedia.hpm_spring.repository.vo.RestaurantReviewVo;
+import himedia.hpm_spring.repository.vo.CommunityVo;
 import himedia.hpm_spring.repository.vo.MountainReviewVo;
 import himedia.hpm_spring.service.RestaurantReviewService;
 
@@ -46,6 +48,14 @@ public class RestaurantReviewController {
         List<RestaurantReviewVo> reviews = rReviewService.retrieveMyReviews(id);
         return ResponseEntity.ok(reviews);
     }
+    
+	// GET : /api/communities/search?q=#{keyword} -> 키워드 기반 게시글 조회
+	@GetMapping("/search")
+	public ResponseEntity<List<RestaurantReviewVo>> retrieveReviewsByKeyword(@RequestParam("q") String keyword) {
+		List<RestaurantReviewVo> results = rReviewService.retrieveReviewsByKeyword(keyword);
+		return ResponseEntity.ok(results);
+	}
+
         
     // POST : /api/restaurant-reviews -> 맛집 리뷰 게시글 생성
     @PostMapping

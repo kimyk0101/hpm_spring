@@ -33,7 +33,27 @@
 	
 	<!-- 사용자의 맛집 리뷰 게시글 조회 -->
 	<select id="retrieveMyReviews" parameterType="Long" resultMap="rReviewResultMap">
-	SELECT id, title, update_date FROM restaurants WHERE users_id=#{usersId}
+	SELECT 
+    c.*, 
+    (SELECT COUNT(*) FROM restaurant_comments cc WHERE cc.restaurants_id = c.id) AS comment_count
+  	FROM restaurants c
+  	WHERE c.users_id = #{usersId}
+  	ORDER BY c.update_date DESC
+	</select>
+	
+	<!-- 키워드 기반 게시글 조회 -->
+	<select id="retrieveReivewsByKeyword" parameterType="String" resultMap="rReviewResultMap">
+	SELECT 
+  	c.*, 
+  	u.nickname,
+  	(SELECT COUNT(*) FROM restaurant_comments cc WHERE cc.restaurants_id = c.id) AS comment_count,
+  	(SELECT cp.file_path FROM restaurant_photos cp WHERE cp.restaurants_id = c.id ORDER BY cp.id ASC LIMIT 1) AS imageUrl,
+  	c.views AS views
+	FROM restaurants c
+	JOIN users u ON c.users_id = u.id
+	WHERE c.title REGEXP #{pattern}
+    OR c.content REGEXP #{pattern}
+	ORDER BY c.id DESC
 	</select>
 	
 	<!-- 맛집 리뷰 게시글 작성 -->

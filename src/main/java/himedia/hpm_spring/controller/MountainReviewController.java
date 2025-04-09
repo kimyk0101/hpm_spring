@@ -13,8 +13,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import himedia.hpm_spring.repository.vo.CommunityVo;
 import himedia.hpm_spring.repository.vo.MountainReviewVo;
 import himedia.hpm_spring.service.MountainReviewService;
 
@@ -45,7 +47,14 @@ public class MountainReviewController {
         List<MountainReviewVo> reviews = mReviewService.retrieveMyReviews(id);
         return ResponseEntity.ok(reviews);
     }
-        
+    
+    // GET : /api/mountain-reviews/search?q=#{keyword} -> 키워드 기반 게시글 조회
+ 		@GetMapping("/search")
+ 		public ResponseEntity<List<MountainReviewVo>> retrieveReviewsByKeyword(@RequestParam("q") String keyword) {
+ 			List<MountainReviewVo> results = mReviewService.retrieveReviewsByKeyword(keyword);
+ 			return ResponseEntity.ok(results);
+ 		}
+    
     // POST : /api/mountain-reviews -> 리뷰 게시글 생성
     @PostMapping
     public ResponseEntity<MountainReviewVo> createReview(@RequestBody MountainReviewVo review) {

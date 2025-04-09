@@ -26,8 +26,22 @@
             mountain_photos
         WHERE 
             mountains_id = #{mountainsId}
-    </select> 
-
+    </select>
+    
+      <!-- photoId로 특정 사진 조회  -->
+    <select id="findPhotoById" parameterType="int" resultType="MountainPhotoVo">
+    	 SELECT 
+    		id,
+    		file_name AS fileName,
+    		file_path AS filePath,
+    		update_date AS updateDate,
+    		mountains_id AS nountainsId
+  		FROM 
+  			mountain_photos
+  		WHERE 
+  			id = #{photoId}
+	</select>
+     
 	<!-- 해당 ID 등산후기 사진 삭제 -->
     <delete id="deletePhotoByMountainId" parameterType="int">
         DELETE FROM
@@ -35,5 +49,11 @@
         WHERE
         	mountains_id = #{mountainsId}
     </delete>
+    
+    <!-- photoId로 개별 사진 삭제 -->
+    <delete id="deletePhotoById" parameterType="int">
+  		DELETE FROM mountain_photos
+  		WHERE id = #{photoId}
+	</delete>
 
 </mapper>

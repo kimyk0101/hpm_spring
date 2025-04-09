@@ -27,6 +27,20 @@
         WHERE 
             restaurants_id = #{restaurantsId}
     </select> 
+    
+    <!-- photoId로 특정 사진 조회  -->
+    <select id="findPhotoById" parameterType="int" resultType="RestaurantPhotoVo">
+    	 SELECT 
+    		id,
+    		file_name AS fileName,
+    		file_path AS filePath,
+    		update_date AS updateDate,
+    		restaurants_id AS restaurantsId
+  		FROM 
+  			restaurant_photos
+  		WHERE 
+  			id = #{photoId}
+	</select>
 
 	<!-- 해당 ID 맛집후기 사진 삭제 -->
     <delete id="deletePhotoByRestaurantId" parameterType="int">
@@ -35,5 +49,11 @@
         WHERE
         	restaurants_id = #{restaurantsId}
     </delete>
+    
+      <!-- photoId로 개별 사진 삭제 -->
+    <delete id="deletePhotoById" parameterType="int">
+  		DELETE FROM restaurant_photos
+  		WHERE id = #{photoId}
+	</delete>
 
 </mapper>

@@ -53,6 +53,13 @@ public class MountainReviewCommentController {
 	        return ResponseEntity.ok(reply);
 	    }
 	    
+	    // GET: /api/communities/comments/my/{id} -> 사용자가 작성한 댓글 + 대댓글 조회 
+	    @GetMapping("/comments/my/{id}")
+	    public ResponseEntity<List<MountainReviewCommentVo>> retrieveCommentsByUser(@PathVariable Long id) {
+	        List<MountainReviewCommentVo> comments = mCommentService.retrieveMyComments(id);
+	        return ResponseEntity.ok(comments);
+	    }
+	    
 		// POST : /api/mountain-reviews/{mReviewId}/comments -> 댓글 생성
 		@PostMapping("/{mReviewId}/comments")
 		public ResponseEntity<MountainReviewCommentVo> createComment(@PathVariable Long mReviewId, @RequestBody MountainReviewCommentVo comment) {

@@ -2,6 +2,7 @@ package himedia.hpm_spring.mappers;
 
 import java.util.List;
 
+import himedia.hpm_spring.repository.vo.CommunityCommentVo;
 import himedia.hpm_spring.repository.vo.RestaurantReviewCommentVo;
 
 public interface RestaurantReviewCommentMapper {
@@ -17,6 +18,9 @@ public interface RestaurantReviewCommentMapper {
     
 //	<select id="findReplyById" parameterType="Long" resultMap="rCommentResultMap">	// 특정 대댓글 조회
     RestaurantReviewCommentVo findReplyById(Long id);
+    
+//	<select id="retriveMyComments" parameterType="Long" resultType="rCommentResultMap">	// 사용자 댓글 + 대댓글 조회  
+    List<RestaurantReviewCommentVo> retrieveMyComments(Long id);     
 
 //	<insert id="createComment" parameterType="rCommentVo" useGeneratedKeys="true" keyProperty="id">	// 댓글 생성
 	int createComment(RestaurantReviewCommentVo comment);
