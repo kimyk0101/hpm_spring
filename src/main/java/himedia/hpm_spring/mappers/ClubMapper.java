@@ -5,7 +5,7 @@ import org.apache.ibatis.annotations.*;
 import java.util.List;
 
 @Mapper
-public interface ClubsMapper {
+public interface ClubMapper {
 
     @Select("SELECT * FROM clubs")
     List<ClubVo> findAllClubs();

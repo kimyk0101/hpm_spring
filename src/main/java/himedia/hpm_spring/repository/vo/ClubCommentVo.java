@@ -4,7 +4,7 @@ import lombok.Data;
 import java.time.LocalDateTime;
 
 @Data
-public class ClubCommentsVo {
+public class ClubCommentVo {
     private Long id;
     private String content;
     private LocalDateTime updateDate;

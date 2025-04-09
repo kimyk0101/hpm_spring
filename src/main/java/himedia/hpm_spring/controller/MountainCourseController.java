@@ -10,20 +10,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
-import himedia.hpm_spring.repository.vo.MountainCoursesVo;
-import himedia.hpm_spring.service.MountainCoursesService;
+import himedia.hpm_spring.repository.vo.MountainCourseVo;
+import himedia.hpm_spring.service.MountainCourseService;
 
 @RestController
 @RequestMapping("/api/mountains")
-public class MountainCoursesController {
+public class MountainCourseController {
 
 	@Autowired
-	private MountainCoursesService mountainCoursesService;
+	private MountainCourseService mountainCourseService;
 
 	 @GetMapping("/{id}/courses")
-	    public List<MountainCoursesVo> getCoursesByMountainId(@PathVariable Long id) {
+	    public List<MountainCourseVo> getCoursesByMountainId(@PathVariable Long id) {
 	        try {            
-	            return mountainCoursesService.retrieveMountainById(id);
+	            return mountainCourseService.retrieveMountainById(id);
 	        } catch (Exception e) {	        	
 	            throw new ResponseStatusException(
 	                HttpStatus.INTERNAL_SERVER_ERROR,

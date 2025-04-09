@@ -15,9 +15,9 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class RestaurantPhotoVo {
+public class MountainReviewPhotoVo {
 
-    private int id;					//	restaurantPhoto 고유번호
+    private int id;					//	mountainPhoto 고유번호
     
     @JsonProperty("file_name")
     private String fileName;		//	파일 이름
@@ -28,6 +28,6 @@ public class RestaurantPhotoVo {
     @JsonProperty("update_date")
     private Date updateDate;		//	갱신 시간
     
-    @JsonProperty("restaurants_id")
-    private int restaurantsId;		//	restaurant ID
+    @JsonProperty("mountains_id")
+    private int mountainsId;		//	mountain ID
 }

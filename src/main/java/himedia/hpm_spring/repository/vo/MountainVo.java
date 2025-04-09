@@ -11,7 +11,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class MountainsVo {
+public class MountainVo {
 
 	private Long id;					// 	산 고유번호
 	private String name;				//	산 이름	

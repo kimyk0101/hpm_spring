@@ -5,28 +5,28 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import himedia.hpm_spring.mappers.MountainsMapper;
-import himedia.hpm_spring.repository.vo.MountainsVo;
+import himedia.hpm_spring.mappers.MountainMapper;
+import himedia.hpm_spring.repository.vo.MountainVo;
 
 @Service
-public class MountainsService {
+public class MountainService {
 
     @Autowired
-    private MountainsMapper mountainsMapper;
+    private MountainMapper mountainMapper;
 
     // 모든 산 정보 조회
-    public List<MountainsVo> retrieveAllMountains() {
-        return mountainsMapper.selectAllMountains();
+    public List<MountainVo> retrieveAllMountains() {
+        return mountainMapper.selectAllMountains();
     }
 
     // 특정 산 정보 조회 (id)
-    public MountainsVo retrieveMountainById(Long id) {
-        return mountainsMapper.selectMountainById(id);
+    public MountainVo retrieveMountainById(Long id) {
+        return mountainMapper.selectMountainById(id);
     }
     
     // 특정 산 정보 조회 (name)
     public String retrieveMountainByName(String name) {
-    	MountainsVo mountain = mountainsMapper.selectMountainByName(name);
+    	MountainVo mountain = mountainMapper.selectMountainByName(name);
         if (mountain != null) {
             return mountain.getId().toString(); // 산 ID를 문자열로 반환
         } else {
@@ -35,8 +35,8 @@ public class MountainsService {
     }
     
     // 검색 기능
-    public List<MountainsVo> searchMountains(String keyword) {
-        return mountainsMapper.searchMountains(keyword);
+    public List<MountainVo> searchMountains(String keyword) {
+        return mountainMapper.searchMountains(keyword);
     }
 
 }

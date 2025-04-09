@@ -16,7 +16,7 @@ public class RestaurantReviewService {
     private RestaurantReviewMapper rReviewMapper;
     
     @Autowired
-	private RestaurantPhotoService restaurantPhotoService;
+	private RestaurantReviewPhotoService restaurantPhotoService;
     
     // 모든 맛집 리뷰 게시글 조회
     public List<RestaurantReviewVo> retrieveAllReviews() {

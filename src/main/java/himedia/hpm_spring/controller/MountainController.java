@@ -1,7 +1,7 @@
 package himedia.hpm_spring.controller;
 
-import himedia.hpm_spring.repository.vo.MountainsVo;
-import himedia.hpm_spring.service.MountainsService;
+import himedia.hpm_spring.repository.vo.MountainVo;
+import himedia.hpm_spring.service.MountainService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,24 +16,24 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/mountains")
-public class MountainsController {
+public class MountainController {
 
     @Autowired
-    private MountainsService mountainsService;
+    private MountainService mountainService;
 
     @GetMapping
-    public List<MountainsVo> getAllMountains() {
-        return mountainsService.retrieveAllMountains();
+    public List<MountainVo> getAllMountains() {
+        return mountainService.retrieveAllMountains();
     }
 
     @GetMapping("/{id}")
-    public MountainsVo getMountainById(@PathVariable Long id) {
-        return mountainsService.retrieveMountainById(id);
+    public MountainVo getMountainById(@PathVariable Long id) {
+        return mountainService.retrieveMountainById(id);
     }
 
     @GetMapping("/name/{name}")
     public String getMountainByName(@PathVariable String name) {
-    	String mountainId = mountainsService.retrieveMountainByName(name);
+    	String mountainId = mountainService.retrieveMountainByName(name);
         if (mountainId != null) {
             return mountainId;
         } else {
@@ -42,7 +42,7 @@ public class MountainsController {
     }    
     
     @GetMapping("/search")
-    public List<MountainsVo> searchMountains(@RequestParam String keyword) {
-        return mountainsService.searchMountains(keyword);
+    public List<MountainVo> searchMountains(@RequestParam String keyword) {
+        return mountainService.searchMountains(keyword);
     }
 }

@@ -16,7 +16,7 @@ public class MountainReviewService {
     private MountainReviewMapper mReviewMapper;
     
     @Autowired
-	private MountainPhotoService mountainPhotoService;
+	private MountainReviewPhotoService mountainPhotoService;
 
     // 모든 리뷰 게시글 조회
     public List<MountainReviewVo> retrieveAllReviews() {
@@ -32,13 +32,6 @@ public class MountainReviewService {
     public List<MountainReviewVo> retrieveMyReviews(Long id) {
         return mReviewMapper.retrieveMyReviews(id);
     }
-    
-    // 키워드 기반 게시글 조회
- 	public List<MountainReviewVo> retrieveReviewsByKeyword(String keyword) {
- 		String pattern = "(^|[^가-힣a-zA-Z0-9])" + keyword + "([^가-힣a-zA-Z0-9]|$)";
- 		return mReviewMapper.retrieveReviewsByKeyword(pattern);
- 	}
-
 
     // 리뷰 게시글 생성
     public MountainReviewVo createReview(MountainReviewVo review) {

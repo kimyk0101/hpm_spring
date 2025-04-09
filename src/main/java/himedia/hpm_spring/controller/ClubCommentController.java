@@ -17,35 +17,35 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import himedia.hpm_spring.repository.vo.ClubCommentsVo;
-import himedia.hpm_spring.service.ClubCommentsService;
+import himedia.hpm_spring.repository.vo.ClubCommentVo;
+import himedia.hpm_spring.service.ClubCommentService;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @RestController
 @RequestMapping("/api/club-comments")
-public class ClubCommentsController {
+public class ClubCommentController {
 
     @Autowired
-    private ClubCommentsService clubCommentsService;
+    private ClubCommentService clubCommentService;
 
     @GetMapping("/clubs/{clubsId}")
-    public ResponseEntity<List<ClubCommentsVo>> retrieveCommentsByClubsId(@PathVariable Long clubsId) {
-        List<ClubCommentsVo> comments = clubCommentsService.findCommentsByClubsId(clubsId);
+    public ResponseEntity<List<ClubCommentVo>> retrieveCommentsByClubsId(@PathVariable Long clubsId) {
+        List<ClubCommentVo> comments = clubCommentService.findCommentsByClubsId(clubsId);
         return ResponseEntity.ok(comments);
     }
 
     @PostMapping
-    public ResponseEntity<ClubCommentsVo> createComment(@RequestBody ClubCommentsVo comment) {
-        ClubCommentsVo savedComment = clubCommentsService.createComment(comment);
+    public ResponseEntity<ClubCommentVo> createComment(@RequestBody ClubCommentVo comment) {
+        ClubCommentVo savedComment = clubCommentService.createComment(comment);
         return ResponseEntity.ok(savedComment);
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<?> updateComment(@RequestBody ClubCommentsVo comment, @PathVariable Long id) {
+    public ResponseEntity<?> updateComment(@RequestBody ClubCommentVo comment, @PathVariable Long id) {
         try {
             comment.setId(id);
-            ClubCommentsVo updatedComment = clubCommentsService.updateComment(comment);
+            ClubCommentVo updatedComment = clubCommentService.updateComment(comment);
             return ResponseEntity.ok(updatedComment);
         } catch (Exception e) {
             // 오류 발생 시 JSON 형식으로 오류 메시지 반환
@@ -57,7 +57,7 @@ public class ClubCommentsController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteComment(@PathVariable Long id) {
-        clubCommentsService.deleteComment(id);
+    	clubCommentService.deleteComment(id);
         return ResponseEntity.ok().<Void>build();
     }
 
