@@ -76,7 +76,7 @@
 	</delete>
 	
 	<!-- 조회수 증가 -->
-    <update id="incrementViews" parameterType="Long">
+    <update id="incrementLikes" parameterType="Long">
     UPDATE communities
     SET views = views + 1
     WHERE id = #{id}

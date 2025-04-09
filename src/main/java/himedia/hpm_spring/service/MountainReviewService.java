@@ -75,8 +75,4 @@ public class MountainReviewService {
         }
     }
     
-	// 조회수 증가 메서드
-	public void incrementViews(Long id) {
-		mReviewMapper.incrementViews(id); 
-	}
 }

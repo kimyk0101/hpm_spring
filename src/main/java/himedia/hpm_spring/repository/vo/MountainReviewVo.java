@@ -28,14 +28,12 @@ public class MountainReviewVo {
 	
 	@JsonProperty("difficulty_level")
 	private String difficultyLevel;	//	moutain_courses 테이블과 매핑
-	private String title;			//	게시글 제목
+
 	private String content;			// 	게시글 내용
 	
 	@JsonProperty("update_date")
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	private LocalDateTime updateDate;	//	게시글 게시시간
-	
-	private Long views;				//	게시글 조회수
 	
 	@JsonProperty("users_id")
 	private Long usersId;			//	게시글 작성자 아이디

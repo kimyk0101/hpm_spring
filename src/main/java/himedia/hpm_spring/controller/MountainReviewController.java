@@ -71,6 +71,7 @@ public class MountainReviewController {
     @PatchMapping("/{id}")
     public ResponseEntity<MountainReviewVo> updateReview(@RequestBody MountainReviewVo review, @PathVariable Long id) {
         review.setId(id);
+        System.out.println("🧪 수정된 데이터: " + review);
         MountainReviewVo updatedReview = mReviewService.updateReview(review);
         return ResponseEntity.ok(updatedReview);
     }
@@ -84,11 +85,5 @@ public class MountainReviewController {
     	mReviewService.deleteReview(id, usersId);
         return ResponseEntity.ok().<Void>build();
     }
-    
-	//	PUT : /api/mountain-reviews/{id}/increment-views -> 조회수
-    @PutMapping("/{id}/increment-views")
-    public ResponseEntity<Void> incrementViews(@PathVariable("id") Long id) {
-    	mReviewService.incrementViews(id);
-        return ResponseEntity.ok().build();
-    }
+   
 }

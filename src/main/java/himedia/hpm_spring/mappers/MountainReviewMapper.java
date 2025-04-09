@@ -29,7 +29,4 @@ public interface MountainReviewMapper {
 	
 //	<delete id="deleteReview" parameterType="Map">	//	리뷰 게시글 삭제
 	int deleteReview(Long id, Long usersId);
-	
-//	<update id="incrementViews" parameterType="Long">	 //	조회수 증가 메서드
-    void incrementViews(Long id);
 }

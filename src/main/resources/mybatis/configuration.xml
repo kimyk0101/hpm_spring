@@ -19,6 +19,7 @@
 		<typeAlias alias="cCommentVo" type="himedia.hpm_spring.repository.vo.CommunityCommentVo"/>
 		<typeAlias alias="mCommentVo" type="himedia.hpm_spring.repository.vo.MountainReviewCommentVo"/>
 		<typeAlias alias="rCommentVo" type="himedia.hpm_spring.repository.vo.RestaurantReviewCommentVo"/>
+		<typeAlias alias="mLikeVo" type="himedia.hpm_spring.repository.vo.MountainReviewLikeVo"/>
 	</typeAliases>
 	
 	<mappers>
@@ -36,6 +37,7 @@
 		<mapper resource="mybatis/mappers/communityComment.xml" />
 		<mapper resource="mybatis/mappers/mountainReviewComment.xml" />
 		<mapper resource="mybatis/mappers/restaurantReviewComment.xml" />
+		<mapper resource="mybatis/mappers/mountainReviewLike.xml" />
 	</mappers>
 	
 </configuration>
