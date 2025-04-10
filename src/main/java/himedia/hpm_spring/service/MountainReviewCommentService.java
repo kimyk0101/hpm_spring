@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import himedia.hpm_spring.mappers.MountainReviewCommentMapper;
-import himedia.hpm_spring.repository.vo.CommunityCommentVo;
 import himedia.hpm_spring.repository.vo.MountainReviewCommentVo;
 
 @Service
@@ -69,6 +68,11 @@ public class MountainReviewCommentService {
 		if (deletedRows == 0) {
 			throw new RuntimeException("Failed to delete comment with ID: " + id + " for user ID: " + usersId);
 		}
+	}
+	
+	// 리뷰 ID 기준으로 모든 댓글 삭제
+	public void deleteCommentsByReviewsId(Long reviewsId) {
+	    mCommentMapper.deleteCommentsByReviewsId(reviewsId);
 	}
 	
 	// 대댓글 추가

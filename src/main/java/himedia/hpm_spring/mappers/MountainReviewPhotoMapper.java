@@ -2,23 +2,22 @@ package himedia.hpm_spring.mappers;
 
 import java.util.List;
 
-import himedia.hpm_spring.repository.vo.CommunityPhotoVo;
 import himedia.hpm_spring.repository.vo.MountainReviewPhotoVo;
 
 public interface MountainReviewPhotoMapper {
 	
-//	<insert id="insertPhoto" parameterType="MountainPhotoVo">
-    int insertPhoto(MountainReviewPhotoVo mountainPhotoVo);
+//	<insert id="insertPhoto" parameterType="mReviewPhotoVo">
+    int insertPhoto(MountainReviewPhotoVo mReviewPhotoVo);
     
-//  <select id="selectAllPhotoByMountainId" parameterType="int" resultType="MountainPhotoVo">
-    List<MountainReviewPhotoVo> selectAllPhotoByMountainId(int mountainPhotoVo);
+//  <select id="selectAllPhotoByReviewsId" parameterType="Long" resultType="mReviewPhotoVo">
+    List<MountainReviewPhotoVo> selectAllPhotoByReviewsId(Long reviewsId);
     
-//  <delete id="deletePhotoByMountainId" parameterType="int">
-    int deletePhotoByMountainId(int mountainPhotoVo);
+//  <delete id="deletePhotoByReviewsId" parameterType="Long">
+    int deletePhotoByReviewsId(Long reviewsId);
     
-//	<select id="findPhotoById" parameterType="int" resultType="com.example.model.MountainPhoto">
-    MountainReviewPhotoVo findPhotoById(int photoId);
+//	<select id="findPhotoById" parameterType="Long" resultType="com.example.model.MountainPhoto">
+    MountainReviewPhotoVo findPhotoById(Long photoId);
 
-//	<delete id="deletePhotoById" parameterType="int">
-    int deletePhotoById(int photoId); 
+//	<delete id="deletePhotoById" parameterType="Long">
+    int deletePhotoById(Long photoId); 
 }

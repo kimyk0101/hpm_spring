@@ -61,7 +61,7 @@
 	</select>
 	
 	<!-- 리뷰 게시글 작성 -->
-	<insert id="createReview" parameterType="mReviewVo">
+	<insert id="createReview" parameterType="mReviewVo" useGeneratedKeys="true" keyProperty="id">
     INSERT INTO reviews (content, update_date, users_id, mountains_id, mountain_courses_id)
 	VALUES (#{content}, #{updateDate}, #{usersId}, #{mountainsId}, #{mountainCoursesId})
 	</insert>

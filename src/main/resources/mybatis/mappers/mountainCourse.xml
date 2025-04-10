@@ -13,6 +13,6 @@
 		course_length as courseLength,
 		mountains_id as mountainsId 
 		FROM mountain_courses
-		WHERE mountains_id = #{mountainId}
+		WHERE mountains_id = #{mountainsId}
 	</select>
 </mapper>

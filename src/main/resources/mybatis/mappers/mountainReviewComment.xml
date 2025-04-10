@@ -74,6 +74,11 @@
     WHERE (id = #{id} AND users_id = #{usersId}) 
        OR (parent_id = #{id} AND users_id = #{usersId});
 	</delete>
+	
+	<!-- reviewsId 기준 댓글 모두 삭제 -->
+	<delete id="deleteCommentsByReviewsId" parameterType="Long">
+    DELETE FROM review_comments WHERE reviews_id = #{reviewsId}
+	</delete>
 
 
     <!-- 대댓글 추가 -->

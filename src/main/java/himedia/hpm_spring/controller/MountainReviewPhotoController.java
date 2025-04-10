@@ -16,93 +16,103 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import ch.qos.logback.core.model.Model;
-import himedia.hpm_spring.repository.vo.CommunityPhotoVo;
 import himedia.hpm_spring.repository.vo.MountainReviewPhotoVo;
 import himedia.hpm_spring.service.MountainReviewPhotoService;
+import himedia.hpm_spring.service.S3Service;
 
 @RestController
-@RequestMapping("/api/mountainPhoto")
+@RequestMapping("/api/mountain-reviews/photos")
 public class MountainReviewPhotoController {
 
-    @Autowired
-    private MountainReviewPhotoService mountainPhotoService;
+	@Autowired
+	private MountainReviewPhotoService mReviewPhotoService;
+	
+	@Autowired
+	private S3Service s3Service;
 
-    //	등산후기 사진 업로드
-    @PostMapping("/upload")
-    public ResponseEntity<List<MountainReviewPhotoVo>> uploadPhoto(@RequestParam("mountainsId") Integer mountainsId, 
-                                              @RequestParam("photos") MultipartFile[] photos) throws IOException {
-    	
-    	
-        if (photos == null || photos.length == 0) {
-            return ResponseEntity.badRequest().body(null); // 오류 발생시 null
-        }
+	@PostMapping("/upload")
+	public ResponseEntity<List<MountainReviewPhotoVo>> uploadPhoto(@RequestParam("reviewsId") Long reviewsId,
+			@RequestParam(value = "photos", required = false) MultipartFile[] photos,
+			@RequestParam(value = "existingPhotoNames", required = false) List<String> existingPhotoNames)
+			throws IOException {
 
-        List<String> s3Urls = mountainPhotoService.insertPhoto(mountainsId, photos);
+		// ✅ 1. 기존 DB에 등록된 사진 목록 조회
+		List<MountainReviewPhotoVo> currentPhotos = mReviewPhotoService.selectAllPhotoByReviewsId(reviewsId);
 
-        if (s3Urls == null) {
-            return ResponseEntity.internalServerError().body(null); // 서비스에서 null 반환시 서버 오류 처리
-        }
+		// ✅ 2. 기존 사진 중 삭제 대상만 추려서 삭제 (existingPhotoNames에 없는 것들)
+		for (MountainReviewPhotoVo photo : currentPhotos) {
+			String fileName = photo.getFileName(); 
+			if (existingPhotoNames == null || !existingPhotoNames.contains(fileName)) {
+				mReviewPhotoService.deletePhotoById(photo.getId()); // DB에서 삭제
+				s3Service.deleteFile(fileName); // S3에서 삭제
+			}
+		}
 
-        // 파일 저장 후 DB에서 다시 조회
-        List<MountainReviewPhotoVo> photoVo = mountainPhotoService.selectAllPhotoByMountainId(mountainsId);
-        return ResponseEntity.ok(photoVo); // JSON 객체로 반환
-    }
-    
-    
-    
-    //	등산후기 사진 조회
-    @GetMapping("/list/{mountainsId}")
-    public ResponseEntity<?> viewPhoto(@PathVariable("mountainsId") int mountainsId, Model model) {
-        try {
-            List<MountainReviewPhotoVo> photos = mountainPhotoService.selectAllPhotoByMountainId(mountainsId);
-            if (photos == null || photos.isEmpty()) {
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("해당 사용자의 사진이 존재하지 않습니다.");
-            }
-            return ResponseEntity.ok(photos);
-        } catch (Exception e) {
-            // 예외 발생
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("사진 조회 중 오류가 발생했습니다: " + e.getMessage());
-        }
-    }
+		// ✅ 3. 새로 추가된 사진 업로드
+		if (photos != null && photos.length > 0) {
+			List<String> filePaths = mReviewPhotoService.insertPhoto(reviewsId, photos);
 
-    
-    //	mountainsId로 사진 삭제
-    @DeleteMapping("/delete/{mountainsId}")
-    public ResponseEntity<?> deletePhoto(@PathVariable("mountainsId") int mountainsId) {
-        try {
-            int result = mountainPhotoService.deletePhotoByMountainId(mountainsId);
-            if (result == 0) {
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("사진을 찾을 수 없습니다.");
-            }
-            return ResponseEntity.ok("사진이 삭제되었습니다.");
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("사진 삭제 중 오류가 발생했습니다: " + e.getMessage());
-        }
-    }
-    
-    //	photoId로 사진 삭제(사진 개별 삭제)
-    @DeleteMapping("/delete/photo/{photoId}")
-    public ResponseEntity<?> deletePhotoById(@PathVariable("photoId") int photoId) {
-    	System.out.println("✅ [삭제 요청 들어옴] photoId = " + photoId);
-    	try {
-            MountainReviewPhotoVo photo = mountainPhotoService.findPhotoById(photoId);
-            System.out.println("📸 photo 객체: " + photo); 
-            if (photo == null) {
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("해당 사진이 존재하지 않습니다.");
-            }
-            
-            // DB에서 삭제   
-            int result = mountainPhotoService.deletePhotoById(photoId);
-            if (result == 0) {
-                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("DB 삭제 실패");
-            }
+			if (filePaths == null) {
+				return ResponseEntity.internalServerError().body(null); // 실패 시 처리
+			}
+		}
 
-            return ResponseEntity.ok("사진이 성공적으로 삭제되었습니다.");
-        } catch (Exception e) {
-        	e.printStackTrace(); // ✅ 콘솔에 에러 출력
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("삭제 중 오류 발생: " + e.getMessage());
-        }
-    }
-    
+		// ✅ 4. 결과 반환 (수정된 전체 사진 목록 조회)
+		List<MountainReviewPhotoVo> updatedPhotoList = mReviewPhotoService.selectAllPhotoByReviewsId(reviewsId);
+		return ResponseEntity.ok(updatedPhotoList);
+	}
+
+	// 등산후기 사진 조회
+	@GetMapping("/by-review/{reviewsId}")
+	public ResponseEntity<?> viewPhoto(@PathVariable("reviewsId") Long reviewsId, Model model) {
+		try {
+			List<MountainReviewPhotoVo> photos = mReviewPhotoService.selectAllPhotoByReviewsId(reviewsId);
+			// 사진이 없으면 404 말고 빈 배열로
+			return ResponseEntity.ok(photos); // 빈 배열 []도 JSON이니까 OK 처리 가능
+		} catch (Exception e) {
+			// 예외 발생
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+					.body("사진 조회 중 오류가 발생했습니다: " + e.getMessage());
+		}
+	}
+
+	// reviewsId로 사진 삭제
+	@DeleteMapping("/by-review/{reviewsId}")
+	public ResponseEntity<?> deletePhoto(@PathVariable("reviewsId") Long reviewsId) {
+		try {
+			int result = mReviewPhotoService.deletePhotoByReviewsId(reviewsId);
+			if (result == 0) {
+				return ResponseEntity.status(HttpStatus.NOT_FOUND).body("사진을 찾을 수 없습니다.");
+			}
+			return ResponseEntity.ok("사진이 삭제되었습니다.");
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+					.body("사진 삭제 중 오류가 발생했습니다: " + e.getMessage());
+		}
+	}
+
+	// photoId로 사진 삭제(사진 개별 삭제)
+	@DeleteMapping("/by-photo/{photoId}")
+	public ResponseEntity<?> deletePhotoById(@PathVariable("photoId") Long photoId) {
+		System.out.println("✅ [삭제 요청 들어옴] photoId = " + photoId);
+		try {
+			MountainReviewPhotoVo photo = mReviewPhotoService.findPhotoById(photoId);
+			System.out.println("📸 photo 객체: " + photo);
+			if (photo == null) {
+				return ResponseEntity.status(HttpStatus.NOT_FOUND).body("해당 사진이 존재하지 않습니다.");
+			}
+
+			// DB에서 삭제
+			int result = mReviewPhotoService.deletePhotoById(photoId);
+			if (result == 0) {
+				return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("DB 삭제 실패");
+			}
+
+			return ResponseEntity.ok("사진이 성공적으로 삭제되었습니다.");
+		} catch (Exception e) {
+			e.printStackTrace(); // ✅ 콘솔에 에러 출력
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("삭제 중 오류 발생: " + e.getMessage());
+		}
+	}
+
 }

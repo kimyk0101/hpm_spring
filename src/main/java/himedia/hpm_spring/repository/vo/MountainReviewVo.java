@@ -2,6 +2,8 @@ package himedia.hpm_spring.repository.vo;
 
 import java.time.LocalDateTime;
 
+import org.springframework.lang.Nullable;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 

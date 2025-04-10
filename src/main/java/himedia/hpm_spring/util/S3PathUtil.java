@@ -34,7 +34,7 @@ public class S3PathUtil {
     }
 
     // ✅ 등산 후기 사진 경로
-    public static String getMountainReviewPhotoPath(int reviewsId, String originalFilename) {
+    public static String getMountainReviewPhotoPath(Long reviewsId, String originalFilename) {
         String extension = getExtension(originalFilename);
         String uuid = UUID.randomUUID().toString();
         return String.format("mountain-review/%d/%s.%s", reviewsId, uuid, extension);

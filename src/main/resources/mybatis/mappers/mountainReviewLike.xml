@@ -14,33 +14,33 @@
 
 	<select id="selectLikeCount" parameterType="int"
 		resultType="int">
-		SELECT COUNT(*) FROM likes
+		SELECT COUNT(*) FROM review_likes
 		WHERE reviews_id = #{reviewsId} AND is_like = TRUE
 	</select>
 
 	<select id="isLiked" parameterType="mLikeVo" resultType="int">
-		SELECT COUNT(*) FROM likes
+		SELECT COUNT(*) FROM review_likes
 		WHERE users_id = #{usersId} AND reviews_id = #{reviewsId} AND is_like = TRUE
 	</select>
 
 	<select id="exists" parameterType="mLikeVo" resultType="int">
-		SELECT COUNT(*) FROM likes
+		SELECT COUNT(*) FROM review_likes
 		WHERE users_id = #{usersId} AND reviews_id = #{reviewsId}
 	</select>
 
 	<insert id="insertLike" parameterType="mLikeVo">
-		INSERT INTO likes (users_id, reviews_id, is_like)
+		INSERT INTO review_likes (users_id, reviews_id, is_like)
 		VALUES (#{usersId}, #{reviewsId}, TRUE)
 	</insert>
 
 	<update id="updateLike" parameterType="mLikeVo">
-		UPDATE likes
+		UPDATE review_likes
 		SET is_like = TRUE
 		WHERE users_id = #{usersId} AND reviews_id = #{reviewsId}
 	</update>
 
 	<update id="cancelLike" parameterType="mLikeVo">
-		UPDATE likes
+		UPDATE review_likes
 		SET is_like = FALSE
 		WHERE users_id = #{usersId} AND reviews_id = #{reviewsId}
 	</update>

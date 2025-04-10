@@ -4,55 +4,55 @@
 <mapper namespace="himedia.hpm_spring.mappers.MountainReviewPhotoMapper">
 
 	<!-- 등산후기 사진 업로드 -->
-    <insert id="insertPhoto" parameterType="mReviewPhotoVo">
-        INSERT INTO mountain_photos (
-            file_name, file_path, update_date, mountains_id
+    <insert id="insertPhoto" parameterType="mReviewPhotoVo" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO review_photos (
+            file_name, file_path, update_date, reviews_id
         )
         VALUES (
-            #{fileName}, #{filePath}, #{updateDate}, #{mountainsId}
+            #{fileName}, #{filePath}, #{updateDate}, #{reviewsId}
         )
     </insert>
     
 
 	<!-- 해당 ID 등산후기 사진 조회 -->
-     <select id="selectAllPhotoByMountainId" parameterType="int" resultType="mReviewPhotoVo">
+     <select id="selectAllPhotoByReviewsId" parameterType="Long" resultType="mReviewPhotoVo">
         SELECT 
             id,
             file_name as fileName,
             file_path as filePath,
             update_date as updateDate,
-            mountains_id as mountainsId
+            reviews_id as reviewsId
         FROM 
-            mountain_photos
+            review_photos
         WHERE 
-            mountains_id = #{mountainsId}
+            reviews_id = #{reviewsId}
     </select>
     
       <!-- photoId로 특정 사진 조회  -->
-    <select id="findPhotoById" parameterType="int" resultType="mReviewPhotoVo">
+    <select id="findPhotoById" parameterType="Long" resultType="mReviewPhotoVo">
     	 SELECT 
     		id,
     		file_name AS fileName,
     		file_path AS filePath,
     		update_date AS updateDate,
-    		mountains_id AS nountainsId
+    		reviews_id AS reviewsId
   		FROM 
-  			mountain_photos
+  			review_photos
   		WHERE 
   			id = #{photoId}
 	</select>
      
 	<!-- 해당 ID 등산후기 사진 삭제 -->
-    <delete id="deletePhotoByMountainId" parameterType="int">
+    <delete id="deletePhotoByReviewsId" parameterType="Long">
         DELETE FROM
-        	mountain_photos 
+        	review_photos 
         WHERE
-        	mountains_id = #{mountainsId}
+        	reviews_id = #{reviewsId}
     </delete>
     
     <!-- photoId로 개별 사진 삭제 -->
-    <delete id="deletePhotoById" parameterType="int">
-  		DELETE FROM mountain_photos
+    <delete id="deletePhotoById" parameterType="Long">
+  		DELETE FROM review_photos
   		WHERE id = #{photoId}
 	</delete>
 

@@ -10,13 +10,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import himedia.hpm_spring.repository.vo.CommunityVo;
 import himedia.hpm_spring.repository.vo.MountainReviewVo;
 import himedia.hpm_spring.service.MountainReviewService;
 
@@ -52,11 +49,13 @@ public class MountainReviewController {
     @PostMapping
     public ResponseEntity<MountainReviewVo> createReview(@RequestBody MountainReviewVo review) {
     	System.out.println("받은 데이터: " + review);
+    	
     	if (review.getUsersId() == null || review.getUsersId() <= 0) {
 			return ResponseEntity.badRequest().body(null); // 유효하지 않은 usersId에 대한 오류 응답
 		}
     	
     	MountainReviewVo savedReview = mReviewService.createReview(review);
+    	System.out.println("저장된 리뷰: " + savedReview);
         return ResponseEntity.ok(savedReview);
     }
 
@@ -65,6 +64,7 @@ public class MountainReviewController {
     public ResponseEntity<MountainReviewVo> updateReview(@RequestBody MountainReviewVo review, @PathVariable Long id) {
         review.setId(id);
         System.out.println("🧪 수정된 데이터: " + review);
+        
         MountainReviewVo updatedReview = mReviewService.updateReview(review);
         return ResponseEntity.ok(updatedReview);
     }
