@@ -13,6 +13,7 @@
 		<typeAlias alias="CommunityPhotoVo" type="himedia.hpm_spring.repository.vo.CommunityPhotoVo" />
 		<typeAlias alias="rReviewPhotoVo" type="himedia.hpm_spring.repository.vo.RestaurantReviewPhotoVo" />
 		<typeAlias alias="MountainVo" type="himedia.hpm_spring.repository.vo.MountainVo" />
+		<typeAlias alias="MountainImageVo" type="himedia.hpm_spring.repository.vo.MountainImageVo" />
 		<typeAlias alias="MountainCourseVo" type="himedia.hpm_spring.repository.vo.MountainCourseVo" />
 		<typeAlias alias="mReviewPhotoVo" type="himedia.hpm_spring.repository.vo.MountainReviewPhotoVo" />
 		<typeAlias alias="cCommentVo" type="himedia.hpm_spring.repository.vo.CommunityCommentVo"/>
@@ -30,6 +31,7 @@
 		<mapper resource="mybatis/mappers/communityPhoto.xml" />
 		<mapper resource="mybatis/mappers/restaurantReviewPhoto.xml" />
 		<mapper resource="mybatis/mappers/mountain.xml" />
+		<mapper resource="mybatis/mappers/mountainImage.xml" />
 		<mapper resource="mybatis/mappers/mountainCourse.xml" />
 		<mapper resource="mybatis/mappers/mountainReviewPhoto.xml" />
 		<mapper resource="mybatis/mappers/communityComment.xml" />
