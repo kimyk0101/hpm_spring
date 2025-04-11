@@ -9,16 +9,16 @@ public interface CommunityPhotoMapper {
 //	<insert id="insertPhoto" parameterType="CommunityPhotoVo">
     int insertPhoto(CommunityPhotoVo communityPhotoVo);
     
-//  <select id="selectAllPhotoByCommunityId" parameterType="int" resultType="CommunityPhotoVo">
-    List<CommunityPhotoVo> selectAllPhotoByCommunityId(int communitiesId);
+//  <select id="selectAllPhotoByCommunityId" parameterType="Long" resultType="CommunityPhotoVo">
+    List<CommunityPhotoVo> selectAllPhotoByCommunityId(Long communitiesId);
     
-//  <delete id="deletePhotoByCommunityId" parameterType="int">
-    int deletePhotoByCommunityId(int communitiesId);
+//  <delete id="deletePhotoByCommunityId" parameterType="Long">
+    int deletePhotoByCommunityId(Long communitiesId);
 
-//	<select id="findPhotoById" parameterType="int" resultType="com.example.model.CommunityPhoto">
-    CommunityPhotoVo findPhotoById(int photoId);
+//	<select id="findPhotoById" parameterType="Long" resultType="com.example.model.CommunityPhoto">
+    CommunityPhotoVo findPhotoById(Long photoId);
 
-//	<delete id="deletePhotoById" parameterType="int">
-    int deletePhotoById(int photoId);    
+//	<delete id="deletePhotoById" parameterType="Long">
+    int deletePhotoById(Long photoId);    
     
 }

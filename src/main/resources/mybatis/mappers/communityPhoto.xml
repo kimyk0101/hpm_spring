@@ -15,7 +15,7 @@
     
 
 	<!-- 해당 ID 커뮤니티 사진 조회 -->
-     <select id="selectAllPhotoByCommunityId" parameterType="int" resultType="CommunityPhotoVo">
+     <select id="selectAllPhotoByCommunityId" parameterType="Long" resultType="CommunityPhotoVo">
         SELECT 
             id,
             file_name as fileName,
@@ -29,7 +29,7 @@
     </select> 
     
     <!-- photoId로 특정 사진 조회  -->
-    <select id="findPhotoById" parameterType="int" resultType="CommunityPhotoVo">
+    <select id="findPhotoById" parameterType="Long" resultType="CommunityPhotoVo">
     	 SELECT 
     		id,
     		file_name AS fileName,
@@ -43,7 +43,7 @@
 	</select>
 
 	<!-- 해당 ID 커뮤니티 사진 삭제 -->
-    <delete id="deletePhotoByCommunityId" parameterType="int">
+    <delete id="deletePhotoByCommunityId" parameterType="Long">
         DELETE FROM
         	community_photos 
         WHERE
@@ -51,7 +51,7 @@
     </delete>
     
     <!-- photoId로 개별 사진 삭제 -->
-    <delete id="deletePhotoById" parameterType="int">
+    <delete id="deletePhotoById" parameterType="Long">
   		DELETE FROM community_photos
   		WHERE id = #{photoId}
 	</delete>

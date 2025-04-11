@@ -1,13 +1,8 @@
 package himedia.hpm_spring.service;
 
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -22,7 +17,6 @@ import software.amazon.awssdk.core.sync.RequestBody;
 import software.amazon.awssdk.services.s3.S3Client;
 import software.amazon.awssdk.services.s3.model.DeleteObjectRequest;
 import software.amazon.awssdk.services.s3.model.PutObjectRequest;
-import software.amazon.awssdk.services.s3.model.PutObjectResponse;
 
 @Service
 public class CommunityPhotoService {
@@ -37,7 +31,7 @@ public class CommunityPhotoService {
 	private String bucket;
 
     @Transactional    
-    public List<String> insertPhoto(Integer communitiesId, MultipartFile[] photos) { 
+    public List<String> insertPhoto(Long communitiesId, MultipartFile[] photos) { 
     	List<String> s3Urls = new ArrayList<>();
 
         try {
@@ -80,12 +74,12 @@ public class CommunityPhotoService {
     }
 
     //	게시글 사진 전체 조회
-    public List<CommunityPhotoVo> selectAllPhotoByCommunityId(int communitiesId) {
+    public List<CommunityPhotoVo> selectAllPhotoByCommunityId(Long communitiesId) {
         return communityPhotoMapper.selectAllPhotoByCommunityId(communitiesId);
     }
 
     //	게시글 사진 전체 삭제(S3 + DB)
-    public int deletePhotoByCommunityId(int communitiesId) {
+    public int deletePhotoByCommunityId(Long communitiesId) {
         List<CommunityPhotoVo> photoList = communityPhotoMapper.selectAllPhotoByCommunityId(communitiesId);
 
         for (CommunityPhotoVo photo : photoList) {
@@ -107,12 +101,12 @@ public class CommunityPhotoService {
     }
     
     //	특정 사진 개별 조회
-    public CommunityPhotoVo findPhotoById(int photoId) {
+    public CommunityPhotoVo findPhotoById(Long photoId) {
         return communityPhotoMapper.findPhotoById(photoId);
     }
     
     //	특정 사진 개별 삭제 
-    public int deletePhotoById(int photoId) {
+    public int deletePhotoById(Long photoId) {
         CommunityPhotoVo photo = findPhotoById(photoId);
         if (photo == null) return 0;
 

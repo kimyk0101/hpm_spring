@@ -1,7 +1,5 @@
 package himedia.hpm_spring.util;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.UUID;
 
 public class S3PathUtil {
@@ -20,14 +18,14 @@ public class S3PathUtil {
     }
 
     // ✅ 커뮤니티 사진 경로
-    public static String getCommunityPhotoPath(int communitiesId, String originalFilename) {
+    public static String getCommunityPhotoPath(Long communitiesId, String originalFilename) {
         String extension = getExtension(originalFilename);
         String uuid = UUID.randomUUID().toString();
         return String.format("community/%d/%s.%s", communitiesId, uuid, extension);
     }
 
     // ✅ 맛집 후기 사진 경로
-    public static String getFoodReviewPhotoPath(int restaurantsId, String originalFilename) {
+    public static String getFoodReviewPhotoPath(Long restaurantsId, String originalFilename) {
         String extension = getExtension(originalFilename);
         String uuid = UUID.randomUUID().toString();
         return String.format("food-review/%d/%s.%s", restaurantsId, uuid, extension);

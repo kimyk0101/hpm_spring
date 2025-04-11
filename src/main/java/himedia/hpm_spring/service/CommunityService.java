@@ -1,11 +1,11 @@
 package himedia.hpm_spring.service;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import himedia.hpm_spring.mappers.CommunityCommentMapper;
 import himedia.hpm_spring.mappers.CommunityMapper;
 import himedia.hpm_spring.repository.vo.CommunityVo;
 
@@ -17,6 +17,9 @@ public class CommunityService {
 	
 	@Autowired
 	private CommunityPhotoService communityPhotoService;
+	
+	@Autowired
+	private CommunityCommentMapper cCommentMapper;
 	
 	// 모든 커뮤니티 게시글 조회
 	public List<CommunityVo> retrieveAllCommunities() {
@@ -64,9 +67,13 @@ public class CommunityService {
 	// 게시글 삭제
 	public void deleteCommunity(Long id, Long usersId) {
 		
-		// 게시글 이미지 먼저 삭제
-		communityPhotoService.deletePhotoByCommunityId(id.intValue());
-		// 게시글 삭제 쿼리 실행 (usersId와 id 함께 비교)
+		// 1. 댓글 먼저 삭제
+		cCommentMapper.deleteCommentsByCommunitiesId(id);
+		
+		// 2. 이미지 삭제
+		communityPhotoService.deletePhotoByCommunityId(id);
+		
+		// 3. 리뷰 삭제
 		int deletedRows = communityMapper.deleteCommunity(id, usersId);
 
 		if (deletedRows == 0) {

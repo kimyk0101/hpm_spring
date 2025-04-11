@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -52,7 +53,7 @@ public class CommunityCommentController {
         return ResponseEntity.ok(reply);
     }
     
- // GET: /api/communities/comments/my/{id} -> 사용자가 작성한 댓글 + 대댓글 조회 
+    // GET: /api/communities/comments/my/{id} -> 사용자가 작성한 댓글 + 대댓글 조회 
     @GetMapping("/comments/my/{id}")
     public ResponseEntity<List<CommunityCommentVo>> retrieveCommentsByUser(@PathVariable Long id) {
         List<CommunityCommentVo> comments = cCommentService.retrieveMyComments(id);
@@ -95,6 +96,17 @@ public class CommunityCommentController {
 		// 삭제 쿼리 실행
 		cCommentService.deleteComment(id, usersId);
 		return ResponseEntity.ok().<Void>build();
+	}
+	
+	// DELETE : /api/communities/{communitiesId}/comments -> communitiesId 기준 모든 댓글 삭제
+	@DeleteMapping("/{communitiesId}/comments")
+	public ResponseEntity<?> deleteCommentsByReviewsId(@PathVariable Long communitiesId) {
+		try {
+			cCommentService.deleteCommentsByCommunitiesId(communitiesId);
+			return ResponseEntity.ok("리뷰에 달린 모든 댓글이 삭제되었습니다.");
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("댓글 삭제 실패: " + e.getMessage());
+		}
 	}
 	
 	// POST : /api/communities/{communityId}/comments/{commentId}/replies -> 대댓글 생성

@@ -1,13 +1,8 @@
 package himedia.hpm_spring.service;
 
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -16,7 +11,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import himedia.hpm_spring.mappers.RestaurantReviewPhotoMapper;
-import himedia.hpm_spring.repository.vo.CommunityPhotoVo;
 import himedia.hpm_spring.repository.vo.RestaurantReviewPhotoVo;
 import himedia.hpm_spring.util.S3PathUtil;
 import software.amazon.awssdk.core.sync.RequestBody;

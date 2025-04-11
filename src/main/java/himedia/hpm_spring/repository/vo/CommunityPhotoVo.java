@@ -17,7 +17,7 @@ import lombok.ToString;
 @ToString
 public class CommunityPhotoVo {
 
-    private int id;					//	communityPhoto 고유번호
+    private Long id;					//	communityPhoto 고유번호
     
     @JsonProperty("file_name")
     private String fileName;		//	파일 이름
@@ -29,5 +29,5 @@ public class CommunityPhotoVo {
     private Date updateDate;		//	갱신 시간
     
     @JsonProperty("communities_id")
-    private int communitiesId;		//	community ID
+    private Long communitiesId;		//	community ID
 }

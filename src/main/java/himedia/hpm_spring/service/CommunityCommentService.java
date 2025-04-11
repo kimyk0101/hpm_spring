@@ -70,6 +70,11 @@ public class CommunityCommentService {
 		}
 	}
 	
+	// 커뮤니티 ID 기준으로 모든 댓글 삭제
+	public void deleteCommentsByCommunitiesId(Long communitiesId) {
+	    cCommentMapper.deleteCommentsByCommunitiesId(communitiesId);
+	}
+	
 	// 대댓글 추가
 	public CommunityCommentVo createReply(CommunityCommentVo reply) {
 	    cCommentMapper.createReply(reply);

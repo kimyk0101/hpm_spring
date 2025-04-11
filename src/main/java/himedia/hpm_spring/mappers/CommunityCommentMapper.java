@@ -30,6 +30,9 @@ public interface CommunityCommentMapper {
 //    <delete id="deleteComment" parameterType="Map">	// 댓글 삭제
 	int deleteComment(Long id, Long usersId);
 	
+//	<delete id="deleteCommentsByCommunitiesId" parameterType="Long">	//	communitiesId 기준 댓글 모두 삭제
+	int deleteCommentsByCommunitiesId(Long communitiesId);
+	
 //    <insert id="createReply" parameterType="cCommentVo" useGeneratedKeys="true" keyProperty="id">	//	대댓글 생성
 	int createReply(CommunityCommentVo comment);
 

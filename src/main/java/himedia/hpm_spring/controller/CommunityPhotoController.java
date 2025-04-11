@@ -20,7 +20,7 @@ import himedia.hpm_spring.repository.vo.CommunityPhotoVo;
 import himedia.hpm_spring.service.CommunityPhotoService;
 
 @RestController
-@RequestMapping("/api/communityPhoto")
+@RequestMapping("/api/communities/photos")
 public class CommunityPhotoController {
 
     @Autowired
@@ -28,7 +28,7 @@ public class CommunityPhotoController {
 
     //	커뮤니티 사진 업로드
     @PostMapping("/upload")
-    public ResponseEntity<List<CommunityPhotoVo>> uploadPhoto(@RequestParam("communitiesId") Integer communitiesId, 
+    public ResponseEntity<List<CommunityPhotoVo>> uploadPhoto(@RequestParam("communitiesId") Long communitiesId, 
                                               @RequestParam("photos") MultipartFile[] photos) throws IOException {
     	
     	
@@ -54,10 +54,10 @@ public class CommunityPhotoController {
     
     
     //	커뮤니티 사진 조회
-    @GetMapping("/list/{communitiesId}")
-    public ResponseEntity<?> viewPhoto(@PathVariable("communitiesId") int communitysId, Model model) {
+    @GetMapping("/by-community/{communitiesId}")
+    public ResponseEntity<?> viewPhoto(@PathVariable("communitiesId") Long communitiessId, Model model) {
         try {
-            List<CommunityPhotoVo> photos = communityPhotoService.selectAllPhotoByCommunityId(communitysId);
+            List<CommunityPhotoVo> photos = communityPhotoService.selectAllPhotoByCommunityId(communitiessId);
             if (photos == null || photos.isEmpty()) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body("해당 사용자의 사진이 존재하지 않습니다.");
             }
@@ -70,10 +70,10 @@ public class CommunityPhotoController {
 
     
     //	communitysId로 사진 삭제(모든 사진 삭제)  
-    @DeleteMapping("/delete/{communitiesId}")
-    public ResponseEntity<?> deletePhoto(@PathVariable("communitiesId") int communitysId) {
+    @DeleteMapping("/by-community/{communitiesId}")
+    public ResponseEntity<?> deletePhoto(@PathVariable("communitiesId") Long communitiesId) {
         try {
-            int result = communityPhotoService.deletePhotoByCommunityId(communitysId);
+            int result = communityPhotoService.deletePhotoByCommunityId(communitiesId);
             if (result == 0) {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body("사진을 찾을 수 없습니다.");
             }
@@ -84,8 +84,8 @@ public class CommunityPhotoController {
     }
     
     //	photoId로 사진 삭제(사진 개별 삭제)
-    @DeleteMapping("/delete/photo/{photoId}")
-    public ResponseEntity<?> deletePhotoById(@PathVariable("photoId") int photoId) {
+    @DeleteMapping("/by-photo/{photoId}")
+    public ResponseEntity<?> deletePhotoById(@PathVariable("photoId") Long photoId) {
     	System.out.println("✅ [삭제 요청 들어옴] photoId = " + photoId);
     	try {
             CommunityPhotoVo photo = communityPhotoService.findPhotoById(photoId);

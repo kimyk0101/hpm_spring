@@ -76,6 +76,10 @@
        OR (parent_id = #{id} AND users_id = #{usersId});
 	</delete>
 
+	<!-- communitiesId 기준 댓글 모두 삭제 -->
+	<delete id="deleteCommentsByCommunitiesId" parameterType="Long">
+    DELETE FROM community_comments WHERE communities_id = #{communitiesId}
+	</delete>
 
     <!-- 대댓글 추가 -->
     <insert id="createReply" parameterType="cCommentVo" useGeneratedKeys="true" keyProperty="id">
