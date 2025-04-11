@@ -2,9 +2,6 @@ package himedia.hpm_spring.mappers;
 
 import java.util.List;
 
-import org.apache.ibatis.annotations.Param;
-
-import himedia.hpm_spring.repository.vo.CommunityVo;
 import himedia.hpm_spring.repository.vo.RestaurantReviewVo;
 
 public interface RestaurantReviewMapper {
@@ -18,9 +15,6 @@ public interface RestaurantReviewMapper {
 //	<select id="retrieveMyReviews" parameterType="Long" resultType="rReviewVo">	// 	사용자의 맛집 리뷰 게시글 조회
 	List<RestaurantReviewVo> retrieveMyReviews(Long id);
 
-//  <select id="retriveReviewsByKeyword" resultType="rReviewVo // 키워드 기반 리뷰 검색 
-	List<RestaurantReviewVo> retrieveReviewsByKeyword(@Param("pattern") String pattern);
-	
 //	<insert id="createReview" parameterType="rReviewVo">	//	맛집 리뷰 게시글 작성
 	int createReview(RestaurantReviewVo review);
 		
@@ -29,7 +23,4 @@ public interface RestaurantReviewMapper {
 	
 //	<delete id="deleteReview" parameterType="Map">	//	맛집 리뷰 게시글 삭제
 	int deleteReview(Long id, Long usersId);
-	
-//	<update id="incrementViews" parameterType="Long">	 //	조회수 증가 메서드
-    void incrementViews(Long id);
 }

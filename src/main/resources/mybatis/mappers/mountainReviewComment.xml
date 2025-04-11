@@ -50,11 +50,11 @@
 	
 	<!-- 사용자의 댓글 + 대댓글 조회 -->
 	<select id="retrieveMyComments" parameterType="Long" resultMap="mCommentResultMap">
-	SELECT c.*, co.title AS title
-  	FROM mountain_comments c
-  	JOIN mountains co ON c.mountains_id = co.id
-  	WHERE c.users_id = #{userId}
-  	ORDER BY c.update_date DESC
+	SELECT m.*, m.title AS title
+  	FROM mountain_comments mc
+  	JOIN mountains m ON mc.mountains_id = m.id
+  	WHERE mc.users_id = #{userId}
+  	ORDER BY mc.update_date DESC
 	</select>
 	
     <!-- 댓글 생성 -->
@@ -79,7 +79,6 @@
 	<delete id="deleteCommentsByReviewsId" parameterType="Long">
     DELETE FROM review_comments WHERE reviews_id = #{reviewsId}
 	</delete>
-
 
     <!-- 대댓글 추가 -->
     <insert id="createReply" parameterType="mCommentVo" useGeneratedKeys="true" keyProperty="id">

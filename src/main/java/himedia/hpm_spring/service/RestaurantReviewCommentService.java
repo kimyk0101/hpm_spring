@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import himedia.hpm_spring.mappers.RestaurantReviewCommentMapper;
-import himedia.hpm_spring.repository.vo.CommunityCommentVo;
 import himedia.hpm_spring.repository.vo.RestaurantReviewCommentVo;
 
 @Service
@@ -19,7 +18,6 @@ public class RestaurantReviewCommentService {
 	public List<RestaurantReviewCommentVo> retrieveAllComments(Long rReviewId) {
 	    return rCommentMapper.retrieveAllComments(rReviewId);
 	}
-
 
 	// 특정 댓글 조회
 	public RestaurantReviewCommentVo retrieveCommentById(Long id) {
@@ -69,6 +67,11 @@ public class RestaurantReviewCommentService {
 		if (deletedRows == 0) {
 			throw new RuntimeException("Failed to delete comment with ID: " + id + " for user ID: " + usersId);
 		}
+	}
+	
+	// 리뷰 ID 기준으로 모든 댓글 삭제
+	public void deleteCommentsByRestaurantsId(Long restaurantsId) {
+	    rCommentMapper.deleteCommentsByRestaurantsId(restaurantsId);
 	}
 	
 	// 대댓글 추가

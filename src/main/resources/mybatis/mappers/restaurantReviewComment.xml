@@ -50,11 +50,11 @@
 	
 	<!-- 사용자의 댓글 + 대댓글 조회 -->
 	<select id="retrieveMyComments" parameterType="Long" resultMap="rCommentResultMap">
-	SELECT c.*, co.title AS title
-  	FROM restaurant_comments c
-  	JOIN restaurants co ON c.restaurants_id = co.id
-  	WHERE c.users_id = #{userId}
-  	ORDER BY c.update_date DESC
+	SELECT r.*, r.title AS title
+  	FROM restaurant_comments rc
+  	JOIN restaurants r ON rc.restaurants_id = r.id
+  	WHERE rc.users_id = #{userId}
+  	ORDER BY rc.update_date DESC
 	</select>
 	
 
@@ -75,7 +75,11 @@
     WHERE (id = #{id} AND users_id = #{usersId}) 
        OR (parent_id = #{id} AND users_id = #{usersId});
 	</delete>
-
+	
+	<!-- restaurantsId 기준 댓글 모두 삭제 -->
+	<delete id="deleteCommentsByReviewsId" parameterType="Long">
+    DELETE FROM restaurant_comments WHERE restaurnats_id = #{restaurantsId}
+	</delete>
 
     <!-- 대댓글 추가 -->
     <insert id="createReply" parameterType="rCommentVo" useGeneratedKeys="true" keyProperty="id">

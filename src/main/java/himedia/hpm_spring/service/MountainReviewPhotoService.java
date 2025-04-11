@@ -74,8 +74,8 @@ public class MountainReviewPhotoService {
 
 	// 등산후기 사진 삭제
 	@Transactional
-	public int deletePhotoByReviewsId(Long i) {
-		List<MountainReviewPhotoVo> photoList = mReviewPhotoMapper.selectAllPhotoByReviewsId(i);
+	public int deletePhotoByReviewsId(Long reviewsId) {
+		List<MountainReviewPhotoVo> photoList = mReviewPhotoMapper.selectAllPhotoByReviewsId(reviewsId);
 
 		for (MountainReviewPhotoVo photo : photoList) {
 			String s3Url = photo.getFilePath();
@@ -88,7 +88,7 @@ public class MountainReviewPhotoService {
 			}
 		}
 
-		return mReviewPhotoMapper.deletePhotoByReviewsId(i);
+		return mReviewPhotoMapper.deletePhotoByReviewsId(reviewsId);
 	}
 
 	// 특정 사진 개별 조회

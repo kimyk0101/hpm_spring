@@ -13,14 +13,14 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class MountainReviewLikeVo {
+public class RestaurantReviewLikeVo {
 	private Long id;
 
 	@JsonProperty("users_id")
 	private Long usersId;
 	
-	@JsonProperty("reviews_id")
-	private Long reviewsId;
+	@JsonProperty("restaurants_id")
+	private Long restaurantsId;
 	
 	@JsonProperty("is_like")
 	private boolean isLike;

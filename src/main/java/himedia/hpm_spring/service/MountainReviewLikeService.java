@@ -31,7 +31,7 @@ public class MountainReviewLikeService {
 	}
 
 	// 리뷰별 좋아요 총 개수
-	public int getLikeCount(int reviewsId) {
+	public int getLikeCount(Long reviewsId) {
 		return mLikeMapper.selectLikeCount(reviewsId);
 	}
 

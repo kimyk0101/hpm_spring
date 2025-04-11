@@ -7,78 +7,71 @@
     	<result property="id" column="id"/>
     	<result property="name" column="name"/>
     	<result property="nickname" column="nickname"/>
-    	<result property="mountainName" column="mountain_name"/>
     	<result property="location" column="location"/>
+    	<result property="mountainName" column="mountain_name"/>
     	<result property="rate" column="rate"/>
-   	 	<result property="title" column="title"/>
     	<result property="content" column="content"/>
     	<result property="updateDate" column="update_date"/>
     	<result property="usersId" column="users_id"/>
     	<result property="mountainsId" column="mountains_id"/>
-    	<result property="views" column="views"/>
+    	<result property="commentCount" column="comment_count"/>
 	</resultMap>
 
-	<!-- 전체 맛집 리뷰 게시글 조회 -->
+	<!-- 전체 맛집 리뷰 게시글 조회 + 댓글 수 -->
 	<select id="retrieveAllReviews" resultMap="rReviewResultMap">
-	SELECT restaurants.*, users.nickname FROM restaurants JOIN users 
-	WHERE restaurants.users_id = users.id 
-	ORDER BY restaurants.id DESC
+	SELECT r.*, 
+		u.nickname,
+		m.mountain_name,
+		(SELECT COUNT(*) FROM restaurant_comments rc WHERE rc.restaurants_id = r.id) AS comment_count 
+	FROM restaurants r
+	JOIN users u ON r.users_id = u.id
+	JOIN mountains m ON r.mountains_id = m.id
+	ORDER BY r.id DESC
 	</select>
 	
 	<!-- 특정 맛집 리뷰 게시글 조회 -->
 	<select id="retrieveReviewById" parameterType="Long" resultMap="rReviewResultMap">
-	SELECT restaurants.*, users.nickname FROM restaurants JOIN users 
-	WHERE restaurants.id=#{id} AND restaurants.users_id = users.id
+	SELECT r.*, 
+		u.nickname,
+		m.mountain_name,
+		(SELECT COUNT(*) FROM restaurant_comments rc WHERE rc.restaurants_id = r.id) AS comment_count 
+	FROM restaurants r
+	JOIN users u ON r.users_id = u.id
+	JOIN mountains m ON r.mountains_id = m.id
+	WHERE r.id = #{id}
 	</select>
 	
 	<!-- 사용자의 맛집 리뷰 게시글 조회 -->
 	<select id="retrieveMyReviews" parameterType="Long" resultMap="rReviewResultMap">
 	SELECT 
-    c.*, 
-    (SELECT COUNT(*) FROM restaurant_comments cc WHERE cc.restaurants_id = c.id) AS comment_count
-  	FROM restaurants c
-  	WHERE c.users_id = #{usersId}
-  	ORDER BY c.update_date DESC
-	</select>
-	
-	<!-- 키워드 기반 게시글 조회 -->
-	<select id="retrieveReivewsByKeyword" parameterType="String" resultMap="rReviewResultMap">
-	SELECT 
-  	c.*, 
-  	u.nickname,
-  	(SELECT COUNT(*) FROM restaurant_comments cc WHERE cc.restaurants_id = c.id) AS comment_count,
-  	(SELECT cp.file_path FROM restaurant_photos cp WHERE cp.restaurants_id = c.id ORDER BY cp.id ASC LIMIT 1) AS imageUrl,
-  	c.views AS views
-	FROM restaurants c
-	JOIN users u ON c.users_id = u.id
-	WHERE c.title REGEXP #{pattern}
-    OR c.content REGEXP #{pattern}
-	ORDER BY c.id DESC
+    r.*, 
+    (SELECT COUNT(*) FROM restaurant_comments cc WHERE cc.restaurants_id = r.id) AS comment_count
+  	FROM restaurants r
+  	WHERE r.users_id = #{usersId}
+  	ORDER BY r.update_date DESC
 	</select>
 	
 	<!-- 맛집 리뷰 게시글 작성 -->
 	<insert id="createReview" parameterType="rReviewVo">
-    INSERT INTO restaurants (name, mountain_name, location, rate, title, content, update_date, users_id, mountains_id)
-    VALUES (#{name}, #{mountainName}, #{location}, #{rate}, #{title}, #{content}, #{updateDate}, #{usersId}, #{mountainsId})
+    INSERT INTO restaurants (name, location, rate, content, update_date, users_id, mountains_id)
+    VALUES (#{name}, #{location}, #{rate}, #{content}, #{updateDate}, #{usersId}, #{mountainsId})
 	</insert>
 	
 	<!-- 맛집 리뷰 게시글 일부 수정 -->
 	<update id="updateReview" parameterType="rReviewVo">
 	UPDATE restaurants SET
-	name=#{name}, mountain_name=#{mountainName}, location=#{location}, rate=#{rate}, title=#{title}, content=#{content}
+		name=#{name}, 
+		location=#{location}, 
+		rate=#{rate}, 
+		content=#{content}, 
+		mountains_id = #{mountainsId}
 	WHERE id=#{id}
 	</update>
 
 	<!-- 맛집 리뷰 게시글 삭제 -->
-	<delete id="deleteReview" parameterType="Long">
+	<delete id="deleteReview" parameterType="Map">
 	DELETE FROM restaurants 
 	WHERE id=#{id} AND users_id = #{usersId}
 	</delete>
 	
-	<!-- 조회수 증가 -->
-    <update id="incrementLikes" parameterType="Long">
-    UPDATE communities
-    SET views = views + 1
-    WHERE id = #{id}
-    </update>
 </mapper>

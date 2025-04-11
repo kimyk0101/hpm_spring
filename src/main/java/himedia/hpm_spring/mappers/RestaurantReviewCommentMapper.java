@@ -2,7 +2,6 @@ package himedia.hpm_spring.mappers;
 
 import java.util.List;
 
-import himedia.hpm_spring.repository.vo.CommunityCommentVo;
 import himedia.hpm_spring.repository.vo.RestaurantReviewCommentVo;
 
 public interface RestaurantReviewCommentMapper {
@@ -30,6 +29,9 @@ public interface RestaurantReviewCommentMapper {
 
 //    <delete id="deleteComment" parameterType="Map">	// 댓글 삭제
 	int deleteComment(Long id, Long usersId);
+	
+//	<delete id="deleteCommentsByRestaurantsId" parameterType="Long">	//	restaurantsId 기준 댓글 모두 삭제
+	int deleteCommentsByRestaurantsId(Long restaurantsId);
 	
 //    <insert id="createReply" parameterType="rCommentVo" useGeneratedKeys="true" keyProperty="id">	//	대댓글 생성
 	int createReply(RestaurantReviewCommentVo comment);

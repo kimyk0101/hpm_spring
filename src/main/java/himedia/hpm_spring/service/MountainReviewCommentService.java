@@ -19,7 +19,6 @@ public class MountainReviewCommentService {
 	    return mCommentMapper.retrieveAllComments(mReviewId);
 	}
 
-
 	// 특정 댓글 조회
 	public MountainReviewCommentVo retrieveCommentById(Long id) {
 		return mCommentMapper.retrieveCommentById(id);

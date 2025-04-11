@@ -53,11 +53,11 @@
 	<!-- 사용자의 리뷰 게시글 조회 -->
 	<select id="retrieveMyReviews" parameterType="Long" resultMap="mReviewResultMap">
 	SELECT 
-    c.*, 
-    (SELECT COUNT(*) FROM mountain_comments cc WHERE cc.mountains_id = c.id) AS comment_count
-  	FROM mountains c
-  	WHERE c.users_id = #{usersId}
-  	ORDER BY c.update_date DESC
+    m.*, 
+    (SELECT COUNT(*) FROM mountain_comments cc WHERE cc.mountains_id = m.id) AS comment_count
+  	FROM mountains m
+  	WHERE m.users_id = #{usersId}
+  	ORDER BY m.update_date DESC
 	</select>
 	
 	<!-- 리뷰 게시글 작성 -->
@@ -69,8 +69,8 @@
 	<!-- 리뷰 게시글 일부 수정 -->
 	<update id="updateReview" parameterType="mReviewVo">
 	UPDATE reviews SET
-		mountains_id = #{mountainsId},  <!-- 산을 다시 선택할 수 있게! -->
-		mountain_courses_id = #{mountainCoursesId}, <!-- 코스도 다시 선택 가능 -->
+		mountains_id = #{mountainsId}, 
+		mountain_courses_id = #{mountainCoursesId},
 		content = #{content}
 	WHERE id = #{id}
 	</update>

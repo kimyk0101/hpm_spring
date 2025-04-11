@@ -5,8 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import himedia.hpm_spring.mappers.RestaurantReviewCommentMapper;
 import himedia.hpm_spring.mappers.RestaurantReviewMapper;
-import himedia.hpm_spring.repository.vo.CommunityVo;
 import himedia.hpm_spring.repository.vo.RestaurantReviewVo;
 
 @Service
@@ -16,7 +16,10 @@ public class RestaurantReviewService {
     private RestaurantReviewMapper rReviewMapper;
     
     @Autowired
-	private RestaurantReviewPhotoService restaurantPhotoService;
+	private RestaurantReviewPhotoService rReviewPhotoMapper;
+    
+	@Autowired
+	private RestaurantReviewCommentMapper rCommentMapper;
     
     // 모든 맛집 리뷰 게시글 조회
     public List<RestaurantReviewVo> retrieveAllReviews() {
@@ -33,12 +36,6 @@ public class RestaurantReviewService {
         return rReviewMapper.retrieveMyReviews(id);
     }
     
-    // 키워드 기반 게시글 조회
- 	public List<RestaurantReviewVo> retrieveReviewsByKeyword(String keyword) {
- 		String pattern = "(^|[^가-힣a-zA-Z0-9])" + keyword + "([^가-힣a-zA-Z0-9]|$)";
- 		return rReviewMapper.retrieveReviewsByKeyword(pattern);
- 	}
-
     // 맛집 리뷰 게시글 생성
     public RestaurantReviewVo createReview(RestaurantReviewVo review) {
         // 맛집 리뷰 게시글 생성
@@ -64,17 +61,17 @@ public class RestaurantReviewService {
     // 맛집 리뷰 게시글 삭제
     public void deleteReview(Long id, Long usersId) {
     	
-    	// 게시글 이미지 먼저 삭제
-    	restaurantPhotoService.deletePhotoByRestaurantId(id.intValue());
+    	// 1. 댓글 먼저 삭제
+    	rCommentMapper.deleteCommentsByRestaurantsId(id);
+
+		// 2. 이미지 삭제
+    	rReviewPhotoMapper.deletePhotoByRestaurantsId(id);
         
+    	// 3. 리뷰 삭제
     	int deletedRows = rReviewMapper.deleteReview(id, usersId);
         if (deletedRows == 0) {
             throw new RuntimeException("Failed to delete restaurantReview with ID: " + id + " for user ID: " + usersId);
         }
     }
     
-	// 조회수 증가 메서드
-	public void incrementViews(Long id) {
-		rReviewMapper.incrementViews(id); 
-	}
 }

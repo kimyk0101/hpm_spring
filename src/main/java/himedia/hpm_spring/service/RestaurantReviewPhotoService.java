@@ -22,7 +22,7 @@ import software.amazon.awssdk.services.s3.model.PutObjectRequest;
 public class RestaurantReviewPhotoService {
 
     @Autowired
-    private RestaurantReviewPhotoMapper restaurantPhotoMapper;
+    private RestaurantReviewPhotoMapper rReviewPhotoMapper;
     
     @Autowired
     private S3Client s3Client;
@@ -31,7 +31,7 @@ public class RestaurantReviewPhotoService {
 	private String bucket;
 
     @Transactional    
-    public List<String> insertPhoto(Integer restaurantsId, MultipartFile[] photos) {
+    public List<String> insertPhoto(Long restaurantsId, MultipartFile[] photos) {
         List<String> s3Urls = new ArrayList<>();
 
         try {
@@ -49,13 +49,13 @@ public class RestaurantReviewPhotoService {
                 String s3Url = "https://" + bucket + ".s3." + System.getenv("AWS_REGION") + ".amazonaws.com/" + s3Key;
             	
                 // 3. DB 업데이트
-                RestaurantReviewPhotoVo restaurantPhotoVo = new RestaurantReviewPhotoVo();
-                restaurantPhotoVo.setRestaurantsId(restaurantsId);
-                restaurantPhotoVo.setFileName(photo.getOriginalFilename());
-                restaurantPhotoVo.setFilePath(s3Url); // 프론트에서 접근할 URL 기준 경로
-                restaurantPhotoVo.setUpdateDate(new Date());
+                RestaurantReviewPhotoVo rReviewPhotoVo = new RestaurantReviewPhotoVo();
+                rReviewPhotoVo.setRestaurantsId(restaurantsId);
+                rReviewPhotoVo.setFileName(photo.getOriginalFilename());
+                rReviewPhotoVo.setFilePath(s3Url); // 프론트에서 접근할 URL 기준 경로
+                rReviewPhotoVo.setUpdateDate(new Date());
 
-                restaurantPhotoMapper.insertPhoto(restaurantPhotoVo);
+                rReviewPhotoMapper.insertPhoto(rReviewPhotoVo);
                 s3Urls.add(s3Url.toString());
             }
 
@@ -70,50 +70,51 @@ public class RestaurantReviewPhotoService {
     }
 
     //	맛집후기 사진 전체 조회
-    public List<RestaurantReviewPhotoVo> selectAllPhotoByRestaurantId(int restaurantsId) {
-        return restaurantPhotoMapper.selectAllPhotoByRestaurantId(restaurantsId);
+    public List<RestaurantReviewPhotoVo> selectAllPhotoByRestaurantsId(Long restaurantsId) {
+        return rReviewPhotoMapper.selectAllPhotoByRestaurantsId(restaurantsId);
     }
     
-    //	특정 사진 조회
-    public RestaurantReviewPhotoVo findPhotoById(int photoId) {
-        return restaurantPhotoMapper.findPhotoById(photoId);
-    }
-
     //	맛집후기 사진 전체 삭제
     @Transactional
-    public int deletePhotoByRestaurantId(int restaurantsId) {
-        List<RestaurantReviewPhotoVo> photoList = restaurantPhotoMapper.selectAllPhotoByRestaurantId(restaurantsId);
+    public int deletePhotoByRestaurantsId(Long restaurantsId) {
+        List<RestaurantReviewPhotoVo> photoList = rReviewPhotoMapper.selectAllPhotoByRestaurantsId(restaurantsId);
 
         for (RestaurantReviewPhotoVo photo : photoList) {
             String s3Url = photo.getFilePath();
             if (s3Url != null && !s3Url.isBlank()) {
                 String s3Key = extractS3KeyFromUrl(s3Url);
-                s3Client.deleteObject(DeleteObjectRequest.builder()
-                        .bucket(bucket)
-                        .key(s3Key)
-                        .build());
+                
+                DeleteObjectRequest deleteRequest = DeleteObjectRequest.builder().bucket(bucket).key(s3Key).build();
+
+                s3Client.deleteObject(deleteRequest);
             }
         }
 
-        return restaurantPhotoMapper.deletePhotoByRestaurantId(restaurantsId);
+        return rReviewPhotoMapper.deletePhotoByRestaurantsId(restaurantsId);
     }
     
+    //	특정 사진 조회
+    public RestaurantReviewPhotoVo findPhotoById(Long photoId) {
+        return rReviewPhotoMapper.findPhotoById(photoId);
+    }
+
+    
     //  개별 사진 삭제
-    @Transactional
-    public int deletePhotoById(int photoId) {
-        RestaurantReviewPhotoVo photo = restaurantPhotoMapper.findPhotoById(photoId);
-        if (photo == null) return 0;
+    public int deletePhotoById(Long photoId) {
+        RestaurantReviewPhotoVo photo = rReviewPhotoMapper.findPhotoById(photoId);
+        if (photo == null) 
+        	return 0;
 
         String s3Url = photo.getFilePath();
         if (s3Url != null && !s3Url.isBlank()) {
             String s3Key = extractS3KeyFromUrl(s3Url);
-            s3Client.deleteObject(DeleteObjectRequest.builder()
-                    .bucket(bucket)
-                    .key(s3Key)
-                    .build());
+            
+            DeleteObjectRequest deleteRequest = DeleteObjectRequest.builder().bucket(bucket).key(s3Key).build();
+            
+            s3Client.deleteObject(deleteRequest);
         }
 
-        return restaurantPhotoMapper.deletePhotoById(photoId);
+        return rReviewPhotoMapper.deletePhotoById(photoId);
     }
     
     private String extractS3KeyFromUrl(String url) {

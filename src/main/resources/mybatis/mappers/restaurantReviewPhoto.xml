@@ -4,7 +4,7 @@
 <mapper namespace="himedia.hpm_spring.mappers.RestaurantReviewPhotoMapper">
 
 	<!-- 맛집후기 사진 업로드 -->
-    <insert id="insertPhoto" parameterType="rReviewPhotoVo">
+    <insert id="insertPhoto" parameterType="rReviewPhotoVo" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO restaurant_photos (
             file_name, file_path, update_date, restaurants_id
         )
@@ -15,7 +15,7 @@
     
 
 	<!-- 해당 ID 맛집후기 사진 조회 -->
-     <select id="selectAllPhotoByRestaurantId" parameterType="int" resultType="rReviewPhotoVo">
+     <select id="selectAllPhotoByRestaurantsId" parameterType="Long" resultType="rReviewPhotoVo">
         SELECT 
             id,
             file_name as fileName,
@@ -29,7 +29,7 @@
     </select> 
     
     <!-- photoId로 특정 사진 조회  -->
-    <select id="findPhotoById" parameterType="int" resultType="rReviewPhotoVo">
+    <select id="findPhotoById" parameterType="Long" resultType="rReviewPhotoVo">
     	 SELECT 
     		id,
     		file_name AS fileName,
@@ -43,7 +43,7 @@
 	</select>
 
 	<!-- 해당 ID 맛집후기 사진 삭제 -->
-    <delete id="deletePhotoByRestaurantId" parameterType="int">
+    <delete id="deletePhotoByRestaurantsId" parameterType="Long">
         DELETE FROM
         	restaurant_photos 
         WHERE
@@ -51,7 +51,7 @@
     </delete>
     
       <!-- photoId로 개별 사진 삭제 -->
-    <delete id="deletePhotoById" parameterType="int">
+    <delete id="deletePhotoById" parameterType="Long">
   		DELETE FROM restaurant_photos
   		WHERE id = #{photoId}
 	</delete>
