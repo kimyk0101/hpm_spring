@@ -32,18 +32,18 @@ public class RestaurantReviewLikeController {
 
 	// 리뷰에 대한 좋아요 개수 조회
 	@GetMapping("/count")
-	public ResponseEntity<Integer> getLikeCount(@RequestParam("restaurnatsId") Long restaurnatsId) {
-		int count = rReviewLikeService.getLikeCount(restaurnatsId);
+	public ResponseEntity<Integer> getLikeCount(@RequestParam("restaurantsId") Long restaurantsId) {
+		int count = rReviewLikeService.getLikeCount(restaurantsId);
 		return ResponseEntity.ok(count);
 	}
 
 	// 사용자가 해당 리뷰에 좋아요 눌렀는지 확인
 	@GetMapping("/is-liked")
 	public ResponseEntity<Boolean> isLiked(@RequestParam("usersId") Long usersId,
-			@RequestParam("restaurnatsId") Long restaurnatsId) {
+			@RequestParam("restaurantsId") Long restaurantsId) {
 		RestaurantReviewLikeVo rLikeVo = new RestaurantReviewLikeVo();
 		rLikeVo.setUsersId(usersId);
-		rLikeVo.setRestaurantsId(restaurnatsId);
+		rLikeVo.setRestaurantsId(restaurantsId);
 
 		Boolean isLiked = rReviewLikeService.isLiked(rLikeVo); // Integer로 받아서 null 가능성 있음
 

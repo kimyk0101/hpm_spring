@@ -18,7 +18,7 @@
     SELECT restaurant_comments.*, users.nickname
     FROM restaurant_comments 
     JOIN users ON restaurant_comments.users_id = users.id
-    WHERE restaurant_comments.reviews_id = #{rReviewId}
+    WHERE restaurant_comments.restaurants_id = #{rReviewId}
     ORDER BY restaurant_comments.update_date ASC;
 	</select>
 
@@ -57,7 +57,6 @@
   	ORDER BY rc.update_date DESC
 	</select>
 	
-
     <!-- 댓글 생성 -->
     <insert id="createComment" parameterType="rCommentVo" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO restaurant_comments (content, update_date, restaurants_id, users_id, parent_id)
@@ -77,8 +76,8 @@
 	</delete>
 	
 	<!-- restaurantsId 기준 댓글 모두 삭제 -->
-	<delete id="deleteCommentsByReviewsId" parameterType="Long">
-    DELETE FROM restaurant_comments WHERE restaurnats_id = #{restaurantsId}
+	<delete id="deleteCommentsByRestaurantsId" parameterType="Long">
+    DELETE FROM restaurant_comments WHERE restaurants_id = #{restaurantsId}
 	</delete>
 
     <!-- 대댓글 추가 -->

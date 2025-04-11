@@ -21,7 +21,7 @@
 	<select id="retrieveAllReviews" resultMap="rReviewResultMap">
 	SELECT r.*, 
 		u.nickname,
-		m.mountain_name,
+		m.name AS mountain_name,
 		(SELECT COUNT(*) FROM restaurant_comments rc WHERE rc.restaurants_id = r.id) AS comment_count 
 	FROM restaurants r
 	JOIN users u ON r.users_id = u.id
@@ -33,7 +33,7 @@
 	<select id="retrieveReviewById" parameterType="Long" resultMap="rReviewResultMap">
 	SELECT r.*, 
 		u.nickname,
-		m.mountain_name,
+		m.name AS mountain_name,
 		(SELECT COUNT(*) FROM restaurant_comments rc WHERE rc.restaurants_id = r.id) AS comment_count 
 	FROM restaurants r
 	JOIN users u ON r.users_id = u.id
@@ -52,7 +52,7 @@
 	</select>
 	
 	<!-- 맛집 리뷰 게시글 작성 -->
-	<insert id="createReview" parameterType="rReviewVo">
+	<insert id="createReview" parameterType="rReviewVo" useGeneratedKeys="true" keyProperty="id">
     INSERT INTO restaurants (name, location, rate, content, update_date, users_id, mountains_id)
     VALUES (#{name}, #{location}, #{rate}, #{content}, #{updateDate}, #{usersId}, #{mountainsId})
 	</insert>
