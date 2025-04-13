@@ -51,7 +51,7 @@
 	
 	<!-- 사용자의 댓글 + 대댓글 조회 -->
 	<select id="retrieveMyComments" parameterType="Long" resultMap="cCommentResultMap">
-	SELECT c.*, co.title AS community_title
+	SELECT c.*
   	FROM community_comments c
   	JOIN communities co ON c.communities_id = co.id
   	WHERE c.users_id = #{userId}

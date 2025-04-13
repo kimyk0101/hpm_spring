@@ -103,6 +103,9 @@ public class UserService {
 			case "register_date":
 				user.setRegisterDate((LocalDateTime) value);
 				break;
+			case "update_date":
+			    // 무시하거나 로그로 남기기만 해도 됨
+			    break;
 			default:
 				throw new IllegalArgumentException("Invalid field name: " + key);
 			}

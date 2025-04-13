@@ -50,11 +50,11 @@
 	
 	<!-- 사용자의 댓글 + 대댓글 조회 -->
 	<select id="retrieveMyComments" parameterType="Long" resultMap="mCommentResultMap">
-	SELECT m.*, m.title AS title
-  	FROM mountain_comments mc
-  	JOIN mountains m ON mc.mountains_id = m.id
-  	WHERE mc.users_id = #{userId}
-  	ORDER BY mc.update_date DESC
+	SELECT rc.*
+  	FROM review_comments rc
+  	JOIN reviews r ON rc.reviews_id = r.id
+  	WHERE rc.users_id = #{userId}
+  	ORDER BY rc.update_date DESC
 	</select>
 	
     <!-- 댓글 생성 -->

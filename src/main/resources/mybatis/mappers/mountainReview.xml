@@ -54,8 +54,8 @@
 	<select id="retrieveMyReviews" parameterType="Long" resultMap="mReviewResultMap">
 	SELECT 
     m.*, 
-    (SELECT COUNT(*) FROM mountain_comments cc WHERE cc.mountains_id = m.id) AS comment_count
-  	FROM mountains m
+    (SELECT COUNT(*) FROM review_comments cc WHERE cc.reviews_id = m.id) AS comment_count
+  	FROM reviews m
   	WHERE m.users_id = #{usersId}
   	ORDER BY m.update_date DESC
 	</select>

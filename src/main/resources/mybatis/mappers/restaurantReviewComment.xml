@@ -50,7 +50,7 @@
 	
 	<!-- 사용자의 댓글 + 대댓글 조회 -->
 	<select id="retrieveMyComments" parameterType="Long" resultMap="rCommentResultMap">
-	SELECT r.*, r.title AS title
+	SELECT rc.*
   	FROM restaurant_comments rc
   	JOIN restaurants r ON rc.restaurants_id = r.id
   	WHERE rc.users_id = #{userId}
