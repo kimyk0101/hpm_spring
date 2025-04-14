@@ -1,16 +1,21 @@
 /**
- * 기능명: RestaurantReview
  * 파일명: RestaurantReviewController.java, RestaurantReviewCommentController.java, RestaurantReviewLikeController.java
- * 설명: 맛집 후기 게시글 관련 API 요청을 처리하는 컨트롤러 클래스
- * 			- 맛집 리뷰 게시글에 대한 CRUD(생성, 읽기, 수정, 삭제) 기능 제공
- *         	- 특정 사용자 게시글 조회
- *    	맛집 후기 게시글에 달린 댓글 및 대댓글 관련 API 요청을 처리하는 컨트롤러 클래스
- *        	- 특정 게시글에 대한 댓글 및 대댓글 CRUD(생성, 읽기, 수정, 삭제) 기능 제공
- *        	- 댓글과 대댓글의 계층 구조를 관리
- *		맛집 후기 게시글에 좋아요 관련 API 요청을 처리하는 컨트롤러 클래스
- *			- 게시글에 대한 좋아요 개수 조회, 좋아요 토글
  * 작성자: 김연경
  * 작성일: 2025-04-14
+ * 
+ * 설명:
+ * - 맛집 후기 게시글 관련 API 요청을 처리하는 컨트롤러 클래스들
+ * 
+ * RestaurantReviewController.java
+ * - 맛집 리뷰 게시글의 CRUD(생성, 읽기, 수정, 삭제) 기능 제공
+ * - 특정 사용자가 작성한 게시글 조회 기능 제공
+ * 
+ * RestaurantReviewCommentController.java
+ * - 맛집 후기 게시글에 달린 댓글 및 대댓글의 CRUD(생성, 읽기, 수정, 삭제) 기능 제공
+ * - 댓글과 대댓글의 계층 구조 관리
+ * 
+ * RestaurantReviewLikeController.java
+ * - 맛집 후기 게시글에 대한 좋아요 개수 조회 및 좋아요 토글 기능 제공
  */
 
 package himedia.hpm_spring.controller;

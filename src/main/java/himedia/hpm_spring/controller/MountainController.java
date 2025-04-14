@@ -1,12 +1,17 @@
 /**
- * 기능명: Mountain
  * 파일명: MountainController.java, MountainCourseController.java
- * 설명: 산 정보 조회 및 검색 관련 API를 제공하는 컨트롤러 클래스
- *   		- 전체 산 목록 조회, 특정 ID로 산 조회, 산 이름으로 ID 조회, 키워드 기반 산 검색
- *		특정 산의 등산 코스를 조회하는 API 컨트롤러 클래스
- *			- 산 ID로 해당 산에 속한 등산 코스 목록 조회
  * 작성자: 김승룡
  * 작성일: 2025-04-07 ~ 04-09
+ * 
+ * 설명:
+ * - 산 정보 조회 및 검색 관련 API 요청을 처리하는 컨트롤러 클래스들
+ * 
+ * MountainController.java
+ * - 전체 산 목록 조회, 특정 산 ID로 산 조회, 산 이름으로 ID 조회 기능 제공
+ * - 키워드 기반 산 검색 기능 제공
+ * 
+ * MountainCourseController.java
+ * - 특정 산에 속한 등산 코스 목록을 산 ID를 통해 조회하는 기능 제공
  */
 
 package himedia.hpm_spring.controller;
