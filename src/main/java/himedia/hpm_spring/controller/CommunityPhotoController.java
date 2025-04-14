@@ -1,3 +1,16 @@
+/**
+ * 파일명: CommunityPhotoController.java
+ * 작성자: 문호정
+ * 설명: 커뮤니티 사진 관련 API 요청을 처리하는 컨트롤러 클래스
+ * 			- 사진의 업로드, 조회, 삭제 관련 기능 제공
+ *         	- 다중 파일 업로드 처리
+ *         	- 게시글 ID 기준 사진 조회/삭제
+ * 작성일: 2025-04-02
+ * 수정자: 김경민
+ * 수정내용: 개별 사진 삭제 기능 추가, AWS S3와 연동
+ * 수정일: 2025.04.07
+ */
+
 package himedia.hpm_spring.controller;
 
 import java.io.IOException;

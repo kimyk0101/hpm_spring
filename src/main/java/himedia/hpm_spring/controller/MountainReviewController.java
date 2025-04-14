@@ -1,3 +1,18 @@
+/**
+ * 기능명: MountainReview
+ * 파일명: MountainReviewController.java, MountainReviewCommentController.java, MountainReviewLikeController.java
+ * 설명: 등산 후기 게시글 관련 API 요청을 처리하는 컨트롤러 클래스
+ * 			- 등산 리뷰 게시글에 대한 CRUD(생성, 읽기, 수정, 삭제) 기능 제공
+ *         	- 특정 사용자 게시글 조회
+ *    	등산 후기 게시글에 달린 댓글 및 대댓글 관련 API 요청을 처리하는 컨트롤러 클래스
+ *        	- 특정 게시글에 대한 댓글 및 대댓글 CRUD(생성, 읽기, 수정, 삭제) 기능 제공
+ *        	- 댓글과 대댓글의 계층 구조를 관리
+ *		등산 후기 게시글에 좋아요 관련 API 요청을 처리하는 컨트롤러 클래스
+ *			- 게시글에 대한 좋아요 개수 조회, 좋아요 토글
+ * 작성자: 김연경
+ * 작성일: 2025-03-20 ~ 04-12
+ */
+
 package himedia.hpm_spring.controller;
 
 import java.util.List;

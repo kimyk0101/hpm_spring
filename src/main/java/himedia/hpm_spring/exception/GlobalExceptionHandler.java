@@ -1,3 +1,11 @@
+/**
+ * 파일명: GlobalExceptionHandler.java
+ * 설명: 애플리케이션 내에서 발생하는 예외를 전역적으로 처리하는 예외 처리 클래스
+ *        	- 특정 예외가 발생하면 적절한 HTTP 상태 코드와 메시지를 반환하여 클라이언트에게 전달
+ * 작성자: 김연경
+ * 작성일: 2025-03-27
+ */
+
 package himedia.hpm_spring.exception;
 
 import org.springframework.http.HttpStatus;

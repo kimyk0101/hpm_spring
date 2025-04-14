@@ -38,5 +38,5 @@ public class UserVo {
 	
 	@JsonProperty("register_date")
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-	private LocalDateTime registerDate;		//	갱신 시간
+	private LocalDateTime registerDate;		//	가입 시간
 }

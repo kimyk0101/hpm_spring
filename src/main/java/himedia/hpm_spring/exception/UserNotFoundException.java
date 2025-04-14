@@ -1,3 +1,12 @@
+/**
+ * 파일명: UserNotFoundException.java
+ * 설명: 사용자 정의 예외를 정의한 클래스
+ *        	- 주로 사용자 정보를 찾을 수 없을 때 발생시키는 예외
+ *        	- 예외가 발생하면 "User not found"와 같은 메시지를 던지며, 이 메시지는 전역 예외 처리 클래스에서 처리
+ * 작성자: 김연경
+ * 작성일: 2025-03-27
+ */
+
 package himedia.hpm_spring.exception;
 
 
