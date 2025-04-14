@@ -41,17 +41,17 @@
 	
 	<!-- 키워드 기반 게시글 조회 -->
 	<select id="retrieveCommunitiesByKeyword" parameterType="String" resultMap="communityResultMap">
-	SELECT 
-  	c.*, 
-  	u.nickname,
-  	(SELECT COUNT(*) FROM community_comments cc WHERE cc.communities_id = c.id) AS comment_count,
-  	(SELECT cp.file_path FROM community_photos cp WHERE cp.communities_id = c.id ORDER BY cp.id ASC LIMIT 1) AS imageUrl,
-  	c.views AS views
-	FROM communities c
-	JOIN users u ON c.users_id = u.id
-	WHERE c.title REGEXP #{pattern}
-    OR c.content REGEXP #{pattern}
-	ORDER BY c.id DESC
+	 SELECT 
+    c.*, 
+    u.nickname,
+    (SELECT COUNT(*) FROM community_comments cc WHERE cc.communities_id = c.id) AS comment_count,
+    (SELECT cp.file_path FROM community_photos cp WHERE cp.communities_id = c.id ORDER BY cp.id ASC LIMIT 1) AS imageUrl,
+    c.views AS views
+  FROM communities c
+  JOIN users u ON c.users_id = u.id
+  WHERE c.title REGEXP #{pattern}
+     OR c.content REGEXP #{pattern}
+  ORDER BY c.id DESC
 	</select>
 	
 	<!-- 게시글 작성 -->
