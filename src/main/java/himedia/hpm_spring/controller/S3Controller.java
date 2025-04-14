@@ -1,3 +1,10 @@
+/**
+ * 파일명: S3Controller.java
+ * 작성자: 김경민
+ * 설명: 
+ * 
+ * 작성일: 2025-04-09
+ */
 package himedia.hpm_spring.controller;
 
 import himedia.hpm_spring.service.S3Service;

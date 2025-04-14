@@ -1,3 +1,16 @@
+/**
+ * 파일명: UserPhotoController.java
+ * 작성자: 문호정
+ * 설명: 사용자 프로필 사진 관련 API 요청을 처리하는 컨트롤러 클래스
+ *   		- 사용자 ID(usersId)를 기준으로 프로필 사진 업로드 (또는 수정)
+ *   		- 특정 사용자의 프로필 사진 조회
+ *   		- 특정 사용자의 프로필 사진 삭제
+ * 작성일: 2025-04-02
+ * 수정자: 김경민
+ * 수정내용: 기존 파일 있으면 삭제하고 새로운 사진 저장 기능 추가, AWS S3와 연동
+ * 수정일: 2025.04.07
+ */
+
 package himedia.hpm_spring.controller;
 
 import java.io.IOException;

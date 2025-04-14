@@ -1,3 +1,11 @@
+/**
+ * 파일명: MountainRecommendController.java
+ * 설명: 산 추천 데이터를 조회하는 컨트롤러 클래스
+ *       추천 산 목록 전체를 클라이언트에게 JSON 형태로 반환
+ * 작성자: 서민정
+ * 작성일: 2025-04-13
+ */
+
 package himedia.hpm_spring.controller;
 
 import himedia.hpm_spring.repository.vo.MountainRecommendVo;

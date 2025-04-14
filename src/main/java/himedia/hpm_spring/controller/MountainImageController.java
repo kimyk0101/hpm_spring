@@ -1,3 +1,11 @@
+/**
+ * 파일명: MountainImageController.java
+ * 설명: 산의 대표 이미지 및 전체 이미지 조회를 위한 컨트롤러
+ *   		- 특정 산의 대표 이미지 1장 및 전체 이미지 목록 조회
+ * 작성자: 김경민
+ * 작성일: 2025-04-10
+ */
+
 package himedia.hpm_spring.controller;
 
 import java.util.List;
