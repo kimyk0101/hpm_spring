@@ -32,7 +32,7 @@ import himedia.hpm_spring.repository.vo.UserPhotoVo;
 import himedia.hpm_spring.service.UserPhotoService;
 
 @RestController
-@RequestMapping("/api/userPhoto")
+@RequestMapping("/api/users/photos")
 public class UserPhotoController {
 
     @Autowired
@@ -40,7 +40,7 @@ public class UserPhotoController {
 
     //	프로필 사진 업로드(수정) 
     @PostMapping("/upload")
-    public ResponseEntity<UserPhotoVo> uploadPhoto(@RequestParam("usersId") Integer userId, 
+    public ResponseEntity<UserPhotoVo> uploadPhoto(@RequestParam("usersId") Long userId, 
                                                    @RequestParam("photo") MultipartFile photo) throws IOException {
         
         String filePath = userPhotoService.insertPhoto(userId, photo);
@@ -52,8 +52,8 @@ public class UserPhotoController {
     }
 
     //	프로필 사진 조회
-    @GetMapping("/view/{usersId}")
-    public ResponseEntity<UserPhotoVo> viewPhoto(@PathVariable("usersId") int usersId) {
+    @GetMapping("/by-user/{usersId}")
+    public ResponseEntity<UserPhotoVo> viewPhoto(@PathVariable("usersId") Long usersId) {
         UserPhotoVo photo = userPhotoService.selectPhotoByUserId(usersId);
 
         if (photo != null) {
@@ -65,8 +65,8 @@ public class UserPhotoController {
 
     
     //	usersId, photoId로 사진 삭제
-    @DeleteMapping("/delete/{usersId}")
-    public ResponseEntity<?> deletePhoto(@PathVariable("usersId") int usersId) {
+    @DeleteMapping("/by-id/{usersId}")
+    public ResponseEntity<?> deletePhoto(@PathVariable("usersId") Long usersId) {
         try {
             int result = userPhotoService.deletePhotoByUserId(usersId);
             if (result == 0) {

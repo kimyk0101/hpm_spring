@@ -7,10 +7,10 @@ public interface UserPhotoMapper {
 //	<insert id="insertOrUpdatePhoto" parameterType="UserPhotoVo">
     int insertOrUpdatePhoto(UserPhotoVo userPhotoVo);
     
-//  <select id="selectPhotoByUserId" parameterType="int" resultType="UserPhotoVo">
-    UserPhotoVo selectPhotoByUserId(int usersId);
+//  <select id="selectPhotoByUserId" parameterType="Long" resultType="UserPhotoVo">
+    UserPhotoVo selectPhotoByUserId(Long usersId);
     
-//  <delete id="deletePhotoByUserId" parameterType="int">
-    int deletePhotoByUserId(int usersId);
+//  <delete id="deletePhotoByUserId" parameterType="Long">
+    int deletePhotoByUserId(Long usersId);
 
 }

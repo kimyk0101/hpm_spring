@@ -11,7 +11,7 @@ public class S3PathUtil {
     }
 
     // ✅ 유저 프로필 사진 경로
-    public static String getUserProfilePath(int userId, String originalFilename) {
+    public static String getUserProfilePath(Long userId, String originalFilename) {
         String extension = getExtension(originalFilename);
         String uuid = UUID.randomUUID().toString();
         return String.format("user-profile/%d/%s.%s", userId, uuid, extension);

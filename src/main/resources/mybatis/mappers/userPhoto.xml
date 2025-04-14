@@ -20,7 +20,7 @@
     
 
 	<!-- 해당 ID 프로필 사진 조회 -->
-     <select id="selectPhotoByUserId" parameterType="int" resultType="UserPhotoVo">
+     <select id="selectPhotoByUserId" parameterType="Long" resultType="UserPhotoVo">
         SELECT 
             id,
             users_id as usersId,
@@ -34,7 +34,7 @@
     </select> 
 
 	<!-- 해당 ID 프로필 사진 삭제 -->
-    <delete id="deletePhotoByUserId" parameterType="int">
+    <delete id="deletePhotoByUserId" parameterType="Long">
         DELETE FROM
         	user_photos 
         WHERE

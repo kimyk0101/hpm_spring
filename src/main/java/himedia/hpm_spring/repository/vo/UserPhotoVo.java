@@ -17,10 +17,10 @@ import lombok.ToString;
 @ToString
 public class UserPhotoVo {
 
-    private int id;				//	userPhoto 고유번호
+    private Long id;				//	userPhoto 고유번호
     
     @JsonProperty("users_id")
-    private int usersId;		//	유저 ID
+    private Long usersId;		//	유저 ID
     
     @JsonProperty("file_name")
     private String fileName;	//	파일 이름

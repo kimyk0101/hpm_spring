@@ -33,7 +33,7 @@ public class UserPhotoService {
 	private String bucket;
 
 	@Transactional
-	public String insertPhoto(Integer usersId, MultipartFile photo) {
+	public String insertPhoto(Long usersId, MultipartFile photo) {
 	    try {
 
 	        // 1. S3에서 기존 사진 삭제 (있을 경우)
@@ -77,13 +77,13 @@ public class UserPhotoService {
 	}
 
     //	프로필 사진 조회
-    public UserPhotoVo selectPhotoByUserId(int usersId) {
+    public UserPhotoVo selectPhotoByUserId(Long usersId) {
         return userPhotoMapper.selectPhotoByUserId(usersId);
     }
 
     //	프로필 사진 삭제
     @Transactional
-    public int deletePhotoByUserId(int usersId) {
+    public int deletePhotoByUserId(Long usersId) {
         return userPhotoMapper.deletePhotoByUserId(usersId);
     }
 
