@@ -8,7 +8,6 @@
     	<result property="nickname" column="nickname"/>
     	<result property="content" column="content"/>
     	<result property="updateDate" column="update_date"/>
-    	<result property="communityTitle" column="community_title" />
     	<result property="communitiesId" column="communities_id"/>
     	<result property="usersId" column="users_id"/>
     	<result property="parentId" column="parent_id"/>

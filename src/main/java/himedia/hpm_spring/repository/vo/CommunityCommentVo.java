@@ -21,7 +21,6 @@ public class CommunityCommentVo {
 	private Long id;						// 	댓글 고유번호
 	private String nickname;				//	users 테이블의 nickname과 매핑
 	private String content;					// 	댓글 내용
-	private String communityTitle;			//  게시글 제목 
 	
 	@JsonProperty("update_date")
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
