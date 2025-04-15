@@ -8,8 +8,8 @@ import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.s3.S3Client;
 
 
-// ✅ AWS S3 클라이언트 설정 클래스
-// S3Client 객체를 Bean으로 등록해주는 역할
+// ✅ AWS S3와 통신하기 위한 설정 클래스
+// S3Client 객체를 스프링 전체에서 재사용할 수 있도록 Bean으로 등록해주는 역할
 
 
 @Configuration

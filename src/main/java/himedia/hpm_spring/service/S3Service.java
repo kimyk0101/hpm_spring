@@ -21,7 +21,8 @@ public class S3Service {
 
 	// config에서 만든 S3Client Bean 주입
 	private final S3Client s3Client;
-
+	
+	// s3 설정값 환경변수 참조 
 	private final String bucketName = System.getenv("AWS_BUCKET");
 	private final String region = System.getenv("AWS_REGION");
 	private final String accessKey = System.getenv("AWS_ACCESS_KEY");
@@ -32,34 +33,30 @@ public class S3Service {
 	// 사용자가 제한시간 동안 이미지를 업로드 가능하게 해주는 URL
 
 	public URL generatePresignedUrl(String fileName) {
-		// 요청 객체 생성
-		PutObjectRequest objectRequest = PutObjectRequest.builder().bucket(bucketName).key("uploads/" + fileName) // S3
-																													// 버킷
-																													// 내
-																													// 저장
-																													// 경로
+		// s3 저장 경로 
+		PutObjectRequest objectRequest = PutObjectRequest.builder()
+				.bucket(bucketName)
+				.key("uploads/" + fileName)																																																																																			// 저장																													// 경로
 				.build();
 
-		// Presigner 객체 생성
-		// Presigned URL을 만들어주는 도구
+		// Presigner 객체 생성(Presigned URL을 만들어주는 도구)
 		S3Presigner presigner = S3Presigner.builder().region(Region.of(region))
 				.credentialsProvider(StaticCredentialsProvider.create(AwsBasicCredentials.create(accessKey, secretKey)))
 				.build();
 
 		// Presigned URL 생성
 		PresignedPutObjectRequest presignedRequest = presigner
-				.presignPutObject(req -> req.signatureDuration(Duration.ofMinutes(10)) // 유효시간: 5분
-						.putObjectRequest(objectRequest));
+				.presignPutObject(req -> req.signatureDuration(Duration.ofMinutes(10)) // 유효시간: 10분
+				.putObjectRequest(objectRequest));
 
 		return presignedRequest.url(); // 이 URL로 리액트에서 PUT 업로드 가능
 	}
 
 	// ✅ S3에서 파일 삭제 기능 추가
 	public void deleteFile(String fileName) {
-		DeleteObjectRequest deleteRequest = DeleteObjectRequest.builder().bucket(bucketName).key("uploads/" + fileName) // 업로드할
-																														// 때랑
-																														// 동일한
-																														// 경로
+		DeleteObjectRequest deleteRequest = DeleteObjectRequest.builder()
+				.bucket(bucketName)
+				.key("uploads/" + fileName) 																												// 경로
 				.build();
 
 		s3Client.deleteObject(deleteRequest);
