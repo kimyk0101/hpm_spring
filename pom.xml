@@ -83,13 +83,32 @@
   			<artifactId>auth</artifactId>
   			<version>2.31.16</version>
 		</dependency>
+		
+		
+				<!-- 크롤링 용-->
+		<dependency>
+		    <groupId>org.seleniumhq.selenium</groupId>
+		    <artifactId>selenium-java</artifactId>
+		    <version>4.31.0</version>
+		</dependency>
+		
+		  <dependency>
+		    <groupId>org.apache.poi</groupId>
+		    <artifactId>poi</artifactId>
+		    <version>5.2.3</version> <!-- 또는 최신 버전 -->
+		  </dependency>
+		  <dependency>
+		    <groupId>org.apache.poi</groupId>
+		    <artifactId>poi-ooxml</artifactId>
+		    <version>5.2.3</version>
+		  </dependency>
+		  
+		  
 	</dependencies>
 	
-	<dependency>
-    <groupId>org.seleniumhq.selenium</groupId>
-    <artifactId>selenium-java</artifactId>
-    <version>4.21.0</version>
-</dependency>
+
+
+
 
 	<build>
 	<finalName>hpm_spring</finalName>
